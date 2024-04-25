@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="D:\OmarProgramming\ELECTRICAL_POWER_CUFE\src\energy_monitor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\OmarProgramming\ELECTRICAL_POWER_CUFE\src\core\data_IO\data_IO.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\OmarProgramming\ELECTRICAL_POWER_CUFE\src\core\data_IO\dataTable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\OmarProgramming\ELECTRICAL_POWER_CUFE\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{691B01FE-0F64-3449-A83E-5144D1BAA81C}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
