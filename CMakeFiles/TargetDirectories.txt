@@ -1,0 +1,3 @@
+D:/OmarProgramming/ELECTRICAL_POWER_CUFE/CMakeFiles/energy_monitor.dir
+D:/OmarProgramming/ELECTRICAL_POWER_CUFE/CMakeFiles/ALL_BUILD.dir
+D:/OmarProgramming/ELECTRICAL_POWER_CUFE/CMakeFiles/ZERO_CHECK.dir
