@@ -1,6 +1,7 @@
 #include "energy_monitor.h"
 #include <iostream>
-#include "core/core.h"
+
+
 using namespace std;
 
 
@@ -9,15 +10,14 @@ int main(){
   dataTable dataObj = dataTable();
   cout << "PLEASE CHOOSE A FILE" << endl;
   cin >> file_addr;
-
+  cout << "sad" << endl;
   if(data_import(file_addr, &dataObj, csv)){
-    cout << "SUCCESSSSS";
+    cout << "SUCCESSSSS" << endl;
   }
   else{
-    cout << "FAIL";
+    cout << "FAIL" << endl;
   }
-
-
-  cout<<"FUCK YOU , I WIN";
+  
+  cout<<"FUCK YOU , I WIN" << endl;
   return 1;
 }
