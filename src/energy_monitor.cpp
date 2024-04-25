@@ -19,5 +19,6 @@ int main(){
   }
   
   cout<<"FUCK YOU , I WIN" << endl;
+  while (1);
   return 1;
 }

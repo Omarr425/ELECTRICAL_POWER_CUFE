@@ -1,0 +1,10 @@
+^D:\OMARPROGRAMMING\ELECTRICAL_POWER_CUFE\WINBUILD\CMAKEFILES\D9F51DDCCF32129E2A7DDD84D50AAC0D\GENERATE.STAMP.RULE
+setlocal
+D:\OmarProgramming\bin\cmake.exe -SD:/OmarProgramming/ELECTRICAL_POWER_CUFE -BD:/OmarProgramming/ELECTRICAL_POWER_CUFE/winBuild --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file D:/OmarProgramming/ELECTRICAL_POWER_CUFE/winBuild/MyProject.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
