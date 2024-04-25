@@ -10,6 +10,7 @@
 ----4) Leave small and meaningful comments that illustrates how this piece of code works
 ----5) Adopted clean architecture for the workspace (src->(core, features , ...))
 ----6) Never Forget to free any memory that once was allocated and isn't in use currently
+----7) Never Forget to put {#pragma once} or Header guards for all header files
 *********IF possible please use DOXYGEN FOR in-process , easy code documenting  https://en.wikipedia.org/wiki/Doxygen
 example ---- 
 
