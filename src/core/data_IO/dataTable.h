@@ -8,12 +8,18 @@ using namespace std;
 
 
 
+/*
+  DYNAMIC DATA HOLDER THAT KEEPS DATA IN RECTANGULAR 2D arrays for now
+*/
+
+
 class dataTable{
   private:
     int _cols_num;
     int _rows_num;
 
-    vector<vector<string>> _table; 
+    vector<vector<double>> _table; 
+
 
   public:
     dataTable();
@@ -21,14 +27,12 @@ class dataTable{
     int get_row_num();
     int get_col_num();
 
+    void insertData(double d, int row , int col);
+    double getData(int row , int col);
 
-    void insertData(string d, int row_num , int _columns_num);
-    void clearData(int row_num , int col_num);
+    void eraseRow(int start_row, int rows_num = 1);
+    void eraseColumn(int start_col, int cols_num = 1);
 
-    string getData(int row_num , int _columns_num);
-
-    void popRow();
-    void popColumn();
     int row_num_Refresh();
     int col_num_Refresh();
     

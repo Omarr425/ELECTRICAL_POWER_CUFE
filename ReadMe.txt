@@ -8,3 +8,6 @@ Simple CLI interface
 MAY BE PROVIDED LATER ON DEPENDING ON PRIORITY
 A WEB/DESKTOP UI
 PDF format export
+
+
+THIS project is missing proper EXCEPTION HANDLING FOR NOW (CRASHES / UNEXPECTED BEHAVIOR is expected)!!

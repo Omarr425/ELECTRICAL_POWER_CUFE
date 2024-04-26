@@ -2,23 +2,18 @@
 #include <iostream>
 
 
-using namespace std;
 
-
+// this file is for testing for now
 int main(){
   string file_addr;
   dataTable dataObj = dataTable();
-  cout << "PLEASE CHOOSE A FILE" << endl;
-  cin >> file_addr;
-  cout << "sad" << endl;
-  if(data_import(file_addr, &dataObj, csv)){
-    cout << "SUCCESSSSS" << endl;
-  }
-  else{
-    cout << "FAIL" << endl;
-  }
-  
-  cout<<"FUCK YOU , I WIN" << endl;
-  while (1);
+
+
+
+
+  cout<<"PROGRAM EXECUTED SUCCESSFULLY TYPE Q to QUIT" << endl;
+  while (std::cin.get() != 'Q'){
+  };
+  std::cout<<"TERMINATE"<< endl;
   return 1;
 }

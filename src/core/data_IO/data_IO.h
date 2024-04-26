@@ -4,6 +4,13 @@
 #include <fstream>
 #include <string>
 
+/*
+  THIS FILE IS FOR IMPORTING OR EXPORTING DIFFERENT FILE FORMATS INTO THE APPLICATION AND WRAPPING The DATA with the dataTable class
+  mainly revolves around   (data_import) and (data_export) functions
+*/
+
+
+
 
 enum dataType{
   csv,

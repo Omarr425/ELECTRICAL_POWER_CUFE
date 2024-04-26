@@ -1,13 +1,18 @@
 #include "dataTable.h"
 
+
+
 dataTable::dataTable(){
   _rows_num = 0;
   _cols_num = 0; 
+
 }
+
 
 int dataTable::get_row_num(){
   return _rows_num;
 }
+
 
 
 int dataTable::get_col_num(){
@@ -15,43 +20,66 @@ int dataTable::get_col_num(){
 }
 
 
-void dataTable::insertData(string d,  int row_num , int col_num){
-  if(row_num > _rows_num){
-    _rows_num = row_num;
+    /**
+      @brief inserts a value to a cell of dataTable instance with that address
+    */
+void dataTable::insertData(double d,  int row , int col){
+  if(row >= _rows_num){
+    _rows_num = row + 1;
   }
-  if(col_num > _cols_num){
-    _cols_num = col_num;
+  if(col >= _cols_num){
+    _cols_num = col + 1;
   }
+  if(row >= _table.size())_table.resize(row + 1);
+  if(col >= _table.at(row).size())_table.at(row).resize(col + 1);
 
 
-  _table[row_num][col_num] = string(d);
+  _table.at(row).at(col) = d;
 
 }
 
-void dataTable::clearData(int row_num, int col_num){
-  _table[row_num][col_num] = "";
-}
+    /**
+      @brief returns the value of a cell with that address
+    */
 
-string dataTable::getData(int row_num, int col_num){
-  return _table[row_num][col_num];
+double dataTable::getData(int row, int col){
+  return _table.at(row).at(col);
 }
+    /**
+      @brief entirely deletes the rows and frees their memory
+      @param start_row the row to start deleting from
+      @param rows_num how many rows to keep deleting after the start row
+    */
 
-void dataTable::popRow(){
-  _table.pop_back();
-  _rows_num--;
+void dataTable::eraseRow(int start_row, int rows_num){
+  _table.erase(_table.begin() + start_row, _table.begin() + start_row + rows_num);
+  _rows_num-= rows_num;
 } 
+    /**
+      @brief entirely deletes colunms and frees thier memory while keeping order
+      @param start_col the column to start deleting from
+      @param cols_num how many columns to keep deleting after the start row
+    */
 
-void dataTable::popColumn(){
+void dataTable::eraseColumn(int start_col, int cols_num){
   for(int i = 0; i < _table.size(); i++){
-    _table[i].pop_back();
+    _table.at(i).erase(_table.at(i).begin() + start_col , _table.at(i).begin() + start_col + cols_num);
   }
+  _cols_num-= cols_num;
 } 
+    /**
+      @brief refreshes the number of rows for any mistake probability or bad handling
+    */
 
 int dataTable::row_num_Refresh(){
   return _table.size();
 }
 
 
+    /**
+      @brief refreshes the number of columns for any mistake probability or bad handling
+    */
+
 int dataTable::col_num_Refresh(){
-   return _table[0].size();
+   return _table.at(0).size();
 }
