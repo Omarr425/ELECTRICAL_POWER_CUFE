@@ -1,0 +1,25 @@
+
+
+
+### For the sake of modularity and ease of synchronised work we are going to utilize project management Tools for example GIT 
+
+### CLEAN CODING PRACTICES SHOULD BE CONSIDERED 
+----1) Carefull , meaningful and elaborative naming for variables,functions and structures is a PRIORITY
+----2) Alway care for the standards of Typing (case_sensitivity, Spacing ) 
+----3) Use double spaces instead of regular tabs (can be changed from vscode)(File->Preferences->settings->"seach space") then change tabsize to 2 and tick insert spaces
+----4) Leave small and meaningful comments that illustrates how this piece of code works
+----5) Adopted clean architecture for the workspace (src->(core, features , ...))
+----6) Never Forget to free any memory that once was allocated and isn't in use currently
+----7) Never Forget to put {#pragma once} or Header guards for all header files
+*********IF possible please use DOXYGEN FOR in-process , easy code documenting  https://en.wikipedia.org/wiki/Doxygen
+example ---- 
+
+
+/*
+    @brief   //brief function description
+    @param  //prameter 1 description
+    @param  // parameter 2 description
+    @return // the returned data
+
+*/
+double dummyFunction(float p1,float p2)
