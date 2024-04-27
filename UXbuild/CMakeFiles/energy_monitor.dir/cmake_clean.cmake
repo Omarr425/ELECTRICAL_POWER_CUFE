@@ -5,6 +5,10 @@ file(REMOVE_RECURSE
   "CMakeFiles/energy_monitor.dir/src/core/data_IO/data_IO.cpp.o.d"
   "CMakeFiles/energy_monitor.dir/src/energy_monitor.cpp.o"
   "CMakeFiles/energy_monitor.dir/src/energy_monitor.cpp.o.d"
+  "CMakeFiles/energy_monitor.dir/src/features/signals/electric.cpp.o"
+  "CMakeFiles/energy_monitor.dir/src/features/signals/electric.cpp.o.d"
+  "CMakeFiles/energy_monitor.dir/src/features/signals/signal.cpp.o"
+  "CMakeFiles/energy_monitor.dir/src/features/signals/signal.cpp.o.d"
   "energy_monitor"
   "energy_monitor.pdb"
 )

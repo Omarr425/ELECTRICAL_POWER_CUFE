@@ -4,7 +4,7 @@
 #include <iostream>
 #include <iomanip>
 
-bool csv_import(string file_address, dataTable *table){
+bool file_IO::csv_import(string file_address, dataTable *table){
   ifstream file;
   string cell;
   char c;
@@ -51,13 +51,13 @@ bool csv_import(string file_address, dataTable *table){
 }
 
 
-bool pdf_import(string file_address, dataTable *table){
+bool file_IO::pdf_import(string file_address, dataTable *table){
   return false;
 };
 
 
 
-bool csv_export(string file_address, dataTable table){
+bool file_IO::csv_export(string file_address, dataTable table){
   ofstream outputFile;
   outputFile << std::setprecision(10);
   outputFile.open(file_address);
@@ -79,7 +79,7 @@ bool csv_export(string file_address, dataTable table){
 };
 
 
-bool pdf_export(string file_address, dataTable table){
+bool file_IO::pdf_export(string file_address, dataTable table){
   return false; 
 }
 
@@ -87,7 +87,7 @@ bool pdf_export(string file_address, dataTable table){
 
 
 
-bool data_import(string file_address,  dataTable *data,  int type){
+bool file_IO::data_import(string file_address,  dataTable *data,  int type){
   switch (type)
   {
   case csv:
@@ -102,7 +102,7 @@ bool data_import(string file_address,  dataTable *data,  int type){
   }
 }
 
-bool data_export(string file_address, dataTable data, int type){
+bool file_IO::data_export(string file_address, dataTable data, int type){
   switch (type)
   {
   case csv:

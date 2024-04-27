@@ -71,7 +71,7 @@ void dataTable::eraseColumn(int start_col, int cols_num){
       @brief refreshes the number of rows for any mistake probability or bad handling
     */
 
-int dataTable::row_num_Refresh(){
+int dataTable::row_Refresh(){
   return _table.size();
 }
 
@@ -80,6 +80,11 @@ int dataTable::row_num_Refresh(){
       @brief refreshes the number of columns for any mistake probability or bad handling
     */
 
-int dataTable::col_num_Refresh(){
-   return _table.at(0).size();
+int dataTable::col_Refresh(){
+  for(int i = 0; i < _rows_num; i++){
+    if(_table.at(i).size() != _cols_num){
+      _table.at(i).resize(_cols_num);
+    }
+  }
+  return _table.at(0).size();
 }

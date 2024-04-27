@@ -17,13 +17,12 @@ class dataTable{
   private:
     int _cols_num;
     int _rows_num;
-
     vector<vector<double>> _table; 
 
 
+
   public:
-    dataTable();
-    
+    dataTable(); 
     int get_row_num();
     int get_col_num();
 
@@ -33,8 +32,8 @@ class dataTable{
     void eraseRow(int start_row, int rows_num = 1);
     void eraseColumn(int start_col, int cols_num = 1);
 
-    int row_num_Refresh();
-    int col_num_Refresh();
+    int row_Refresh();
+    int col_Refresh();
     
 };
 

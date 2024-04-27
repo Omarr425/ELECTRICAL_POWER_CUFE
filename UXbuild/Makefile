@@ -201,6 +201,54 @@ src/energy_monitor.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/energy_monitor.dir/build.make CMakeFiles/energy_monitor.dir/src/energy_monitor.cpp.s
 .PHONY : src/energy_monitor.cpp.s
 
+src/features/signals/electric.o: src/features/signals/electric.cpp.o
+.PHONY : src/features/signals/electric.o
+
+# target to build an object file
+src/features/signals/electric.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/energy_monitor.dir/build.make CMakeFiles/energy_monitor.dir/src/features/signals/electric.cpp.o
+.PHONY : src/features/signals/electric.cpp.o
+
+src/features/signals/electric.i: src/features/signals/electric.cpp.i
+.PHONY : src/features/signals/electric.i
+
+# target to preprocess a source file
+src/features/signals/electric.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/energy_monitor.dir/build.make CMakeFiles/energy_monitor.dir/src/features/signals/electric.cpp.i
+.PHONY : src/features/signals/electric.cpp.i
+
+src/features/signals/electric.s: src/features/signals/electric.cpp.s
+.PHONY : src/features/signals/electric.s
+
+# target to generate assembly for a file
+src/features/signals/electric.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/energy_monitor.dir/build.make CMakeFiles/energy_monitor.dir/src/features/signals/electric.cpp.s
+.PHONY : src/features/signals/electric.cpp.s
+
+src/features/signals/signal.o: src/features/signals/signal.cpp.o
+.PHONY : src/features/signals/signal.o
+
+# target to build an object file
+src/features/signals/signal.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/energy_monitor.dir/build.make CMakeFiles/energy_monitor.dir/src/features/signals/signal.cpp.o
+.PHONY : src/features/signals/signal.cpp.o
+
+src/features/signals/signal.i: src/features/signals/signal.cpp.i
+.PHONY : src/features/signals/signal.i
+
+# target to preprocess a source file
+src/features/signals/signal.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/energy_monitor.dir/build.make CMakeFiles/energy_monitor.dir/src/features/signals/signal.cpp.i
+.PHONY : src/features/signals/signal.cpp.i
+
+src/features/signals/signal.s: src/features/signals/signal.cpp.s
+.PHONY : src/features/signals/signal.s
+
+# target to generate assembly for a file
+src/features/signals/signal.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/energy_monitor.dir/build.make CMakeFiles/energy_monitor.dir/src/features/signals/signal.cpp.s
+.PHONY : src/features/signals/signal.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -219,6 +267,12 @@ help:
 	@echo "... src/energy_monitor.o"
 	@echo "... src/energy_monitor.i"
 	@echo "... src/energy_monitor.s"
+	@echo "... src/features/signals/electric.o"
+	@echo "... src/features/signals/electric.i"
+	@echo "... src/features/signals/electric.s"
+	@echo "... src/features/signals/signal.o"
+	@echo "... src/features/signals/signal.i"
+	@echo "... src/features/signals/signal.s"
 .PHONY : help
 
 

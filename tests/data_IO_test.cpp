@@ -9,12 +9,12 @@ using namespace std;
 int main(){
   string file_addr;
   dataTable dataObj = dataTable();
-
+  file_IO fileio;
 
   //IMPORT DATA AS CSV
   cout << "PLEASE CHOOSE IMPORT FILE" << endl;
   cin >> file_addr;
-  if(data_import(file_addr, &dataObj, csv)){
+  if(fileio.data_import(file_addr, &dataObj, csv)){
     cout << "DATA IMPORT SUCCESS" << endl;
   }
   else{
@@ -26,7 +26,7 @@ int main(){
   //EXPORT READ DATA AS CSV
   cout << "PLEASE CHOOSE EXPORT FILE" << endl;
   cin >> file_addr;
-  if(data_export(file_addr,dataObj,csv)){
+  if(fileio.data_export(file_addr,dataObj,csv)){
     cout << "DATA EXPORT SUCCESS" << endl;
   }
   else{

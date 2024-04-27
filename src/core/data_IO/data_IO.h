@@ -18,10 +18,11 @@ enum dataType{
   // and any file file formats you can think of that have function assosiated and can handle
 };
 
-
+struct file_IO{
 /**
   @brief csv File I/O functions 
 */
+private:
 bool csv_import(string file_address, dataTable *table);
 bool csv_export(string file_address, dataTable table);
 
@@ -30,7 +31,7 @@ bool csv_export(string file_address, dataTable table);
 */
 bool pdf_import(string file_address, dataTable *table);
 bool pdf_export(string file_address, dataTable table);
-
+public:
 
 /**
   @brief a function that imports files with supported file formats
@@ -41,4 +42,4 @@ bool pdf_export(string file_address, dataTable table);
 */
 bool data_import(string file_address,  dataTable *data,  int type);
 bool data_export(string file_address, dataTable data, int type);
-
+};

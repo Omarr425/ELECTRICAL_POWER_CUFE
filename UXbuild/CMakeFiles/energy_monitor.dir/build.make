@@ -111,11 +111,41 @@ CMakeFiles/energy_monitor.dir/src/energy_monitor.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/energy_monitor.dir/src/energy_monitor.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/renderer/59265a2b-d6f5-4b6a-ad90-6c1b1b9d04ac/Programming/ELECTRICAL_POWER_CUFE/src/energy_monitor.cpp -o CMakeFiles/energy_monitor.dir/src/energy_monitor.cpp.s
 
+CMakeFiles/energy_monitor.dir/src/features/signals/electric.cpp.o: CMakeFiles/energy_monitor.dir/flags.make
+CMakeFiles/energy_monitor.dir/src/features/signals/electric.cpp.o: /media/renderer/59265a2b-d6f5-4b6a-ad90-6c1b1b9d04ac/Programming/ELECTRICAL_POWER_CUFE/src/features/signals/electric.cpp
+CMakeFiles/energy_monitor.dir/src/features/signals/electric.cpp.o: CMakeFiles/energy_monitor.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/renderer/59265a2b-d6f5-4b6a-ad90-6c1b1b9d04ac/Programming/ELECTRICAL_POWER_CUFE/UXbuild/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/energy_monitor.dir/src/features/signals/electric.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/energy_monitor.dir/src/features/signals/electric.cpp.o -MF CMakeFiles/energy_monitor.dir/src/features/signals/electric.cpp.o.d -o CMakeFiles/energy_monitor.dir/src/features/signals/electric.cpp.o -c /media/renderer/59265a2b-d6f5-4b6a-ad90-6c1b1b9d04ac/Programming/ELECTRICAL_POWER_CUFE/src/features/signals/electric.cpp
+
+CMakeFiles/energy_monitor.dir/src/features/signals/electric.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/energy_monitor.dir/src/features/signals/electric.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/renderer/59265a2b-d6f5-4b6a-ad90-6c1b1b9d04ac/Programming/ELECTRICAL_POWER_CUFE/src/features/signals/electric.cpp > CMakeFiles/energy_monitor.dir/src/features/signals/electric.cpp.i
+
+CMakeFiles/energy_monitor.dir/src/features/signals/electric.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/energy_monitor.dir/src/features/signals/electric.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/renderer/59265a2b-d6f5-4b6a-ad90-6c1b1b9d04ac/Programming/ELECTRICAL_POWER_CUFE/src/features/signals/electric.cpp -o CMakeFiles/energy_monitor.dir/src/features/signals/electric.cpp.s
+
+CMakeFiles/energy_monitor.dir/src/features/signals/signal.cpp.o: CMakeFiles/energy_monitor.dir/flags.make
+CMakeFiles/energy_monitor.dir/src/features/signals/signal.cpp.o: /media/renderer/59265a2b-d6f5-4b6a-ad90-6c1b1b9d04ac/Programming/ELECTRICAL_POWER_CUFE/src/features/signals/signal.cpp
+CMakeFiles/energy_monitor.dir/src/features/signals/signal.cpp.o: CMakeFiles/energy_monitor.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/renderer/59265a2b-d6f5-4b6a-ad90-6c1b1b9d04ac/Programming/ELECTRICAL_POWER_CUFE/UXbuild/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/energy_monitor.dir/src/features/signals/signal.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/energy_monitor.dir/src/features/signals/signal.cpp.o -MF CMakeFiles/energy_monitor.dir/src/features/signals/signal.cpp.o.d -o CMakeFiles/energy_monitor.dir/src/features/signals/signal.cpp.o -c /media/renderer/59265a2b-d6f5-4b6a-ad90-6c1b1b9d04ac/Programming/ELECTRICAL_POWER_CUFE/src/features/signals/signal.cpp
+
+CMakeFiles/energy_monitor.dir/src/features/signals/signal.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/energy_monitor.dir/src/features/signals/signal.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/renderer/59265a2b-d6f5-4b6a-ad90-6c1b1b9d04ac/Programming/ELECTRICAL_POWER_CUFE/src/features/signals/signal.cpp > CMakeFiles/energy_monitor.dir/src/features/signals/signal.cpp.i
+
+CMakeFiles/energy_monitor.dir/src/features/signals/signal.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/energy_monitor.dir/src/features/signals/signal.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/renderer/59265a2b-d6f5-4b6a-ad90-6c1b1b9d04ac/Programming/ELECTRICAL_POWER_CUFE/src/features/signals/signal.cpp -o CMakeFiles/energy_monitor.dir/src/features/signals/signal.cpp.s
+
 # Object files for target energy_monitor
 energy_monitor_OBJECTS = \
 "CMakeFiles/energy_monitor.dir/src/core/data_IO/dataTable.cpp.o" \
 "CMakeFiles/energy_monitor.dir/src/core/data_IO/data_IO.cpp.o" \
-"CMakeFiles/energy_monitor.dir/src/energy_monitor.cpp.o"
+"CMakeFiles/energy_monitor.dir/src/energy_monitor.cpp.o" \
+"CMakeFiles/energy_monitor.dir/src/features/signals/electric.cpp.o" \
+"CMakeFiles/energy_monitor.dir/src/features/signals/signal.cpp.o"
 
 # External object files for target energy_monitor
 energy_monitor_EXTERNAL_OBJECTS =
@@ -123,9 +153,11 @@ energy_monitor_EXTERNAL_OBJECTS =
 energy_monitor: CMakeFiles/energy_monitor.dir/src/core/data_IO/dataTable.cpp.o
 energy_monitor: CMakeFiles/energy_monitor.dir/src/core/data_IO/data_IO.cpp.o
 energy_monitor: CMakeFiles/energy_monitor.dir/src/energy_monitor.cpp.o
+energy_monitor: CMakeFiles/energy_monitor.dir/src/features/signals/electric.cpp.o
+energy_monitor: CMakeFiles/energy_monitor.dir/src/features/signals/signal.cpp.o
 energy_monitor: CMakeFiles/energy_monitor.dir/build.make
 energy_monitor: CMakeFiles/energy_monitor.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/media/renderer/59265a2b-d6f5-4b6a-ad90-6c1b1b9d04ac/Programming/ELECTRICAL_POWER_CUFE/UXbuild/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable energy_monitor"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/media/renderer/59265a2b-d6f5-4b6a-ad90-6c1b1b9d04ac/Programming/ELECTRICAL_POWER_CUFE/UXbuild/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable energy_monitor"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/energy_monitor.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
