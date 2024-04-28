@@ -8,15 +8,18 @@ bool file_IO::csv_import(string file_address, dataTable *table){
   ifstream file;
   string cell;
   char c;
+
+  table->get_row_num();
+
   int row_index = 0;
   int col_index = 0;
   file.open(file_address);
   if(file.is_open()){
-
     //operations to fill the dataTable object from the file
-
       while(file.get(c)){
+
         if(c == '\n' || c == ','){
+
           try{
             table->insertData(stod(cell),  row_index, col_index);
             cell = "";
@@ -41,7 +44,6 @@ bool file_IO::csv_import(string file_address, dataTable *table){
           cell.push_back(c);
         }
       }
-
     file.close();
     return true;
   }
@@ -65,14 +67,15 @@ bool file_IO::csv_export(string file_address, dataTable table){
     cout << "unexpected error" << endl;
     return false;
   }else{
+
     int col_index;
     int row_index;
     for(row_index = 0; row_index  < table.get_row_num(); row_index++){
       for(col_index = 0; col_index < (table.get_col_num() - 1); col_index++){
-          outputFile << table.getData(row_index,col_index) << ',';
-        }
-        outputFile << table.getData(row_index,col_index) << endl;
+        outputFile << table.getData(row_index,col_index) << ',';
       }
+      outputFile << table.getData(row_index,col_index) << endl;
+    }
     outputFile.close();
     return true;
   }
@@ -91,10 +94,10 @@ bool file_IO::data_import(string file_address,  dataTable *data,  int type){
   switch (type)
   {
   case csv:
-    return csv_import(file_address, data);
+    return csv_import(file_address+".csv", data);
     break;
   case pdf:
-    return pdf_import(file_address, data);
+    return pdf_import(file_address+".pdf", data);
     break;
   default:
     return false;
@@ -106,10 +109,10 @@ bool file_IO::data_export(string file_address, dataTable data, int type){
   switch (type)
   {
   case csv:
-    return csv_export(file_address, data);
+    return csv_export(file_address+".csv", data);
     break;
   case pdf:
-    return pdf_export(file_address, data);
+    return pdf_export(file_address+".pdf", data);
   default:
     return false;
     break;

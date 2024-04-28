@@ -7,7 +7,7 @@
 
 struct _signal_data{
   std::string dataLabels[4] = {"time","val","dv/dt","vdt"};
-  dataTable *data;
+  dataTable data;
 };
 
 
@@ -21,12 +21,11 @@ class signal{
     double avg_ptp; //avg peak to peak
 
     double max_ptp;
-    double max_ptp_time; //time in seconds;
     double min_ptp;
-    double min_ptp_time;
 
-    double avg_max_vals; //avg amplitude
-    double avg_min_vals;
+
+    double avg_max_val; //avg amplitude
+    double avg_min_val;
 
 
     //VALUES MAX/MIN
@@ -55,26 +54,29 @@ class signal{
     _signal_data signal_data;
 //METHODS FOR SETTING AND GETTING VALUES FROM the signal dataset
     inline void putValue(double val, int row, int col){
-      signal_data.data->insertData(val,row,col);
+      signal_data.data.insertData(val,row,col);
     }
 
     inline double getValue(int row, int col){
-      return signal_data.data->getData(row,col);
+      return signal_data.data.getData(row,col);
     }
 
     inline void refreshData(){
-      signal_data.data->col_Refresh();
-      signal_data.data->row_Refresh();
+      signal_data.data.refresh();
     }
 
 
 
-    double accuracy_for_min_max = 0.95;
+    double accuracy_for_min_max = 0.03;
+    struct maximas_minimas{
+      std::vector<double> value;
+      std::vector<double> time;
+    };
 
-    dataTable val_maximas;
-    dataTable val_manimas;
-    dataTable dvBdt_maximas;
-    dataTable dvBdt_manimas;
+    maximas_minimas val_maximas;
+    maximas_minimas val_minimas;
+    maximas_minimas dvBdt_maximas;
+    maximas_minimas dvBdt_minimas;
 
     bool timeDomain_analysed;
     
@@ -85,15 +87,25 @@ class signal{
 
     //Makes variable data out of the time-value data such as slopes and areas wrt to time
     bool pre_analyze();
+
     bool soft_analyze();
+    /// @brief VALUES ANALYTICS THAT EVALUATE MAXIMAS_MINIMAS using SLOPE DATA
+    bool update_maximas_minimas();
+    /// @brief filter local MAXIMAS and MINIMAS and update ptp data (only top maximas and lowest minimas) 
+    bool post_maximas_minimas();
+    bool update_slope_maximas_minimas();
+  
+
+
 
     double timeStart;
     double timeEnd;
     int samples_num;
-
+    bool _has_data;
+    bool data_viable;
   public:
 
-    signal(dataTable *d);
+   //ENUM FOR EASE OF ACCESSING SIGNAL DATA and ARRANGMENT OF COLUMNS
     enum{
       time,
       val,
@@ -102,8 +114,11 @@ class signal{
       area
     };
 
+    bool hasData();
+    bool dataViable();
+    bool loadData(string name = "signal", string fileLocation = settings.get_settings<std::string>(defaulSignalExportPath));
     bool signal_analytics();
-
+    bool exportSignal(string name = "signal" , string fileLocation = settings.get_settings<std::string>(defaulSignalImportPath));
     const _analytics get_analytics();
     dataTable get_sig_data()const;
 };

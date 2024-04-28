@@ -4,8 +4,11 @@
 #include <stdlib.h>
 #include <type_traits>
 #include <string>
+#include "settings/setting.h"
 
   using namespace std;
+
+extern _settings settings;
 
 template <typename t>
 struct eng_multiplier{

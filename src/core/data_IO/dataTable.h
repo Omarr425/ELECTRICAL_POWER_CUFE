@@ -21,7 +21,10 @@ class dataTable{
 
 
 
+
+
   public:
+
     dataTable(); 
     int get_row_num();
     int get_col_num();
@@ -32,8 +35,6 @@ class dataTable{
     void eraseRow(int start_row, int rows_num = 1);
     void eraseColumn(int start_col, int cols_num = 1);
 
-    int row_Refresh();
-    int col_Refresh();
-    
+    void refresh();
 };
 

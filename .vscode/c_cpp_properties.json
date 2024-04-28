@@ -3,7 +3,9 @@
         {
             "name": "Win32",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/bin/**",
+                "${workspaceFolder}/bin/_deps/yaml-cpp-src"
             ],
             "defines": [
                 "_DEBUG",
