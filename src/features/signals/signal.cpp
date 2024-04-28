@@ -153,7 +153,7 @@ bool signal::update_maximas_minimas()
     {//MAXIMA DETECTED
     //WILL SEARCH THE FOLLOWING AND THE PAST ELEMENTS FOR THE ABOLUTE BIGGEST
     double localMaxima = getValue(index - 1,val);
-    double temp;
+    double temp = 0;
     int ridx = 0;
 
     for(int i = 0; i < 2; i++ ){
