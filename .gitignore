@@ -200,21 +200,21 @@ coverage*.info
 *.coveragexml
 
 # NCrunch
-<<<<<<< HEAD
+
 _NCrunch_*
 .*crunch*.local.xml
 nCrunchTemp_*
 
 # MightyMoose
 *.mm.*
-=======
+
 NCrunch*
 .crunch.local.xml
 nCrunchTemp_*
 
 # MightyMoose
 .mm.
->>>>>>> 1eb45e0 (updated gitIgnore and other stuff)
+
 AutoTest.Net/
 
 # Web workbench (sass)
@@ -254,11 +254,10 @@ PublishScripts/
 # NuGet Symbol Packages
 *.snupkg
 # The packages folder can be ignored because of Package Restore
-<<<<<<< HEAD
+
 **/[Pp]ackages/*
-=======
 */[Pp]ackages/
->>>>>>> 1eb45e0 (updated gitIgnore and other stuff)
+
 # except build/, which is used as an MSBuild target.
 !**/[Pp]ackages/build/
 # Uncomment if necessary however generally it will be regenerated when needed
@@ -330,11 +329,10 @@ ServiceFabricBackup/
 # Business Intelligence projects
 *.rdl.data
 *.bim.layout
-<<<<<<< HEAD
+
 *.bim_*.settings
-=======
 .bim_.settings
->>>>>>> 1eb45e0 (updated gitIgnore and other stuff)
+
 *.rptproj.rsuser
 *- [Bb]ackup.rdl
 *- [Bb]ackup ([0-9]).rdl
@@ -371,19 +369,19 @@ node_modules/
 *.aps
 
 # Visual Studio LightSwitch build output
-<<<<<<< HEAD
+
 **/*.HTMLClient/GeneratedArtifacts
 **/*.DesktopClient/GeneratedArtifacts
 **/*.DesktopClient/ModelManifest.xml
 **/*.Server/GeneratedArtifacts
 **/*.Server/ModelManifest.xml
-=======
+
 */.HTMLClient/GeneratedArtifacts
 */.DesktopClient/GeneratedArtifacts
 */.DesktopClient/ModelManifest.xml
 */.Server/GeneratedArtifacts
 */.Server/ModelManifest.xml
->>>>>>> 1eb45e0 (updated gitIgnore and other stuff)
+
 _Pvt_Extensions
 
 # Paket dependency manager
@@ -397,11 +395,11 @@ paket-files/
 .cr/personal
 
 # Python Tools for Visual Studio (PTVS)
-<<<<<<< HEAD
+
 __pycache__/
-=======
+
 _pycache_/
->>>>>>> 1eb45e0 (updated gitIgnore and other stuff)
+
 *.pyc
 
 # Cake - Uncomment if you are using it
@@ -432,13 +430,11 @@ ASALocalRun/
 # NVidia Nsight GPU debugger configuration file
 *.nvuser
 
-<<<<<<< HEAD
-=======
+
 *vcxproj
 *vcxproj.filters
 *sln
 
->>>>>>> 1eb45e0 (updated gitIgnore and other stuff)
 # MFractors (Xamarin productivity tool) working folder
 .mfractor/
 
@@ -476,8 +472,6 @@ FodyWeavers.xsd
 *.msi
 *.msix
 *.msm
-<<<<<<< HEAD
+
 *.msp
-=======
-*.msp
->>>>>>> 1eb45e0 (updated gitIgnore and other stuff)
+
