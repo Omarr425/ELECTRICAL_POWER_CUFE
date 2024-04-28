@@ -135,7 +135,7 @@ bool signal::update_maximas_minimas()
     //WILL SEARCH THE FOLLOWING AND THE PAST ELEMENT FOR THE ABOLUTE SMALLEST
     
     double localMinima = getValue(index - 1,val);
-    double temp;
+    double temp = 0;
     int ridx = 0;
     for(int i = 0; i < 2; i++ ){
       if(temp < localMinima){
@@ -218,13 +218,13 @@ bool signal::post_maximas_minimas()
   }
 
 
-  double sum_maxes;
+  double sum_maxes = 0;
   for(int i = 0; i < val_maximas.value.size(); i++){
     sum_maxes+=val_maximas.value[i];
   }
   analytics.avg_max_val = sum_maxes/val_maximas.value.size();
 
-  double sum_mins;
+  double sum_mins = 0;
   for(int i = 0; i < val_minimas.value.size(); i++){
     sum_mins+=val_minimas.value[i];
   }
