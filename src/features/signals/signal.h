@@ -16,38 +16,46 @@ class signal{
   protected:
   //Basic data
   struct _analytics{
-    double base_frequency;
-    
-    double avg_ptp; //avg peak to peak
 
-    double max_ptp;
-    double min_ptp;
+    double avg_ptp; //avg peak to peak        //CHECKED
+    double max_ptp;                           //CHECKED
+    double min_ptp;                           //CHECKED
 
-
-    double avg_max_val; //avg amplitude
-    double avg_min_val;
 
 
     //VALUES MAX/MIN
-    double max_val;
-    double max_val_time; //time in seconds;
-    double min_val;
-    double min_val_time;
+    double avg_max_val; //avg amplitude       //CHECKED
+    double avg_min_val;                       //CHECKED
+    double max_val;                           //CHECKED
+    double max_val_time; //time in seconds;   //CHECKED
+    double min_val;                           //CHECKED
+    double min_val_time;                      //CHECKED
  
     //SLOPE MAX/MIN
-    double max_dvBdt;
-    double max_dvBdt_time; //time in seconds;
-    double min_dvBdt;
-    double min_dvBdt_time;
+    double max_dvBdt;                         //IN PROGRESS
+    double max_dvBdt_time; //time in seconds; //IN PROGRESS
+    double min_dvBdt;                         //IN PROGRESS
+    double min_dvBdt_time;                    //IN PROGRESS
 
-    double dc_offset;
-    double thd;  //total harmonic distortion;
-    double rms;
-    double avg;
+    double dc_offset;                         //CHECKED
+    double thd;  //total harmonic distortion; //IN PROGRESS
+    double rms;                               //CHECKED
+    double avg;                               //CHECKED
     
-    bool is_harmonic;
-    bool is_periodic;
+    bool is_harmonic;                         //IN PROGRESS
+    bool is_periodic;                         //CHECKED
 
+
+
+    double avg_sample_time;                   //CHECKED
+    double timeStart;                         //CHECKED
+    double timeEnd;                           //CHECKED
+    int samples_num;                          //CHECKED
+    double periods_num;                       //CHECKED
+    double base_frequency;                    //CHECKED
+    double base_angular_frequency;            //CHECKED
+    double periodic_time;                     //CHECKED
+    double duty_cycle;                        //CHECKED
   }analytics;
 
     
@@ -67,7 +75,7 @@ class signal{
 
 
 
-    double accuracy_for_min_max = 0.03;
+    double accuracy_for_min_max = stod(settings.get_settings(signal_defaultAccuracyFactor));
     struct maximas_minimas{
       std::vector<double> value;
       std::vector<double> time;
@@ -89,18 +97,22 @@ class signal{
     bool pre_analyze();
 
     bool soft_analyze();
-    /// @brief VALUES ANALYTICS THAT EVALUATE MAXIMAS_MINIMAS using SLOPE DATA
-    bool update_maximas_minimas();
+    /// @brief EVALUATE MAXIMAS/MINIMAS using SLOPE DATA
+    bool update_local_maximas_minimas();
     /// @brief filter local MAXIMAS and MINIMAS and update ptp data (only top maximas and lowest minimas) 
-    bool post_maximas_minimas();
+    bool post_local_maximas_minimas();
+    /// @brief deduce base frequency + angular + number of periods for the signal 
+    bool deduce_baseFrequency();
+    /// @brief rms and avg based on integer number of signals analysis only
+    bool deduce_avg_rms();
+
     bool update_slope_maximas_minimas();
+        //frequency analytics
+    std::vector<double[2]> forrierTransform(signal base_sig); //IN PROGRESS
   
 
 
 
-    double timeStart;
-    double timeEnd;
-    int samples_num;
     bool _has_data;
     bool data_viable;
   public:
@@ -114,58 +126,28 @@ class signal{
       area
     };
 
+
+    maximas_minimas const get_valMaximas(){
+      return val_maximas;
+    }
+    maximas_minimas const get_valMinimas(){
+      return val_minimas;
+    }
+    maximas_minimas const get_dvBdtMaximas(){
+      return dvBdt_maximas;
+    }
+    maximas_minimas const get_dvBdtMinimas(){
+      return dvBdt_minimas;
+    }
+
     bool hasData();
     bool dataViable();
-    bool loadData(string name = "signal", string fileLocation = settings.get_settings<std::string>(defaulSignalExportPath));
+    bool loadData(string name = "signal", string fileLocation = settings.get_settings(signal_defaulSignalExportPath));
     bool signal_analytics();
-    bool exportSignal(string name = "signal" , string fileLocation = settings.get_settings<std::string>(defaulSignalImportPath));
+    bool exportSignal(string name = "signal" , string fileLocation = settings.get_settings(signal_defaulSignalImportPath));
     const _analytics get_analytics();
     dataTable get_sig_data()const;
 };
 
 
 
-//Scalar with signal or signal with signal operations
-struct _signal_operation{
-
-      //signal with a signal arthimetic
-    signal add(signal base_sig1,  signal base_sig2);
-    signal subtract(signal base_sig1, signal base_sig2);
-    signal multiply(signal base_sig1, signal base_sig2);
-    signal divide(signal base_sig1, signal base_sig2);
-    double phase_diff(signal base_sig1, signal base_sig2);
-    
-    double integ_vpower(signal base_sig1, int power);
-    
-
-    //Scalar with a signal arthimetic
-    signal add(signal base_sig1,  double val);
-    signal subtract(signal base_sig1, double val);
-    signal multiply(signal base_sig1, double val);
-    signal divide(signal base_sig1, double val);
-    signal logarithmic(signal base_sig);
-
-  //filtering
-    enum filterType{
-      cascade
-    };
-    //first order filters returns filtered signals
-      //second order filters yet to come
-    signal lowPass_filter(signal base_sig, int order=1, int t = cascade);
-    signal highPass_filter(signal base_sig, int order=1, int t = cascade);
-    signal bangReject_filter(signal base_sig, int order=1, int t = cascade);
-    signal bandPass_filter(signal base_sig, int order=1, int t = cascade);
-    signal factor_frequency(signal base_sig, float increase_ratio);
-
-
-
-    //extracts a subset of a signal with time boundaries
-    signal subsignal_time(signal base_sig, double time_start,  double time_end);
-    //extracts a subset of a signal with value boundaries
-    signal subsignal_value(signal base_sig, double value1,  double value2);
-    //extract a subset of a signal starting from a value for a certain period
-    signal subsignal_value_till(signal base_sig, double value1,  double time_after);
-
-    //frequency analytics
-    std::vector<double[2]> forrierTransform(signal base_sig);
-};
