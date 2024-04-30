@@ -1,5 +1,7 @@
 #include "signal.h"
 #include <iostream>
+#define _USE_MATH_DEFINES
+#include <math.h>
 #include <cmath>
 
 // EXPECTED DATA FORMAT FIRST COLUMN TIME SECOND COLUMN VALUES
@@ -129,7 +131,7 @@ bool signal::pre_analyze()
 bool signal::update_local_maximas_minimas()
 {
   int index = 1;
-  double current_firstDeriv_sign = sign(getValue(index,first_deriv));
+  int current_firstDeriv_sign = sign(getValue(index,first_deriv));
   int last_firstDeriv_sign = current_firstDeriv_sign;
 
   //ONLY UPDATE LAST DERIV SIGN WHEN SIGN CHANGES FROM NEGATIVE TO POSITIVE OR VICEVERSA
@@ -268,7 +270,7 @@ bool signal::post_local_maximas_minimas()
 
 
   //get peak to peak data
-  int ptp_num = val_minimas.value.size();
+  size_t ptp_num = val_minimas.value.size();
   if(val_maximas.value.size() < val_minimas.value.size()) ptp_num = val_maximas.value.size();
   double max_ptp = 0;
   double min_ptp = 0;
@@ -299,7 +301,7 @@ bool signal::post_local_maximas_minimas()
 
 bool signal::deduce_baseFrequency()
 {
-  int least_extrema_num = val_maximas.value.size() - 1;
+  size_t least_extrema_num = val_maximas.value.size() - 1;
   if((val_minimas.value.size() - 1) < least_extrema_num) least_extrema_num = val_minimas.value.size() - 1;
   double sumFrequency_maximaBased = 0;
   double sumFrequency_minimaBased = 0;
