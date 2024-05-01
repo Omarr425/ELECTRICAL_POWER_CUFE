@@ -5,6 +5,7 @@
 #include "../../core/core.h"
 #include <string>
 
+
 struct _signal_data{
   std::string dataLabels[4] = {"time","val","dv/dt","vdt"};
   dataTable data;
@@ -12,8 +13,24 @@ struct _signal_data{
 
 
 
+
+   //ENUM FOR EASE OF ACCESSING SIGNAL DATA and ARRANGMENT OF COLUMNS
+    enum dataTable_order{
+      _time,
+      _val,
+      _first_deriv,
+      _second_deriv,
+      _area,
+    };
+
+
+
 class signal{
   protected:
+
+  friend class _signal_operation;
+
+
   //Basic data
   struct _analytics{
 
@@ -86,7 +103,7 @@ class signal{
     maximas_minimas dvBdt_maximas;
     maximas_minimas dvBdt_minimas;
 
-    bool timeDomain_analysed;
+
     
     double _dvBdt(double v1, double v2, double t1, double t2);
     double _dv2Bdt2(double v1, double v2, double v3, double t1, double t2);
@@ -112,19 +129,12 @@ class signal{
   
 
 
-
-    bool _has_data;
-    bool data_viable;
+    bool timeDomain_analysed = false;
+    bool _has_data = false;
+    bool data_viable = false;
   public:
 
-   //ENUM FOR EASE OF ACCESSING SIGNAL DATA and ARRANGMENT OF COLUMNS
-    enum{
-      time,
-      val,
-      first_deriv,
-      second_deriv,
-      area
-    };
+
 
 
     maximas_minimas const get_valMaximas(){
@@ -140,10 +150,14 @@ class signal{
       return dvBdt_minimas;
     }
 
+
+    const bool isTimeAnalysed(){
+      return timeDomain_analysed; 
+    }
     bool hasData();
     bool dataViable();
     bool loadData(string name = "signal", string fileLocation = settings.get_settings(signal_defaulSignalExportPath));
-    bool signal_analytics();
+    bool analyse();
     bool exportSignal(string name = "signal" , string fileLocation = settings.get_settings(signal_defaulSignalImportPath));
     const _analytics get_analytics();
     dataTable get_sig_data()const;
@@ -151,3 +165,10 @@ class signal{
 
 
 
+inline bool isNear(double v1, double v2, double acc){
+  if( (v1 >= v2*(1  - acc)) &&   (v1 <= v2*(1  + acc)) ){
+    return true;
+  }else{
+    return false;
+  }
+}

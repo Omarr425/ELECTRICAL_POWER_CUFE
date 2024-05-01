@@ -9,7 +9,6 @@
 bool signal::loadData(string name, string fileLocation){
     //CONSTRUCTOR
   file_IO importFile;
-
   if(importFile.data_import(fileLocation+name,  &signal_data.data, csv)){
     _has_data = true;
     data_viable = true;
@@ -40,20 +39,14 @@ double signal::_dv2Bdt2(double v1, double v2, double v3,double t1, double t2){
 }
 
 double signal::_vdt(double v1, double v2, double t1, double t2){
-  return (v1 + v2) * (t1 - t2) * 0.5; //RETURNS AREA OF TRAPEZOID
+  return (v1 + v2) * (t1 - t2) * 0.5; //RETURNS _AREA OF TRAPEZOID
 }
 
-inline bool isNear(double v1, double v2, double acc){
-  if( (v1 >= v2*(1  - acc)) &&   (v1 <= v2*(1  + acc)) ){
-    return true;
-  }else{
-    return false;
-  }
-}
+
 
 
 /**
- * @brief does pre analytic operation like getting slopes and areas wrt and adds them to the datatable data 
+ * @brief does pre analytic operation like getting slopes and _areas wrt and adds them to the datatable data 
  * 
 */
 bool signal::pre_analyze()
@@ -68,10 +61,10 @@ bool signal::pre_analyze()
     return false;
   }else{
   //START DOING BASIC ANALYTICS   
-    int row_index = 0;
-    double current_val = getValue(row_index,val);
-    double next_val = getValue(row_index + 1,val);
-    double current_time = getValue(row_index,time);
+    unsigned int row_index = 0;
+    double current_val = getValue(row_index,_val);
+    double next_val = getValue(row_index + 1,_val);
+    double current_time = getValue(row_index,_time);
     analytics.timeStart = current_time;
     double max_amp = current_val;
     double min_amp = current_val;
@@ -85,9 +78,9 @@ bool signal::pre_analyze()
     //START FILLING COLUMNS FOR integration with respect to time , first derivative , second derivative;
     for(row_index = 1; row_index < (signal_data.data.get_row_num() - 1); row_index++){
 
-      current_val = getValue(row_index,val);
-      next_val = getValue(row_index + 1,val);
-      current_time = getValue(row_index,time);
+      current_val = getValue(row_index,_val);
+      next_val = getValue(row_index + 1,_val);
+      current_time = getValue(row_index,_time);
 
       if(last_time >= current_time){
         std::cerr << "CORRUPTED DATA" << endl;
@@ -100,21 +93,21 @@ bool signal::pre_analyze()
       
       vdt += _vdt(last_val,  current_val, current_time, last_time);
 
-      putValue(current_dvBdt,row_index,first_deriv);
-      putValue(current_dv2Bdt2,row_index,second_deriv);
-      putValue(vdt,row_index,area);
+      putValue(current_dvBdt,row_index,_first_deriv);
+      putValue(current_dv2Bdt2,row_index,_second_deriv);
+      putValue(vdt,row_index,_area);
 
 
       last_val = current_val;
       last_time = current_time;
     }
 
-    current_val = getValue(row_index,val);
-    current_time = getValue(row_index,time);
+    current_val = getValue(row_index,_val);
+    current_time = getValue(row_index,_time);
     analytics.samples_num = row_index + 1;
 
     vdt += _vdt(last_val,  current_val, current_time, last_time);
-    putValue(vdt,row_index,area);
+    putValue(vdt,row_index,_area);
     
     analytics.timeEnd = current_time;
     analytics.avg_sample_time = (analytics.timeEnd - analytics.timeStart)/(analytics.samples_num - 1) ;
@@ -130,14 +123,14 @@ bool signal::pre_analyze()
 /// @brief VALUES ANALYTICS THAT EVALUATE MAXIMAS_MINIMAS using SLOPE DATA
 bool signal::update_local_maximas_minimas()
 {
-  int index = 1;
-  int current_firstDeriv_sign = sign(getValue(index,first_deriv));
+  unsigned int index = 1;
+  int current_firstDeriv_sign = sign(getValue(index,_first_deriv));
   int last_firstDeriv_sign = current_firstDeriv_sign;
 
   //ONLY UPDATE LAST DERIV SIGN WHEN SIGN CHANGES FROM NEGATIVE TO POSITIVE OR VICEVERSA
   for(index = 2;  index < (analytics.samples_num - 2);  index++){
 
-    current_firstDeriv_sign = sign(getValue(index,first_deriv));
+    current_firstDeriv_sign = sign(getValue(index,_first_deriv));
 
     if((last_firstDeriv_sign !=  current_firstDeriv_sign)){
       //IF THE SLOPE CHANGE AS FOLLOW POSITIVE--> NEGATIVE/ZERO ** or NEGATIVE --> POSITIVE/ZERO 
@@ -149,59 +142,59 @@ bool signal::update_local_maximas_minimas()
         if(current_firstDeriv_sign == positive){
           //SLOPE was NEGATIVE SIGN AND CHANGED TO POSITIVE ------ MINIMA
           int ridx = -1;
-          int i = index + ridx;
-          double localMinima = getValue(i,val); 
+          unsigned int i = index + ridx;
+          double localMinima = getValue(i,_val); 
           for(i;  i < (index + 1); i++){
-            if(getValue(i,val) < localMinima){
-              localMinima = getValue(i,val);
+            if(getValue(i,_val) < localMinima){
+              localMinima = getValue(i,_val);
               ridx++;
             }
           }
           val_minimas.value.push_back(localMinima);
-          val_minimas.time.push_back(getValue(index + ridx,time));
+          val_minimas.time.push_back(getValue(index + ridx,_time));
         }
         else if(current_firstDeriv_sign == negative){
         //SLOPE was POSITIVE SIGN AND CHANGED TO NEGATIVE --------  MAXIMA
                   //SLOPE was NEGATIVE SIGN AND CHANGED TO POSITIVE MINIMA
           int ridx = -1;
-          int i = index + ridx;
-          double localMaxima = getValue(i,val); 
+          unsigned int i = index + ridx;
+          double localMaxima = getValue(i,_val); 
           for(i;  i < (index + 1); i++){
-            if(getValue(i,val) > localMaxima){
-              localMaxima = getValue(i,val);
+            if(getValue(i,_val) > localMaxima){
+              localMaxima = getValue(i,_val);
               ridx++;
             }
           }
             val_maximas.value.push_back(localMaxima);
-            val_maximas.time.push_back(getValue(index + ridx,time));
+            val_maximas.time.push_back(getValue(index + ridx,_time));
           }
 
         else if(current_firstDeriv_sign == zero){
           //SLOPE WAS POSITIVE OR NEGATIVE THEN BECAME ZERO ACT ACCORDINGLY
           int ridx = -1;
-          int i = index + ridx;
-          double localMinima = getValue(i,val); 
+          unsigned int i = index + ridx;
+          double localMinima = getValue(i,_val); 
           for(i;  i < (index + 1); i++){
-            if(getValue(i,val) < localMinima){
-              localMinima = getValue(i,val);
+            if(getValue(i,_val) < localMinima){
+              localMinima = getValue(i,_val);
               ridx++;
             }
           }
             val_minimas.value.push_back(localMinima);
-            val_minimas.time.push_back(getValue(index + ridx,time));
+            val_minimas.time.push_back(getValue(index + ridx,_time));
           }
           else if(last_firstDeriv_sign == positive){
             //LAST SLOPE WAS POSITIVE AND NOW ZERO (MAXIMA)
           int ridx = -1;
-          int i = index + ridx;
-          double localMaxima = getValue(i,val); 
+          unsigned int i = index + ridx;
+          double localMaxima = getValue(i,_val); 
           for(i;  i < (index + 1); i++){
-            if(getValue(i,val) > localMaxima){
-              localMaxima = getValue(i,val);
+            if(getValue(i,_val) > localMaxima){
+              localMaxima = getValue(i,_val);
               ridx++;
             }
             val_maximas.value.push_back(localMaxima);
-            val_maximas.time.push_back(getValue(index + ridx,time));
+            val_maximas.time.push_back(getValue(index + ridx,_time));
           }
         }
       }
@@ -309,18 +302,19 @@ bool signal::deduce_baseFrequency()
   std::vector<double> _maxima_periods;
   bool maxima_periodic;
   bool minima_periodic;
-
   for(int i = 0;  i < least_extrema_num; i++){
     double maxima_subPeriod = 1/(val_maximas.time.at(i + 1) - val_maximas.time.at(i));
     sumFrequency_maximaBased += maxima_subPeriod;
     _maxima_periods.push_back(  (val_maximas.time.at(i + 1) - val_maximas.time.at(i)) );
   }
   double base_frequency_maximaBased = sumFrequency_maximaBased/(least_extrema_num);
+
   for(int i = 0;  i < least_extrema_num; i++){
     double minima_subPeriod = 1/(val_minimas.time.at(i + 1) - val_minimas.time.at(i));
     sumFrequency_minimaBased += minima_subPeriod;
     _minima_periods.push_back(  (val_minimas.time.at(i + 1) - val_minimas.time.at(i)) );
   }
+
   double base_frequency_minimaBased = sumFrequency_minimaBased/(least_extrema_num);
 
   //CHECK that all maxima-to-maxima periods where equal 
@@ -357,7 +351,7 @@ bool signal::deduce_baseFrequency()
       analytics.periodic_time = 1/analytics.base_frequency;
       analytics.is_periodic = true;
 
-      int idx = 0;
+      unsigned int idx = 0;
       double t_on = 0;
       double t_off = 0;
       double sumDuty = 0;
@@ -378,18 +372,18 @@ bool signal::deduce_avg_rms()
 {  
   double startTime_stamp = analytics.timeStart; 
   double endTime_stamp = analytics.periodic_time * floor(analytics.periods_num) ; 
-  int index = 0;
+  unsigned int index = 0;
   double currentTime = 0;
-  double lastTime = getValue(index,time);
+  double lastTime = getValue(index,_time);
   double currentVal = 0;
-  double lastVal = getValue(index,val);
+  double lastVal = getValue(index,_val);
   double vdt = 0;
   double v2dt = 0;
   index++;
   //NOW WE GET THE DATA START INDEX AGAIN
   for(index; currentTime <= (endTime_stamp); index++){
-    currentTime = getValue(index,time);
-    currentVal = getValue(index,val);
+    currentTime = getValue(index,_time);
+    currentVal = getValue(index,_val);
 
     vdt += _vdt(currentVal, lastVal, currentTime, lastTime);
     v2dt += _vdt((currentVal*currentVal),  (lastVal*lastVal),  currentTime,  lastTime);
@@ -416,11 +410,13 @@ bool signal::soft_analyze(){
 
 
 
-bool signal::signal_analytics(){
+bool signal::analyse(){
 
   if(pre_analyze()){
+
     //FUTURE WORK THAT INCLUDES TRANSFORM NON EQUALY TIME-SPACED discrete signal into equally time-spaced discrete signal using approximation techniques
     soft_analyze();
+    timeDomain_analysed = true;
     return true;
   }
   else{

@@ -7,7 +7,9 @@
   enum{
     signal_defaulSignalImportPath,
     signal_defaulSignalExportPath,
-    signal_defaultAccuracyFactor
+    signal_defaultAccuracyFactor,
+    sample_time_diff_factor,
+    freq_diff_factor
   };
 
 class _settings{
@@ -17,6 +19,8 @@ class _settings{
   std::string signal_exportPath;
   std::string signal_importPath;
   std::string signal_accuracyFactor;
+  std::string signal_sampleTimeFactor;
+  std::string signal_frequencyFactor;
 
 
   public:
@@ -25,6 +29,8 @@ class _settings{
     signal_exportPath = config["signal"]["defaultExportPath"].as<std::string>();
     signal_importPath = config["signal"]["defaultImportPath"].as<std::string>();
     signal_accuracyFactor = config["signal"]["defaultAccuracyFactor"].as<std::string>();
+    signal_sampleTimeFactor = config["signal"]["max_samplingTime_diff"].as<std::string>();
+    signal_frequencyFactor = config["signal"]["operation_max_freqDiff"].as<std::string>();
   }
   bool save_settings(){
     std::ofstream file;
@@ -55,7 +61,17 @@ class _settings{
 
     case signal_defaultAccuracyFactor:
         signal_accuracyFactor = data;
-        config["signal"]["defaulAccuracyFactor"] = signal_defaultAccuracyFactor;
+        config["signal"]["defaulAccuracyFactor"] = signal_accuracyFactor;
+      break;
+    
+    case signal_defaultAccuracyFactor:
+        signal_sampleTimeFactor = data;
+        config["signal"]["max_samplingTime_diff"] = signal_sampleTimeFactor;
+      break;
+
+    case signal_defaultAccuracyFactor:
+        signal_frequencyFactor = data;
+        config["signal"]["operation_max_freqDiff"] = signal_frequencyFactor;
       break;
 
     default:
@@ -76,9 +92,18 @@ std::string get_settings(int settingToGet){
 
       case signal_defaultAccuracyFactor:
         return signal_accuracyFactor;
+        break;
+
+      case sample_time_diff_factor:
+        return signal_sampleTimeFactor;
+        break;
+      
+      case freq_diff_factor:
+        return signal_frequencyFactor;
+        break;
 
       default:
-        return 0;
+        return "0";
         break;
     }
   }
