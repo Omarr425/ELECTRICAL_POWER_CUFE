@@ -64,10 +64,12 @@ class signal{
 
 
 
+
     double avg_sample_time;                   //CHECKED
     double timeStart;                         //CHECKED
     double timeEnd;                           //CHECKED
-    int samples_num;                          //CHECKED
+    unsigned int samples_num;                          //CHECKED
+
     double periods_num;                       //CHECKED
     double base_frequency;                    //CHECKED
     double base_angular_frequency;            //CHECKED
