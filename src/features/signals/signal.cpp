@@ -9,6 +9,7 @@
 bool signal::loadData(string name, string fileLocation){
     //CONSTRUCTOR
   file_IO importFile;
+
   if(importFile.data_import(fileLocation+name,  &signal_data.data, csv)){
     _has_data = true;
     data_viable = true;
@@ -243,7 +244,7 @@ bool signal::post_local_maximas_minimas()
   //filter the maximas and minimas for top maximas and minimas only and other local one are ignored for now
 
   for(int i = 0; i < val_minimas.value.size(); i++){
-    if( (val_minimas.value.at(i) >=  (analytics.min_val*(1-accuracy_for_min_max)) ) ){
+    if( (val_minimas.value.at(i) >=  (analytics.min_val*(1-min_max_accuracy)) ) ){
       //erase minimas or maximas that are far than the smallest local minima by a certain factor
       val_minimas.value.erase(val_minimas.value.begin() + i);
       val_minimas.time.erase(val_minimas.value.begin() + i);
@@ -252,7 +253,7 @@ bool signal::post_local_maximas_minimas()
   
 
   for(int i = 0; i < val_maximas.value.size(); i++){
-    if( (val_maximas.value.at(i) <=  (analytics.max_val*(1-accuracy_for_min_max)) ) ){
+    if( (val_maximas.value.at(i) <=  (analytics.max_val*(1-min_max_accuracy)) ) ){
       //erase maval_maximas or maximas that are far than the biggest local maxima by a certain factor
       val_maximas.value.erase(val_maximas.value.begin() + i);
       val_maximas.time.erase(val_maximas.value.begin() + i);
@@ -333,7 +334,7 @@ bool signal::deduce_baseFrequency()
     //START by assuming it is periodic unless its not
     maxima_periodic = true;
     for(int i = 0;  i < (_maxima_periods.size() - 1); i++){
-      if(!isNear(_maxima_periods.at(i),  _maxima_periods.at(i + 1),  accuracy_for_min_max)){
+      if(!isNear(_maxima_periods.at(i),  _maxima_periods.at(i + 1),  min_max_accuracy)){
         maxima_periodic = false;
       }
     }
@@ -343,7 +344,7 @@ bool signal::deduce_baseFrequency()
   if(_minima_periods.size() > 1){
     minima_periodic = true;
     for(int i = 0;  i < (_minima_periods.size() - 1); i++){
-      if(!isNear(_minima_periods.at(i), _minima_periods.at(i + 1),  accuracy_for_min_max)){
+      if(!isNear(_minima_periods.at(i), _minima_periods.at(i + 1),  min_max_accuracy)){
         minima_periodic = false;
       }
     }
@@ -355,7 +356,7 @@ bool signal::deduce_baseFrequency()
 
   //DEDUCE IF THE FUNCTION IS PERIODIC IF time between maximas equals time between minimas and act accordingly
     if(maxima_periodic && minima_periodic){
-      if( isNear(base_frequency_minimaBased,  base_frequency_maximaBased,   accuracy_for_min_max) ){
+      if( isNear(base_frequency_minimaBased,  base_frequency_maximaBased,   min_max_accuracy) ){
       analytics.base_frequency = (base_frequency_maximaBased + base_frequency_minimaBased)/2;
       analytics.base_angular_frequency = analytics.base_frequency*M_PI*2;
       analytics.periods_num = (analytics.timeEnd - analytics.timeStart)*analytics.base_frequency;

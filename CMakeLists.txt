@@ -12,31 +12,6 @@ message(STATUS "Source files: ${CMAKE_BINARY_DIR}")
 message(STATUS "Source files: ${CMAKE_SOURCE_DIR}")
 
 
-# Include FetchContent module
-include(FetchContent)
-
-# Fetch and build yaml-cpp
-FetchContent_Declare(
-    yaml-cpp
-    GIT_REPOSITORY https://github.com/jbeder/yaml-cpp.git
-    GIT_TAG        yaml-cpp-0.7.0
-)
-FetchContent_MakeAvailable(yaml-cpp)
-
-if(NOT yaml-cpp_POPULATED)
-  message(STATUS "Fetching yaml-cpp...")
-  FetchContent_Populate(yaml-cpp)
-  add_subdirectory(${yaml-cpp_SOURCE_DIR} ${yaml-cpp_BINARY_DIR})
-endif()
-
-
-
-
-if(NOT yaml-cpp_POPULATED)
-  message(STATUS "Fetching yaml-cpp...")
-  FetchContent_Populate(yaml-cpp)
-  add_subdirectory(${yaml-cpp_SOURCE_DIR} ${yaml-cpp_BINARY_DIR})
-endif()
 
 
 
@@ -52,12 +27,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}
 
 # Add executable
 add_executable(${PROJECT_NAME} ${SOURCES})
-
-
-target_include_directories(${PROJECT_NAME} PUBLIC ${yaml-cpp_SOURCE_DIR}/include)
-
-target_link_libraries(${PROJECT_NAME} PUBLIC yaml-cpp)
-
+target_include_directories(${PROJECT_NAME} PUBLIC include)
 
 # Link yaml-cpp to your project
 

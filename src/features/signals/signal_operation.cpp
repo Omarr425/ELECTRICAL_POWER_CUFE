@@ -38,7 +38,7 @@ signal _signal_operation::add(signal* base_sig1,  signal* base_sig2, int mode)
 
 
   //check for their their sampling times if they are valid
-  if(!isNear(base_sig1->get_analytics().avg_sample_time , base_sig2->get_analytics().avg_sample_time, sampleTime_diff_factor)  ){
+  if(!isNear(base_sig1->get_analytics().avg_sample_time , base_sig2->get_analytics().avg_sample_time, samplingRate_diff)  ){
     std::cerr << "CANT WORK WITH THESE TWO SIGNALS  __FAR_SAMPLING_RATES";
     lastOperationSuccess = false;
     return resultant;
@@ -135,7 +135,7 @@ signal _signal_operation::multiply(signal* base_sig1, signal* base_sig2, int mod
   if(!base_sig2->isTimeAnalysed())base_sig2->analyse();
 
   //check for their their sampling times if they are valid
-  if(!isNear(base_sig1->get_analytics().avg_sample_time , base_sig2->get_analytics().avg_sample_time, sampleTime_diff_factor)  ){
+  if(!isNear(base_sig1->get_analytics().avg_sample_time , base_sig2->get_analytics().avg_sample_time, samplingRate_diff)  ){
     std::cerr << "CANT WORK WITH THESE TWO SIGNALS  __FAR_SAMPLING_RATES";
     lastOperationSuccess = false;
     return resultant;
@@ -237,18 +237,18 @@ double _signal_operation::phase_diff(signal *base_sig1, signal *base_sig2)
   if(!base_sig1->isTimeAnalysed())base_sig1->analyse();
   if(!base_sig2->isTimeAnalysed())base_sig2->analyse();
   //check for their their sampling times if they are valid
-  
-  if(!isNear(base_sig1->get_analytics().avg_sample_time , base_sig2->get_analytics().avg_sample_time, sampleTime_diff_factor)  ){
+
+  if(!isNear(base_sig1->get_analytics().avg_sample_time , base_sig2->get_analytics().avg_sample_time, samplingRate_diff)  ){
     std::cerr << "CANT WORK WITH THESE TWO SIGNALS __FAR_SAMPLING_RATES" << endl;
     lastOperationSuccess = false;
     return 0;
   }
-  if(!isNear(base_sig1->get_analytics().base_frequency,  base_sig2->get_analytics().base_frequency, frequency_diff_factor)  ){
+  if(!isNear(base_sig1->get_analytics().base_frequency,  base_sig2->get_analytics().base_frequency, freq_diff_accuracy)  ){
     std::cerr << "CANT WORK WITH THESE TWO SIGNALS __FAR_FREQUENCIES_" << endl;
     lastOperationSuccess = false;
     return 0;
   }
-
+ 
   double reference_time = base_sig1->get_valMaximas().time.at(0);
   //WE KEEP COMPARING THE MAXIMAS OF THE SECOND SIGNAL TO INTEGER ORDERS OF THE FIRST SIGNAL and see the time difference between them  
   // timeDiff = peak(n)_time - sig2_nearest_maxima;

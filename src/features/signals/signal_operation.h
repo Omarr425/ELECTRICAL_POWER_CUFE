@@ -15,8 +15,8 @@ enum operation_mode{
 class _signal_operation{
     private:
       bool lastOperationSuccess;
-      float sampleTime_diff_factor = stof(settings.get_settings(sample_time_diff_factor));
-      float frequency_diff_factor = stof(settings.get_settings(freq_diff_factor));
+      float samplingRate_diff = stof(settings.get_setting("signal","samplingRate_diff"));
+      float freq_diff_accuracy = stof(settings.get_setting("signal","freq_diff"));
     public:
       //signal with a signal arthimetic
     signal add(signal* base_sig1, signal* base_sig2, int mode = INTERSECT);

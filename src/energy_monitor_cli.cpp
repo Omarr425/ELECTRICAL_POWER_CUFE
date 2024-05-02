@@ -31,7 +31,7 @@ int main(){
     dummySig2.loadData(file_name);
     _signal_operation operation;
 
-    cout << "PHASE ANGLE    :::  " << operation.phase_diff(&dummySig1, &dummySig2)/M_PI << "PI" << endl;
+        cout << "PHASE ANGLE    :::  " << operation.phase_diff(&dummySig1, &dummySig2)/M_PI << "PI" << endl;
 
     signal dummySig3 = operation.multiply(&dummySig1,  &dummySig2, INTERSECT);
 
@@ -39,7 +39,7 @@ int main(){
     //analyticBlock(&dummySig2);
     //analyticBlock(&dummySig3);
  
-
+     
 
     cout << "PLEASE CHOOSE A FILE TO EXPORT" << endl;
     cin >> file_name;

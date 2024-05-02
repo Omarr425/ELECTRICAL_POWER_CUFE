@@ -94,7 +94,7 @@ class signal{
 
 
 
-    double accuracy_for_min_max = stod(settings.get_settings(signal_defaultAccuracyFactor));
+    double min_max_accuracy = stod(settings.get_setting("signal","min_max_accuracy"));
     struct maximas_minimas{
       std::vector<double> value;
       std::vector<double> time;
@@ -161,9 +161,9 @@ class signal{
     }
     bool hasData();
     bool dataViable();
-    bool loadData(string name = "signal", string fileLocation = settings.get_settings(signal_defaulSignalExportPath));
+    bool loadData(string name = "signal", string fileLocation = settings.get_setting("signal","import_path"));
     bool analyse();
-    bool exportSignal(string name = "signal" , string fileLocation = settings.get_settings(signal_defaulSignalImportPath));
+    bool exportSignal(string name = "signal" , string fileLocation = settings.get_setting("signal","export_path"));
     const _analytics get_analytics();
     dataTable get_sig_data()const;
 };
