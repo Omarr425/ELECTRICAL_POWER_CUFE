@@ -1,6 +1,6 @@
 
-c = 10
-filename = '../bin/signals/sine1.csv';
+
+filename = 'sine3.csv';
 M = csvread(filename);
 time = M(:, 1);  
 value = M(:, 2); 

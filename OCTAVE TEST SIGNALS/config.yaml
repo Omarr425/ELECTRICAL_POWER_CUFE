@@ -1,0 +1,7 @@
+%YAML 1.2
+signal:
+ defaultExportPath: signals/
+ defaultImportPath: signals/
+ defaultAccuracyFactor: "0.05"
+ max_samplingTime_diff: "0.05"
+ operation_max_freqDiff: "0.05"
