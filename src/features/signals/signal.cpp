@@ -22,11 +22,11 @@ bool signal::loadData(string name, string fileLocation){
 }
 
 bool signal::hasData(){
-  return _has_data;
+  return this->_has_data;
 }
 
 bool signal::dataViable(){
-  return data_viable;
+  return this->data_viable;
 }
 
 double signal::_dvBdt(double v1, double v3, double t1, double t2){
@@ -51,6 +51,13 @@ double signal::_vdt(double v1, double v2, double t1, double t2){
 */
 bool signal::pre_analyze()
 {
+
+
+    this->_has_data = true;
+    this->data_viable = true;
+
+
+
 //CHECK IF THE ONCE PASSED TABLE HAS AT LEAST 2 COLUMNS for TIME and Values respectively
   if(signal_data.data.get_col_num() < 2)
   {
@@ -60,6 +67,9 @@ bool signal::pre_analyze()
     std::cerr << "TOOO FEW SAMPLES PRE ANALYZER TERMINATE" << endl;
     return false;
   }else{
+
+
+
   //START DOING BASIC ANALYTICS   
     unsigned int row_index = 0;
     double current_val = getValue(row_index,_val);
@@ -73,7 +83,7 @@ bool signal::pre_analyze()
 
     double last_val = current_val;
     double last_time = current_time;
-
+    //ENABLE THE DATA VIABLE Variable and if data is not disable it
 
     //START FILLING COLUMNS FOR integration with respect to time , first derivative , second derivative;
     for(row_index = 1; row_index < (signal_data.data.get_row_num() - 1); row_index++){
@@ -112,6 +122,7 @@ bool signal::pre_analyze()
     analytics.timeEnd = current_time;
     analytics.avg_sample_time = (analytics.timeEnd - analytics.timeStart)/(analytics.samples_num - 1) ;
     refreshData();
+
     return true;
   }
 }
@@ -440,7 +451,7 @@ bool signal::exportSignal(string name, string fileLocation){
   file_IO file;
   //CHECKS IF The data does exist and viable
   refreshData();
-  if(hasData()&&dataViable()){
+  if(hasData() && dataViable()){
     if(file.data_export((fileLocation+name), signal_data.data, csv)){
       return true;
     }

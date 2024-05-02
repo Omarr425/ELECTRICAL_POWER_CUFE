@@ -5,7 +5,11 @@
 #include "cmath"
 #include "math.h"
 
+#include <stdlib.h>
 
+#define toRad(_deg)((_deg/180)  * M_PI) 
+#define toDeg(_rad)((_rad/M_PI) * 180)
+#define constrain(_rad)(std::fmod(_rad + M_PI , M_PI*2) - M_PI)
 
 
 inline bool isInDomain(double start,double end,double current){
@@ -34,7 +38,7 @@ signal _signal_operation::add(signal* base_sig1,  signal* base_sig2, int mode)
 
 
   //check for their their sampling times if they are valid
-  if(isNear(base_sig1->get_analytics().avg_sample_time , base_sig2->get_analytics().avg_sample_time, sampleTime_diff_factor)  ){
+  if(!isNear(base_sig1->get_analytics().avg_sample_time , base_sig2->get_analytics().avg_sample_time, sampleTime_diff_factor)  ){
     std::cerr << "CANT WORK WITH THESE TWO SIGNALS  __FAR_SAMPLING_RATES";
     lastOperationSuccess = false;
     return resultant;
@@ -55,7 +59,7 @@ signal _signal_operation::add(signal* base_sig1,  signal* base_sig2, int mode)
     if(base_sig2->analytics.timeEnd > time_end){
       time_end = base_sig2->analytics.timeEnd;
     }
-    if(base_sig1->analytics.timeEnd < time_start){
+    if(base_sig2->analytics.timeEnd < time_start){
       time_start = base_sig2->analytics.timeStart;
     }
     break;
@@ -87,14 +91,23 @@ signal _signal_operation::add(signal* base_sig1,  signal* base_sig2, int mode)
   for(resultant_sig_idx;  ;resultant_sig_idx++){
     double sum = 0;
     double resultant_time = time_start + resultant_sig_idx*avg_samplingTime;
-    bool base_sig1_inDomain = isInDomain(time_start, time_end, base_sig1->getValue(base_sig1_idx, _time));
-    bool base_sig2_inDomain = isInDomain(time_start, time_end, base_sig2->getValue(base_sig2_idx, _time));
-
+    //break if we go out of boundary
+    if( (base_sig2_idx >= base_sig2->analytics.samples_num)  && (base_sig1_idx >= base_sig1->analytics.samples_num)  ){
+      break;
+    }
+    bool base_sig1_inDomain = false;
+    bool base_sig2_inDomain = false; 
+    if(base_sig1_idx < base_sig1->analytics.samples_num){
+      base_sig1_inDomain = isInDomain(time_start, time_end, base_sig1->getValue(base_sig1_idx, _time));
+    }
+    if((base_sig2_idx < base_sig2->analytics.samples_num)){
+      base_sig2_inDomain = isInDomain(time_start, time_end, base_sig2->getValue(base_sig2_idx, _time));
+    }
     //WE WENT OUT OF DOMAIN SUMMATION ENDED
     if(!base_sig1_inDomain && !base_sig2_inDomain){
       break;
     }
-
+  cout << base_sig1->analytics.samples_num << endl;
 //CHECK IF VALUES ARE IN DOMAIN AND IF IT IS TRUE ADD THEM TO THE RESULTANT
     if(base_sig1_inDomain){
       sum +=  base_sig1->getValue(base_sig1_idx,_val); 
@@ -106,7 +119,7 @@ signal _signal_operation::add(signal* base_sig1,  signal* base_sig2, int mode)
     }
 
     resultant.putValue(sum, resultant_sig_idx ,  _val);
-    resultant.putValue(resultant_time, resultant_sig_idx, _val);
+    resultant.putValue(resultant_time, resultant_sig_idx, _time);
   }
 
   lastOperationSuccess = true;
@@ -122,7 +135,7 @@ signal _signal_operation::multiply(signal* base_sig1, signal* base_sig2, int mod
   if(!base_sig2->isTimeAnalysed())base_sig2->analyse();
 
   //check for their their sampling times if they are valid
-  if(isNear(base_sig1->get_analytics().avg_sample_time , base_sig2->get_analytics().avg_sample_time, sampleTime_diff_factor)  ){
+  if(!isNear(base_sig1->get_analytics().avg_sample_time , base_sig2->get_analytics().avg_sample_time, sampleTime_diff_factor)  ){
     std::cerr << "CANT WORK WITH THESE TWO SIGNALS  __FAR_SAMPLING_RATES";
     lastOperationSuccess = false;
     return resultant;
@@ -175,10 +188,16 @@ signal _signal_operation::multiply(signal* base_sig1, signal* base_sig2, int mod
   for(resultant_sig_idx;  ;resultant_sig_idx++){
     double result = 1;
     double resultant_time = time_start + resultant_sig_idx*avg_samplingTime;
-    bool base_sig1_inDomain = isInDomain(time_start, time_end, base_sig1->getValue(base_sig1_idx, _time));
-    bool base_sig2_inDomain = isInDomain(time_start, time_end, base_sig2->getValue(base_sig2_idx, _time));
 
-    //WE WENT OUT OF DOMAIN MULTIPLICATION ENDED
+    bool base_sig1_inDomain = false;
+    bool base_sig2_inDomain = false; 
+    if(base_sig1_idx < base_sig1->analytics.samples_num){
+      base_sig1_inDomain = isInDomain(time_start, time_end, base_sig1->getValue(base_sig1_idx, _time));
+    }
+    if((base_sig2_idx < base_sig2->analytics.samples_num)){
+      base_sig2_inDomain = isInDomain(time_start, time_end, base_sig2->getValue(base_sig2_idx, _time));
+    }
+    //WE WENT OUT OF DOMAIN SUMMATION ENDED
     if(!base_sig1_inDomain && !base_sig2_inDomain){
       break;
     }
@@ -194,7 +213,7 @@ signal _signal_operation::multiply(signal* base_sig1, signal* base_sig2, int mod
     }
 
     resultant.putValue(result, resultant_sig_idx ,  _val);
-    resultant.putValue(resultant_time, resultant_sig_idx, _val);
+    resultant.putValue(resultant_time, resultant_sig_idx, _time);
   }
 
   lastOperationSuccess = true;
@@ -212,20 +231,20 @@ signal _signal_operation::multiply(signal* base_sig1, signal* base_sig2, int mod
 */
 double _signal_operation::phase_diff(signal *base_sig1, signal *base_sig2)
 { 
-  double avgPhaseDiff;
+  double avgPhaseDiff = 0;
 
 
   if(!base_sig1->isTimeAnalysed())base_sig1->analyse();
   if(!base_sig2->isTimeAnalysed())base_sig2->analyse();
   //check for their their sampling times if they are valid
   
-  if(isNear(base_sig1->get_analytics().avg_sample_time , base_sig2->get_analytics().avg_sample_time, sampleTime_diff_factor)  ){
-    std::cerr << "CANT WORK WITH THESE TWO SIGNALS __FAR_SAMPLING_RATES";
+  if(!isNear(base_sig1->get_analytics().avg_sample_time , base_sig2->get_analytics().avg_sample_time, sampleTime_diff_factor)  ){
+    std::cerr << "CANT WORK WITH THESE TWO SIGNALS __FAR_SAMPLING_RATES" << endl;
     lastOperationSuccess = false;
     return 0;
   }
-  if(isNear(base_sig1->get_analytics().base_frequency,  base_sig2->get_analytics().base_frequency, frequency_diff_factor)  ){
-    std::cerr << "CANT WORK WITH THESE TWO SIGNALS __FAR_FREQUENCIES_";
+  if(!isNear(base_sig1->get_analytics().base_frequency,  base_sig2->get_analytics().base_frequency, frequency_diff_factor)  ){
+    std::cerr << "CANT WORK WITH THESE TWO SIGNALS __FAR_FREQUENCIES_" << endl;
     lastOperationSuccess = false;
     return 0;
   }
@@ -244,11 +263,13 @@ double _signal_operation::phase_diff(signal *base_sig1, signal *base_sig2)
 
   size_t idx = 0;
   for(idx; idx < base_sig2->get_valMaximas().time.size(); idx++){
-    double time_diff = base_sig2->get_valMaximas().value.at(idx) - reference_time;
+    double time_diff = base_sig2->get_valMaximas().time.at(idx) - reference_time;
     sum_phaseDiff += time_diff/(base_sig1->get_analytics().periodic_time) * 2 * M_PI;  
+    reference_time += base_sig1->analytics.periodic_time;
   }
-  avgPhaseDiff = sum_phaseDiff/idx;
-
+   avgPhaseDiff = sum_phaseDiff/idx;
+  //AVG PHASE DIFFERENCE IN RADS
+  return -constrain(avgPhaseDiff);
 }
 
 
@@ -257,24 +278,30 @@ double _signal_operation::phase_diff(signal *base_sig1, signal *base_sig2)
 
 signal _signal_operation::multiply(signal *base_sig1, double val)
 {
+  if(!base_sig1->isTimeAnalysed())base_sig1->analyse();
   signal resultant;
-  for(unsigned int idx = 0; idx < base_sig1->analytics.samples_num;  idx++){
-    double result = base_sig1->getValue(idx, _val) * val;
-    resultant.putValue(result,  idx,  _val);
-  }
 
+  for(unsigned int idx = 0; idx < base_sig1->analytics.samples_num;  idx++){
+    double multiple = base_sig1->getValue(idx, _val) * val;
+    double result_time = base_sig1->getValue(idx, _time);
+    resultant.putValue(multiple,  idx,  _val);
+    resultant.putValue(result_time,  idx,  _time);
+  }
   return resultant;
 }
 
 
 signal _signal_operation::add(signal* base_sig1, double val)
 {
+
+  if(!base_sig1->isTimeAnalysed())base_sig1->analyse();
   signal resultant;
   for(unsigned int idx = 0; idx < base_sig1->analytics.samples_num;  idx++){
     double sum = base_sig1->getValue(idx, _val) + val;
+    double result_time = base_sig1->getValue(idx, _time);
     resultant.putValue(sum, idx,  _val);
+    resultant.putValue(result_time, idx,  _time);
   }
-
   return resultant;
 }
 

@@ -134,6 +134,9 @@ class signal{
     bool timeDomain_analysed = false;
     bool _has_data = false;
     bool data_viable = false;
+
+
+    
   public:
 
 
