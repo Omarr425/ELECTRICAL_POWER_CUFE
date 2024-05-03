@@ -95,6 +95,9 @@ class signal{
 
 
     double min_max_accuracy = stod(settings.get_setting("signal","min_max_accuracy"));
+    double maxima_diff_rounding = stod(settings.get_setting("signal","maxima_diff_rounding"));
+    double minima_diff_rounding = stod(settings.get_setting("signal","minima_diff_rounding"));
+
     struct maximas_minimas{
       std::vector<double> value;
       std::vector<double> time;
@@ -170,10 +173,3 @@ class signal{
 
 
 
-inline bool isNear(double v1, double v2, double acc){
-  if( (v1 >= v2*(1  - acc)) &&   (v1 <= v2*(1  + acc)) ){
-    return true;
-  }else{
-    return false;
-  }
-}

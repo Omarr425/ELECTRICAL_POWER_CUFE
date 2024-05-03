@@ -6,14 +6,19 @@
 #include <string>
 #include "settings/setting.h"
 
-  using namespace std;
+
+#define toRad(_deg)((_deg/180)  * M_PI) 
+#define toDeg(_rad)((_rad/M_PI) * 180)
+using namespace std;
 
 extern _settings settings;
+
+
 
 template <typename t>
 struct eng_multiplier{
 
-  t to_millis(t v)
+inline t to_millis(t v)
   {
     if(is_arithmetic<t>::value){
       return v*10e-3;
@@ -25,7 +30,7 @@ struct eng_multiplier{
   }
 
 
-  t to_micros(t v)
+inline t to_micros(t v)
   {
     if(is_arithmetic<t>::value){
       return v*10e-6;
@@ -37,7 +42,7 @@ struct eng_multiplier{
   }
 
 
-  t to_nanos(t v)
+inline t to_nanos(t v)
   {
     if(is_arithmetic<t>::value){
       return v*10e-9;
@@ -49,7 +54,7 @@ struct eng_multiplier{
   }
 
 
-  t to_kilos(t v)
+inline t to_kilos(t v)
   {
     if(is_arithmetic<t>::value){
       return v*10e3;
@@ -61,7 +66,7 @@ struct eng_multiplier{
   }
 
 
-  t to_megas(t v)
+inline t to_megas(t v)
   {
     if(is_arithmetic<t>::value){
       return v*10e6;
@@ -73,7 +78,7 @@ struct eng_multiplier{
   }
 
 
-  t to_gigas(t v)
+inline t to_gigas(t v)
   {
     if(is_arithmetic<t>::value){
       return v*10e9;
@@ -86,8 +91,49 @@ struct eng_multiplier{
 };
 
 
+#define _USE_MATH_DEFINES
+#include <math.h>
 #include <ctime>
 #include <cmath>
+//--------------HELPER METHODS---------------------//
+#define toRad(_deg)((_deg/180)  * M_PI) 
+#define toDeg(_rad)((_rad/M_PI) * 180)
+
+inline double constrain(double _rad){
+  _rad = fmod(_rad + M_PI , 2 * M_PI);
+  if(_rad < 0)_rad += 2*M_PI;
+  return _rad - M_PI;
+}
+
+
+inline bool isInDomain(double start,double end,double current){
+  if((start <= current)&&(current <= end)){
+    return true;
+  }else{
+    return false;
+  }
+}
+
+inline bool isNear(double v1, double v2, double acc){
+  if( (v1 >= v2*(1  - acc)) &&   (v1 <= v2*(1  + acc)) ){
+    return true;
+  }else{
+    return false;
+  }
+}
+
+template <typename t>
+inline t roundTo(t num,t n){
+  return round(num/n)*n;
+}
+
+
+
+
+
+
+
+
 inline float getCurrentTime(){
   return float(clock()/CLOCKS_PER_SEC);
 }

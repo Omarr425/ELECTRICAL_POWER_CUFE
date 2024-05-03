@@ -3,22 +3,15 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include "defaultSetting.h"
 
-using json = nlohmann::json;
 
 
+  
 class _settings{
+  using json = nlohmann::ordered_json;
 
   json configs;
-  void loadDefaultConfigs(){
-    configs["signal"]["export_path"] = R"(signals/)" ;
-    configs["signal"]["import_path"] = R"(signals/)" ;
-    configs["signal"]["min_max_accuracy"] = to_string(0.05);
-    configs["signal"]["freq_diff"] = to_string(0.05);
-    configs["signal"]["samplingRate_diff"] = to_string(0.05);
-  }
-
-
 
   public:
   _settings(){ 
@@ -28,7 +21,7 @@ class _settings{
 
       std::ofstream configFileWrite;
       configFileWrite.open("configFile.json");
-      loadDefaultConfigs();
+      default_settings_init(&configs);
       configFileWrite << std::setw(4) << configs;
       configFileWrite.close();
     }else{
@@ -54,7 +47,6 @@ class _settings{
 
 
   string get_setting(string class_name,string setting){
-    cout << configs[class_name][setting] << endl; 
     return configs[class_name][setting];
   }
 

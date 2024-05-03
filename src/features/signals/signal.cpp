@@ -242,23 +242,36 @@ bool signal::post_local_maximas_minimas()
   }
 
   //filter the maximas and minimas for top maximas and minimas only and other local one are ignored for now
-
-  for(int i = 0; i < val_minimas.value.size(); i++){
-    if( (val_minimas.value.at(i) >=  (analytics.min_val*(1-min_max_accuracy)) ) ){
+  /*WE ROUND THE DIFFERENCE BY A FACTOR TO (minima_rounding) COMPENSATE FOR VERY CLOSE TO ZERO VALUES 
+    THEN COMPARE THE RATIO OF THE DIFFERENCE TO THE MIN_MAX TO ANOTHER FACTOR(min_max_accuracy) to compensate for offset sampling or low sampling rate 
+  */
+  for(int i = 0; i < val_minimas.value.size();){
+    double diff =  (val_minimas.value.at(i) - analytics.min_val);
+    if( abs( ( roundTo(diff, minima_diff_rounding)/analytics.min_val) ) >  min_max_accuracy ) {
       //erase minimas or maximas that are far than the smallest local minima by a certain factor
       val_minimas.value.erase(val_minimas.value.begin() + i);
-      val_minimas.time.erase(val_minimas.value.begin() + i);
+      val_minimas.time.erase(val_minimas.time.begin() + i);
+    }else{
+      i++;
     }
   }
   
-
-  for(int i = 0; i < val_maximas.value.size(); i++){
-    if( (val_maximas.value.at(i) <=  (analytics.max_val*(1-min_max_accuracy)) ) ){
+  for(int i = 0; i < val_maximas.value.size();){
+    double diff = (val_maximas.value.at(i) - analytics.max_val);
+    if( abs( ( roundTo(diff, maxima_diff_rounding)/analytics.max_val) ) >  min_max_accuracy ){
       //erase maval_maximas or maximas that are far than the biggest local maxima by a certain factor
       val_maximas.value.erase(val_maximas.value.begin() + i);
-      val_maximas.time.erase(val_maximas.value.begin() + i);
+      val_maximas.time.erase(val_maximas.time.begin() + i);
+    }else{
+      i++;
     }
   }
+
+  //CALL SHRINK TO FIT FOR THE VECTORS
+  val_maximas.value.shrink_to_fit();
+  val_maximas.time.shrink_to_fit();
+  val_minimas.value.shrink_to_fit();
+  val_minimas.time.shrink_to_fit();
 
 
   double sum_maxes = 0;
@@ -393,7 +406,7 @@ bool signal::deduce_avg_rms()
   double v2dt = 0;
   index++;
   //NOW WE GET THE DATA START INDEX AGAIN
-  for(index; currentTime <= (endTime_stamp); index++){
+  for(index; (currentTime < (endTime_stamp)) && (index < analytics.samples_num); index++){
     currentTime = getValue(index,_time);
     currentVal = getValue(index,_val);
 

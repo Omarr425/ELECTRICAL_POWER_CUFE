@@ -4,20 +4,19 @@
 #define _USE_MATH_DEFINES
 #include "cmath"
 #include "math.h"
-
 #include <stdlib.h>
+#include "../../core/core.h"
 
-#define toRad(_deg)((_deg/180)  * M_PI) 
-#define toDeg(_rad)((_rad/M_PI) * 180)
-#define constrain(_rad)(std::fmod(_rad + M_PI , M_PI*2) - M_PI)
+//--------------INITIALIZED STATIC MEMBER SETTINGS-------------//
+
+float _signal_operation::samplingRate_diff = stof(settings.get_setting("signal","samplingRate_diff"));
+float _signal_operation::freq_diff_accuracy = stof(settings.get_setting("signal","freq_diff"));
+_signal_operation signal_operation_global;
 
 
-inline bool isInDomain(double start,double end,double current){
-  if((start <= current)&&(current <= end)){
-    return true;
-  }else{
-    return false;
-  }
+void _signal_operation::refreshSettings(){
+  samplingRate_diff = stof(settings.get_setting("signal","samplingRate_diff"));
+  freq_diff_accuracy = stof(settings.get_setting("signal","freq_diff"));  
 }
 
 
@@ -91,10 +90,7 @@ signal _signal_operation::add(signal* base_sig1,  signal* base_sig2, int mode)
   for(resultant_sig_idx;  ;resultant_sig_idx++){
     double sum = 0;
     double resultant_time = time_start + resultant_sig_idx*avg_samplingTime;
-    //break if we go out of boundary
-    if( (base_sig2_idx >= base_sig2->analytics.samples_num)  && (base_sig1_idx >= base_sig1->analytics.samples_num)  ){
-      break;
-    }
+
     bool base_sig1_inDomain = false;
     bool base_sig2_inDomain = false; 
     if(base_sig1_idx < base_sig1->analytics.samples_num){
@@ -103,11 +99,7 @@ signal _signal_operation::add(signal* base_sig1,  signal* base_sig2, int mode)
     if((base_sig2_idx < base_sig2->analytics.samples_num)){
       base_sig2_inDomain = isInDomain(time_start, time_end, base_sig2->getValue(base_sig2_idx, _time));
     }
-    //WE WENT OUT OF DOMAIN SUMMATION ENDED
-    if(!base_sig1_inDomain && !base_sig2_inDomain){
-      break;
-    }
-  cout << base_sig1->analytics.samples_num << endl;
+
 //CHECK IF VALUES ARE IN DOMAIN AND IF IT IS TRUE ADD THEM TO THE RESULTANT
     if(base_sig1_inDomain){
       sum +=  base_sig1->getValue(base_sig1_idx,_val); 
@@ -120,7 +112,14 @@ signal _signal_operation::add(signal* base_sig1,  signal* base_sig2, int mode)
 
     resultant.putValue(sum, resultant_sig_idx ,  _val);
     resultant.putValue(resultant_time, resultant_sig_idx, _time);
+
+    //WE WENT OUT OF DOMAIN SUMMATION ENDED
+    if(!base_sig1_inDomain && !base_sig2_inDomain){
+      break;
+    }
   }
+
+  
 
   lastOperationSuccess = true;
   return  resultant;
@@ -184,25 +183,20 @@ signal _signal_operation::multiply(signal* base_sig1, signal* base_sig2, int mod
   double avg_samplingTime = (base_sig1->get_analytics().avg_sample_time + base_sig2->get_analytics().avg_sample_time)/2;
 
 
-
   for(resultant_sig_idx;  ;resultant_sig_idx++){
     double result = 1;
     double resultant_time = time_start + resultant_sig_idx*avg_samplingTime;
-
     bool base_sig1_inDomain = false;
     bool base_sig2_inDomain = false; 
+
+    
     if(base_sig1_idx < base_sig1->analytics.samples_num){
       base_sig1_inDomain = isInDomain(time_start, time_end, base_sig1->getValue(base_sig1_idx, _time));
     }
     if((base_sig2_idx < base_sig2->analytics.samples_num)){
       base_sig2_inDomain = isInDomain(time_start, time_end, base_sig2->getValue(base_sig2_idx, _time));
     }
-    //WE WENT OUT OF DOMAIN SUMMATION ENDED
-    if(!base_sig1_inDomain && !base_sig2_inDomain){
-      break;
-    }
 
-//CHECK IF VALUES ARE IN DOMAIN AND IF IT IS TRUE ADD THEM TO THE RESULTANT
     if(base_sig1_inDomain){
       result *=  base_sig1->getValue(base_sig1_idx,_val); 
       base_sig1_idx++;
@@ -214,6 +208,15 @@ signal _signal_operation::multiply(signal* base_sig1, signal* base_sig2, int mod
 
     resultant.putValue(result, resultant_sig_idx ,  _val);
     resultant.putValue(resultant_time, resultant_sig_idx, _time);
+  
+    //WE WENT OUT OF DOMAIN SUMMATION ENDED
+    if(!base_sig1_inDomain && !base_sig2_inDomain){
+
+      break;
+    }
+
+//CHECK IF VALUES ARE IN DOMAIN AND IF IT IS TRUE ADD THEM TO THE RESULTANT
+
   }
 
   lastOperationSuccess = true;
@@ -248,7 +251,7 @@ double _signal_operation::phase_diff(signal *base_sig1, signal *base_sig2)
     lastOperationSuccess = false;
     return 0;
   }
- 
+
   double reference_time = base_sig1->get_valMaximas().time.at(0);
   //WE KEEP COMPARING THE MAXIMAS OF THE SECOND SIGNAL TO INTEGER ORDERS OF THE FIRST SIGNAL and see the time difference between them  
   // timeDiff = peak(n)_time - sig2_nearest_maxima;

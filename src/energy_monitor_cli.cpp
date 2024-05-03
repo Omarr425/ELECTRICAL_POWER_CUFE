@@ -19,31 +19,30 @@ int main(){
   file_IO file;
 
 
-  cout << "PLEASE CHOOSE A FILE TO IMPORT" << endl;
+  cout << "PLEASE CHOOSE A FILE TO IMPORT ::: VOLTAGE DATA" << endl;
   cin >> file_name;
-  signal dummySig1 = signal();
+  _voltage volt1;
   
-  if(dummySig1.loadData(file_name)){
+  if(volt1.loadData(file_name)){
     cout<<"SUCCESS"<<endl;  
-    cout << "PLEASE CHOOSE A FILE TO IMPORT" << endl;
+    cout << "PLEASE CHOOSE A FILE TO IMPORT ::: CURRENT DATA" << endl;
     cin >> file_name;
-    signal dummySig2 = signal();
-    dummySig2.loadData(file_name);
+    _current current1;
+    current1.loadData(file_name);
     _signal_operation operation;
 
-        cout << "PHASE ANGLE    :::  " << operation.phase_diff(&dummySig1, &dummySig2)/M_PI << "PI" << endl;
+    cout << "PHASE ANGLE    :::  " << operation.phase_diff(&volt1, &current1)/M_PI << "PI" << endl;
 
-    signal dummySig3 = operation.multiply(&dummySig1,  &dummySig2, INTERSECT);
 
-    //analyticBlock(&dummySig1); 
-    //analyticBlock(&dummySig2);
-    //analyticBlock(&dummySig3);
- 
-     
+    _power power1 = _power(&volt1,&current1);
+
+    cout << "ENERGY CONSUMPTION :::  " << power1.get_energy(0,1) << endl;
+
+    analyticBlock(&power1);
 
     cout << "PLEASE CHOOSE A FILE TO EXPORT" << endl;
     cin >> file_name;
-    if(dummySig3.exportSignal(file_name)){
+    if(power1.exportSignal(file_name)){
       cout<<"SUCCESS"<<endl;
     }else{
       cout<<"ERR"<<endl;
@@ -88,6 +87,7 @@ void analyticBlock(signal *dummySignal){
   cout << "FREQ::"<<dummySignal->get_analytics().base_frequency << endl;
   cout << "ANG_FREQ::"<<dummySignal->get_analytics().base_angular_frequency << endl;
   cout << "SAMPLING_RATE::"<<dummySignal->get_analytics().avg_sample_time << endl;
+  cout << "NUM_OF_SAMPLES::"<<dummySignal->get_analytics().samples_num << endl;
   cout << "HAS DATA ::" << dummySignal->hasData() << endl;
   cout << "DATA VIABLE ::" << dummySignal->dataViable() << endl;
 }

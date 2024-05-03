@@ -1,3 +1,4 @@
+#pragma once
 #include "signal.h"
 
 
@@ -12,11 +13,13 @@ enum operation_mode{
 };
 
 
+
+ 
 class _signal_operation{
     private:
-      bool lastOperationSuccess;
-      float samplingRate_diff = stof(settings.get_setting("signal","samplingRate_diff"));
-      float freq_diff_accuracy = stof(settings.get_setting("signal","freq_diff"));
+     bool lastOperationSuccess;
+     static float samplingRate_diff;
+     static float freq_diff_accuracy;
     public:
       //signal with a signal arthimetic
     signal add(signal* base_sig1, signal* base_sig2, int mode = INTERSECT);
@@ -60,6 +63,9 @@ class _signal_operation{
     bool isSuccessfull(){
       return lastOperationSuccess;
     }
-
+    
+    static void refreshSettings();
 
 };
+
+extern _signal_operation signal_operation_global;
