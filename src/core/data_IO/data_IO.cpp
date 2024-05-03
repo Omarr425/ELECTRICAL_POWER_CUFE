@@ -4,29 +4,32 @@
 #include <iostream>
 #include <iomanip>
 
-bool csv_import(string file_address, dataTable *table){
+bool file_IO::csv_import(string file_address, dataTable *table){
   ifstream file;
   string cell;
   char c;
+
+  table->get_row_num();
+
   int row_index = 0;
   int col_index = 0;
   file.open(file_address);
   if(file.is_open()){
-
     //operations to fill the dataTable object from the file
-
       while(file.get(c)){
+
         if(c == '\n' || c == ','){
+
           try{
             table->insertData(stod(cell),  row_index, col_index);
             cell = "";
           }
           catch(const std::invalid_argument& e){
-            std::cerr << "FAILED TO READ CORRUPTED FILE"<< endl;
+            std::cerr << "FAILED TO READ CORRUPTED FILE  "<< e.what() << endl;
             return false;
           }
           catch(const std::out_of_range& e){
-            std::cerr << "VERY LARGE OR VERY SMALL values IN THE FILE"<< endl;
+            std::cerr << "VERY LARGE OR VERY SMALL values IN THE FILE  "<<  e.what()  << endl;
             return false;
           }
 
@@ -41,7 +44,6 @@ bool csv_import(string file_address, dataTable *table){
           cell.push_back(c);
         }
       }
-
     file.close();
     return true;
   }
@@ -51,13 +53,13 @@ bool csv_import(string file_address, dataTable *table){
 }
 
 
-bool pdf_import(string file_address, dataTable *table){
+bool file_IO::pdf_import(string file_address, dataTable *table){
   return false;
 };
 
 
 
-bool csv_export(string file_address, dataTable table){
+bool file_IO::csv_export(string file_address, dataTable table){
   ofstream outputFile;
   outputFile << std::setprecision(10);
   outputFile.open(file_address);
@@ -65,21 +67,22 @@ bool csv_export(string file_address, dataTable table){
     cout << "unexpected error" << endl;
     return false;
   }else{
-    int col_index;
-    int row_index;
+
+    unsigned int col_index;
+    unsigned int row_index;
     for(row_index = 0; row_index  < table.get_row_num(); row_index++){
       for(col_index = 0; col_index < (table.get_col_num() - 1); col_index++){
-          outputFile << table.getData(row_index,col_index) << ',';
-        }
-        outputFile << table.getData(row_index,col_index) << endl;
+        outputFile << table.getData(row_index,col_index) << ',';
       }
+      outputFile << table.getData(row_index,col_index) << endl;
+    }
     outputFile.close();
     return true;
   }
 };
 
 
-bool pdf_export(string file_address, dataTable table){
+bool file_IO::pdf_export(string file_address, dataTable table){
   return false; 
 }
 
@@ -87,14 +90,14 @@ bool pdf_export(string file_address, dataTable table){
 
 
 
-bool data_import(string file_address,  dataTable *data,  int type){
+bool file_IO::data_import(string file_address,  dataTable *data,  int type){
   switch (type)
   {
   case csv:
-    return csv_import(file_address, data);
+    return csv_import(file_address+".csv", data);
     break;
   case pdf:
-    return pdf_import(file_address, data);
+    return pdf_import(file_address+".pdf", data);
     break;
   default:
     return false;
@@ -102,14 +105,14 @@ bool data_import(string file_address,  dataTable *data,  int type){
   }
 }
 
-bool data_export(string file_address, dataTable data, int type){
+bool file_IO::data_export(string file_address, dataTable data, int type){
   switch (type)
   {
   case csv:
-    return csv_export(file_address, data);
+    return csv_export(file_address+".csv", data);
     break;
   case pdf:
-    return pdf_export(file_address, data);
+    return pdf_export(file_address+".pdf", data);
   default:
     return false;
     break;

@@ -9,33 +9,32 @@ dataTable::dataTable(){
 }
 
 
-int dataTable::get_row_num(){
+unsigned int dataTable::get_row_num(){
   return _rows_num;
 }
 
 
 
-int dataTable::get_col_num(){
+unsigned int dataTable::get_col_num(){
   return _cols_num;
 }
 
+#include <iostream>
 
     /**
       @brief inserts a value to a cell of dataTable instance with that address
     */
-void dataTable::insertData(double d,  int row , int col){
+void dataTable::insertData(double d,  unsigned int row , unsigned int col){
   if(row >= _rows_num){
     _rows_num = row + 1;
   }
   if(col >= _cols_num){
     _cols_num = col + 1;
   }
+
   if(row >= _table.size())_table.resize(row + 1);
   if(col >= _table.at(row).size())_table.at(row).resize(col + 1);
-
-
   _table.at(row).at(col) = d;
-
 }
 
     /**
@@ -68,18 +67,16 @@ void dataTable::eraseColumn(int start_col, int cols_num){
   _cols_num-= cols_num;
 } 
     /**
-      @brief refreshes the number of rows for any mistake probability or bad handling
+      @brief refreshes the data Table for any mistake probability or bad handling
     */
 
-int dataTable::row_num_Refresh(){
-  return _table.size();
+void dataTable::refresh(){
+  for(unsigned int i = 0; i < _rows_num; i++){
+    if(_table.at(i).size() <= _cols_num){
+      _table.at(i).resize(_cols_num);
+    }
+  }
 }
 
 
-    /**
-      @brief refreshes the number of columns for any mistake probability or bad handling
-    */
-
-int dataTable::col_num_Refresh(){
-   return _table.at(0).size();
-}
+  
