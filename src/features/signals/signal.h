@@ -92,11 +92,13 @@ class signal{
       signal_data.data.refresh();
     }
 
-
-
+using json = nlohmann::json;
     double min_max_accuracy = stod(settings.get_setting("signal","min_max_accuracy"));
     double maxima_diff_rounding = stod(settings.get_setting("signal","maxima_diff_rounding"));
     double minima_diff_rounding = stod(settings.get_setting("signal","minima_diff_rounding"));
+    bool smaller_extremas_ignored = stoi(settings.get_setting("signal","smaller_extremas_ignored"));
+    double period_diff_accuracy = stod(settings.get_setting("signal","period_diff_accuracy"));
+    bool periodic_avg_rms = stoi(settings.get_setting("signal","periodic_avg&rms")); 
 
     struct maximas_minimas{
       std::vector<double> value;
@@ -115,9 +117,24 @@ class signal{
     double _vdt(double v1, double v2, double t1, double t2);
     
 
-    //Makes variable data out of the time-value data such as slopes and areas wrt to time
+    /**
+     * @brief Makes variable data out of the time-value data such as slopes and areas wrt to time
+     * @return expected returns are the followin
+     * check for data viability
+     * (--time --values --first derivative --second derivative --integration) table 
+     * 
+     * */
     bool pre_analyze();
-
+    //INTERPOLATIONS FOR FIXING LOW SAMPLE SIGNALS/DIFFERENT SAMPLING RATES
+    void interpolate();
+    
+    /**
+      * @brief soft time tomain analysis
+      * @return expected after successfull analysis the following
+      * --frequency detection , --local minimas/maximas : time map
+      * --periodic avg/rms (per_period) , peak to peak / dc offset data
+      * --interpolate data 
+    */ 
     bool soft_analyze();
     /// @brief EVALUATE MAXIMAS/MINIMAS using SLOPE DATA
     bool update_local_maximas_minimas();
@@ -165,6 +182,8 @@ class signal{
     bool hasData();
     bool dataViable();
     bool loadData(string name = "signal", string fileLocation = settings.get_setting("signal","import_path"));
+    bool loadData(dataTable _data);
+    bool loadData(std::vector<double> time,std::vector<double> vals);
     bool analyse();
     bool exportSignal(string name = "signal" , string fileLocation = settings.get_setting("signal","export_path"));
     const _analytics get_analytics();

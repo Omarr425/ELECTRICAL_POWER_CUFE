@@ -3,13 +3,17 @@ project(energy_monitor VERSION 1.0)
 
 set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/bin)
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
-
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 
 
 
 message(STATUS "Source files: ${CMAKE_BINARY_DIR}")
 message(STATUS "Source files: ${CMAKE_SOURCE_DIR}")
+
+
 
 
 

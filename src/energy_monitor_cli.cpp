@@ -18,11 +18,11 @@ int main(){
   dataTable data = dataTable();
   file_IO file;
 
-
+  
   cout << "PLEASE CHOOSE A FILE TO IMPORT ::: VOLTAGE DATA" << endl;
   cin >> file_name;
   _voltage volt1;
-  
+
   if(volt1.loadData(file_name)){
     cout<<"SUCCESS"<<endl;  
     cout << "PLEASE CHOOSE A FILE TO IMPORT ::: CURRENT DATA" << endl;
@@ -31,15 +31,24 @@ int main(){
     current1.loadData(file_name);
     _signal_operation operation;
 
-    cout << "PHASE ANGLE    :::  " << operation.phase_diff(&volt1, &current1)/M_PI << "PI" << endl;
-
-
+   
     _power power1 = _power(&volt1,&current1);
 
-    cout << "ENERGY CONSUMPTION :::  " << power1.get_energy(0,1) << endl;
-
+    analyticBlock(&volt1);
+    analyticBlock(&current1);
     analyticBlock(&power1);
-
+    cout << "--------------------------------------------------" << endl;
+    cout << "--------------------------------------------------" << endl;
+    cout << "--------------------------------------------------" << endl;
+    cout << "PHASE ANGLE    :::  " << operation.phase_diff(&volt1, &current1)/M_PI << "PI" << endl;
+    cout << "ENERGY CONSUMPTION :::  " << power1.get_energy(0,5) << endl;
+    cout << "APPARENT:::  " << power1.get_apparent() << endl;
+    cout << "ACTIVE:::  " << power1.get_active() << endl;
+    cout << "REACTIVE:::  " << power1.get_reactive() << endl;
+    cout << "POWER_FACTOR:::  " << power1.get_PF() << endl;
+    cout << "LOAD TYPE:::  " << power1.get_loadType() << endl;
+    cout << "POWER_FACTOR_TYPE ::: " << power1.pf_type() << endl;
+    
     cout << "PLEASE CHOOSE A FILE TO EXPORT" << endl;
     cin >> file_name;
     if(power1.exportSignal(file_name)){
@@ -59,16 +68,12 @@ int main(){
 }
 
 
-
-
-
-
 void analyticBlock(signal *dummySignal){
   dummySignal->analyse();
   cout << "NUM_P::"<<dummySignal->get_analytics().periods_num << endl;
   cout << "MAX::"<<dummySignal->get_analytics().max_val << " at "  <<  dummySignal->get_analytics().max_val_time << endl;
   cout << "MIN::"<<dummySignal->get_analytics().min_val << " at "  <<  dummySignal->get_analytics().min_val_time << endl;
-  cout << "PTP::"<<dummySignal->get_analytics().max_ptp << endl;
+  cout << "PTP::"<<dummySignal->get_analytics().avg_ptp << endl;
   cout << "NUM_MAXES::"<<dummySignal->get_valMaximas().value.size() << endl;
   cout << "---------MAXIMAS----------------" << endl;
   for(int i = 0; i < dummySignal->get_valMaximas().value.size(); i++){

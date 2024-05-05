@@ -9,6 +9,14 @@
 
 #define toRad(_deg)((_deg/180)  * M_PI) 
 #define toDeg(_rad)((_rad/M_PI) * 180)
+
+
+#define positive 1
+#define zero 0
+#define negative -1
+#define sign(c)((c>0) ? positive : ((c<0) ? negative : zero))
+
+
 using namespace std;
 
 extern _settings settings;

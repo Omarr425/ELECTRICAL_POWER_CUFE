@@ -7,6 +7,9 @@
 #include <stdlib.h>
 #include "../../core/core.h"
 
+
+
+
 //--------------INITIALIZED STATIC MEMBER SETTINGS-------------//
 
 float _signal_operation::samplingRate_diff = stof(settings.get_setting("signal","samplingRate_diff"));
@@ -72,8 +75,8 @@ signal _signal_operation::add(signal* base_sig1,  signal* base_sig2, int mode)
       time_start = base_sig2->analytics.timeStart;
     }
     //BOTH NOW POINT AT THE START OF THE INTERSECTION DOMAIN
-    for(base_sig1_idx;  base_sig1->getValue(base_sig1_idx, _time)  <= time_start;  base_sig1_idx++);
-    for(base_sig2_idx;  base_sig1->getValue(base_sig2_idx, _time)  <= time_start;  base_sig2_idx++);
+    for(base_sig1_idx;  base_sig1->getValue(base_sig1_idx, _time)  < time_start;  base_sig1_idx++);
+    for(base_sig2_idx;  base_sig1->getValue(base_sig2_idx, _time)  < time_start;  base_sig2_idx++);
     break;
 
   default:
@@ -101,6 +104,11 @@ signal _signal_operation::add(signal* base_sig1,  signal* base_sig2, int mode)
     }
 
 //CHECK IF VALUES ARE IN DOMAIN AND IF IT IS TRUE ADD THEM TO THE RESULTANT
+    //WE WENT OUT OF DOMAIN SUMMATION ENDED
+    if(!base_sig1_inDomain && !base_sig2_inDomain){
+      break;
+    }
+
     if(base_sig1_inDomain){
       sum +=  base_sig1->getValue(base_sig1_idx,_val); 
       base_sig1_idx++;
@@ -113,10 +121,6 @@ signal _signal_operation::add(signal* base_sig1,  signal* base_sig2, int mode)
     resultant.putValue(sum, resultant_sig_idx ,  _val);
     resultant.putValue(resultant_time, resultant_sig_idx, _time);
 
-    //WE WENT OUT OF DOMAIN SUMMATION ENDED
-    if(!base_sig1_inDomain && !base_sig2_inDomain){
-      break;
-    }
   }
 
   
@@ -169,8 +173,9 @@ signal _signal_operation::multiply(signal* base_sig1, signal* base_sig2, int mod
       time_start = base_sig2->analytics.timeStart;
     }
     //BOTH NOW POINT AT THE START OF THE INTERSECTION DOMAIN
-    for(base_sig1_idx;  base_sig1->getValue(base_sig1_idx, _time)  <= time_start;  base_sig1_idx++);
-    for(base_sig2_idx;  base_sig1->getValue(base_sig2_idx, _time)  <= time_start;  base_sig2_idx++);
+    for(base_sig1_idx;  base_sig1->getValue(base_sig1_idx, _time)  < time_start;  base_sig1_idx++);
+    for(base_sig2_idx;  base_sig1->getValue(base_sig2_idx, _time)  < time_start;  base_sig2_idx++);
+
     break;
 
   default:
@@ -186,15 +191,19 @@ signal _signal_operation::multiply(signal* base_sig1, signal* base_sig2, int mod
   for(resultant_sig_idx;  ;resultant_sig_idx++){
     double result = 1;
     double resultant_time = time_start + resultant_sig_idx*avg_samplingTime;
+    //WE WENT OUT OF DOMAIN SUMMATION ENDED
     bool base_sig1_inDomain = false;
     bool base_sig2_inDomain = false; 
 
-    
     if(base_sig1_idx < base_sig1->analytics.samples_num){
       base_sig1_inDomain = isInDomain(time_start, time_end, base_sig1->getValue(base_sig1_idx, _time));
     }
     if((base_sig2_idx < base_sig2->analytics.samples_num)){
       base_sig2_inDomain = isInDomain(time_start, time_end, base_sig2->getValue(base_sig2_idx, _time));
+    }
+
+    if((!base_sig1_inDomain && !base_sig2_inDomain)){
+      break;
     }
 
     if(base_sig1_inDomain){
@@ -206,14 +215,10 @@ signal _signal_operation::multiply(signal* base_sig1, signal* base_sig2, int mod
       base_sig2_idx++;
     }
 
+
     resultant.putValue(result, resultant_sig_idx ,  _val);
     resultant.putValue(resultant_time, resultant_sig_idx, _time);
   
-    //WE WENT OUT OF DOMAIN SUMMATION ENDED
-    if(!base_sig1_inDomain && !base_sig2_inDomain){
-
-      break;
-    }
 
 //CHECK IF VALUES ARE IN DOMAIN AND IF IT IS TRUE ADD THEM TO THE RESULTANT
 
@@ -232,43 +237,43 @@ signal _signal_operation::multiply(signal* base_sig1, signal* base_sig2, int mod
  * @param base_sig2 the signal to compare with
  * @return the phase difference
 */
-double _signal_operation::phase_diff(signal *base_sig1, signal *base_sig2)
+double _signal_operation::phase_diff(signal *ref_sig, signal *sig2)
 { 
   double avgPhaseDiff = 0;
 
 
-  if(!base_sig1->isTimeAnalysed())base_sig1->analyse();
-  if(!base_sig2->isTimeAnalysed())base_sig2->analyse();
+  if(!ref_sig->isTimeAnalysed())ref_sig->analyse();
+  if(!sig2->isTimeAnalysed())sig2->analyse();
   //check for their their sampling times if they are valid
 
-  if(!isNear(base_sig1->get_analytics().avg_sample_time , base_sig2->get_analytics().avg_sample_time, samplingRate_diff)  ){
+  if(!isNear(ref_sig->get_analytics().avg_sample_time , sig2->get_analytics().avg_sample_time, samplingRate_diff)  ){
     std::cerr << "CANT WORK WITH THESE TWO SIGNALS __FAR_SAMPLING_RATES" << endl;
     lastOperationSuccess = false;
     return 0;
   }
-  if(!isNear(base_sig1->get_analytics().base_frequency,  base_sig2->get_analytics().base_frequency, freq_diff_accuracy)  ){
+  if(!isNear(ref_sig->get_analytics().base_frequency,  sig2->get_analytics().base_frequency, freq_diff_accuracy)  ){
     std::cerr << "CANT WORK WITH THESE TWO SIGNALS __FAR_FREQUENCIES_" << endl;
     lastOperationSuccess = false;
     return 0;
   }
 
-  double reference_time = base_sig1->get_valMaximas().time.at(0);
+  double reference_time = ref_sig->get_valMaximas().time.at(0);
   //WE KEEP COMPARING THE MAXIMAS OF THE SECOND SIGNAL TO INTEGER ORDERS OF THE FIRST SIGNAL and see the time difference between them  
   // timeDiff = peak(n)_time - sig2_nearest_maxima;
-  double time_start = base_sig2->analytics.timeStart;
-  double time_end = base_sig2->analytics.timeEnd;
+  double time_start = sig2->analytics.timeStart;
+  double time_end = sig2->analytics.timeEnd;
   while(reference_time <= time_start){
-    reference_time += base_sig1->analytics.periodic_time;
+    reference_time += ref_sig->analytics.periodic_time;
   }
 
   double sum_phaseDiff = 0;
-  //NOW WE HAVE THE the FIRST PEAK of BASE_SIG1 TIME THAT IS IN THE TIME DOMAIN OF BASE_SIG2
+  //NOW WE HAVE THE the FIRST PEAK of ref_sig TIME THAT IS IN THE TIME DOMAIN OF sig2
 
   size_t idx = 0;
-  for(idx; idx < base_sig2->get_valMaximas().time.size(); idx++){
-    double time_diff = base_sig2->get_valMaximas().time.at(idx) - reference_time;
-    sum_phaseDiff += time_diff/(base_sig1->get_analytics().periodic_time) * 2 * M_PI;  
-    reference_time += base_sig1->analytics.periodic_time;
+  for(idx; idx < sig2->get_valMaximas().time.size(); idx++){
+    double time_diff = sig2->get_valMaximas().time.at(idx) - reference_time;
+    sum_phaseDiff += time_diff/(ref_sig->get_analytics().periodic_time) * 2 * M_PI;  
+    reference_time += ref_sig->analytics.periodic_time;
   }
    avgPhaseDiff = sum_phaseDiff/idx;
   //AVG PHASE DIFFERENCE IN RADS

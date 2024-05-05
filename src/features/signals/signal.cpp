@@ -5,6 +5,10 @@
 #include <cmath>
 
 // EXPECTED DATA FORMAT FIRST COLUMN TIME SECOND COLUMN VALUES
+//FUTURE WORK SUBDIVIDE SIGNALS WHEN FREQUENCY CHANGE OR PHASE ANGLE CHANGES SUDDENLY
+//FOR SUB_DIVIDED ANALYSES FOR EACH PART
+
+
 
 bool signal::loadData(string name, string fileLocation){
     //CONSTRUCTOR
@@ -19,6 +23,26 @@ bool signal::loadData(string name, string fileLocation){
     _has_data = false;
     data_viable = false;
     return false;
+  }
+}
+
+bool signal::loadData(dataTable _data)
+{
+  signal_data.data = _data;
+  return true;
+}
+
+bool signal::loadData(std::vector<double> time, std::vector<double> vals)
+{
+  if(time.size() != vals.size()){
+    std::cerr<< "TIME VECTOR SIZE DIFFERENT THAN VALUE VECTOR" << endl;
+    return false;
+  }else{
+    for( int idx = 0; idx < time.size(); idx++){
+      putValue(vals.at(idx) , idx , _val);
+      putValue(vals.at(idx) , idx , _time);
+    }
+    return true;
   }
 }
 
@@ -128,17 +152,18 @@ bool signal::pre_analyze()
   }
 }
 
-#define positive 1
-#define zero 0
-#define negative -1
-#define sign(c)((c>0) ? positive : ((c<0) ? negative : zero))
+
 /// @brief VALUES ANALYTICS THAT EVALUATE MAXIMAS_MINIMAS using SLOPE DATA
 bool signal::update_local_maximas_minimas()
 {
   unsigned int index = 1;
   int current_firstDeriv_sign = sign(getValue(index,_first_deriv));
   int last_firstDeriv_sign = current_firstDeriv_sign;
-
+  //CLEAR ARRAY IF THEY HAD ANY DATA BEFORE SINCE WE ARE DOING PUSHBACKS
+  val_maximas.value.clear();
+  val_maximas.time.clear();
+  val_minimas.value.clear();
+  val_minimas.time.clear();
   //ONLY UPDATE LAST DERIV SIGN WHEN SIGN CHANGES FROM NEGATIVE TO POSITIVE OR VICEVERSA
   for(index = 2;  index < (analytics.samples_num - 2);  index++){
 
@@ -223,6 +248,7 @@ bool signal::post_local_maximas_minimas()
   /// **BLOCK FOR UPDATING
   // (analytics.min_val -- analytics.max_val)and their times -- analytics.avg_max -- analytics.avg_min
   // ++ updating the local maximas and manimas to hold only the biggest maximas and minimas
+
   analytics.min_val = val_minimas.value.at(0);
   analytics.min_val_time = val_minimas.time.at(0);
   for(int i = 1; i < val_minimas.value.size(); i++){
@@ -245,6 +271,7 @@ bool signal::post_local_maximas_minimas()
   /*WE ROUND THE DIFFERENCE BY A FACTOR TO (minima_rounding) COMPENSATE FOR VERY CLOSE TO ZERO VALUES 
     THEN COMPARE THE RATIO OF THE DIFFERENCE TO THE MIN_MAX TO ANOTHER FACTOR(min_max_accuracy) to compensate for offset sampling or low sampling rate 
   */
+ if(smaller_extremas_ignored){
   for(int i = 0; i < val_minimas.value.size();){
     double diff =  (val_minimas.value.at(i) - analytics.min_val);
     if( abs( ( roundTo(diff, minima_diff_rounding)/analytics.min_val) ) >  min_max_accuracy ) {
@@ -266,7 +293,7 @@ bool signal::post_local_maximas_minimas()
       i++;
     }
   }
-
+ }
   //CALL SHRINK TO FIT FOR THE VECTORS
   val_maximas.value.shrink_to_fit();
   val_maximas.time.shrink_to_fit();
@@ -292,11 +319,12 @@ bool signal::post_local_maximas_minimas()
   if(val_maximas.value.size() < val_minimas.value.size()) ptp_num = val_maximas.value.size();
   double max_ptp = 0;
   double min_ptp = 0;
-  double sum_ptp = max_ptp;
   if(ptp_num > 0){
     max_ptp = val_maximas.value.at(0) - val_minimas.value.at(0);
     min_ptp = val_maximas.value.at(0) - val_minimas.value.at(0);
 
+    double sum_ptp = max_ptp;
+    
     for(int i = 1; i < ptp_num; i++){
       double ptp = val_maximas.value[i] - val_minimas.value[i];
       sum_ptp+=ptp;
@@ -347,7 +375,7 @@ bool signal::deduce_baseFrequency()
     //START by assuming it is periodic unless its not
     maxima_periodic = true;
     for(int i = 0;  i < (_maxima_periods.size() - 1); i++){
-      if(!isNear(_maxima_periods.at(i),  _maxima_periods.at(i + 1),  min_max_accuracy)){
+      if(!isNear(_maxima_periods.at(i),  _maxima_periods.at(i + 1), period_diff_accuracy)){
         maxima_periodic = false;
       }
     }
@@ -357,7 +385,7 @@ bool signal::deduce_baseFrequency()
   if(_minima_periods.size() > 1){
     minima_periodic = true;
     for(int i = 0;  i < (_minima_periods.size() - 1); i++){
-      if(!isNear(_minima_periods.at(i), _minima_periods.at(i + 1),  min_max_accuracy)){
+      if(!isNear(_minima_periods.at(i), _minima_periods.at(i + 1),  period_diff_accuracy)){
         minima_periodic = false;
       }
     }
@@ -369,7 +397,7 @@ bool signal::deduce_baseFrequency()
 
   //DEDUCE IF THE FUNCTION IS PERIODIC IF time between maximas equals time between minimas and act accordingly
     if(maxima_periodic && minima_periodic){
-      if( isNear(base_frequency_minimaBased,  base_frequency_maximaBased,   min_max_accuracy) ){
+      if( isNear(base_frequency_minimaBased,  base_frequency_maximaBased,   period_diff_accuracy) ){
       analytics.base_frequency = (base_frequency_maximaBased + base_frequency_minimaBased)/2;
       analytics.base_angular_frequency = analytics.base_frequency*M_PI*2;
       analytics.periods_num = (analytics.timeEnd - analytics.timeStart)*analytics.base_frequency;
@@ -396,7 +424,13 @@ bool signal::deduce_baseFrequency()
 bool signal::deduce_avg_rms()
 {  
   double startTime_stamp = analytics.timeStart; 
-  double endTime_stamp = analytics.periodic_time * floor(analytics.periods_num) ; 
+  double endTime_stamp = 0;
+  if(periodic_avg_rms){
+    endTime_stamp = analytics.periodic_time * floor(analytics.periods_num) ; 
+  }else{
+    endTime_stamp = analytics.timeEnd;
+  }
+  
   unsigned int index = 0;
   double currentTime = 0;
   double lastTime = getValue(index,_time);
@@ -406,17 +440,14 @@ bool signal::deduce_avg_rms()
   double v2dt = 0;
   index++;
   //NOW WE GET THE DATA START INDEX AGAIN
-  for(index; (currentTime < (endTime_stamp)) && (index < analytics.samples_num); index++){
+  for(index; (currentTime <= (endTime_stamp)) && (index < analytics.samples_num); index++){
     currentTime = getValue(index,_time);
     currentVal = getValue(index,_val);
-
     vdt += _vdt(currentVal, lastVal, currentTime, lastTime);
     v2dt += _vdt((currentVal*currentVal),  (lastVal*lastVal),  currentTime,  lastTime);
-
     lastTime = currentTime;
     lastVal = currentVal;
   }
-
   analytics.avg = vdt/(endTime_stamp - startTime_stamp);
   analytics.rms = sqrt( v2dt/(endTime_stamp - startTime_stamp) );
   return true;
