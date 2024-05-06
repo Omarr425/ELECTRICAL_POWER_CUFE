@@ -40,7 +40,7 @@ signal _signal_operation::add(signal* base_sig1,  signal* base_sig2, int mode)
 
 
   //check for their their sampling times if they are valid
-  if(!isNear(base_sig1->get_analytics().avg_sample_time , base_sig2->get_analytics().avg_sample_time, samplingRate_diff)  ){
+  if(!isNear(base_sig1->get_analytics()->avg_sample_time , base_sig2->get_analytics()->avg_sample_time, samplingRate_diff)  ){
     std::cerr << "CANT WORK WITH THESE TWO SIGNALS  __FAR_SAMPLING_RATES";
     lastOperationSuccess = false;
     return resultant;
@@ -86,7 +86,7 @@ signal _signal_operation::add(signal* base_sig1,  signal* base_sig2, int mode)
   //now we know summing boundaries
   //
 
-  double avg_samplingTime = (base_sig1->get_analytics().avg_sample_time + base_sig2->get_analytics().avg_sample_time)/2;
+  double avg_samplingTime = (base_sig1->get_analytics()->avg_sample_time + base_sig2->get_analytics()->avg_sample_time)/2;
 
 
 
@@ -138,7 +138,7 @@ signal _signal_operation::multiply(signal* base_sig1, signal* base_sig2, int mod
   if(!base_sig2->isTimeAnalysed())base_sig2->analyse();
 
   //check for their their sampling times if they are valid
-  if(!isNear(base_sig1->get_analytics().avg_sample_time , base_sig2->get_analytics().avg_sample_time, samplingRate_diff)  ){
+  if(!isNear(base_sig1->get_analytics()->avg_sample_time , base_sig2->get_analytics()->avg_sample_time, samplingRate_diff)  ){
     std::cerr << "CANT WORK WITH THESE TWO SIGNALS  __FAR_SAMPLING_RATES";
     lastOperationSuccess = false;
     return resultant;
@@ -185,7 +185,7 @@ signal _signal_operation::multiply(signal* base_sig1, signal* base_sig2, int mod
   //now we know multiplication boundaries
   //
 
-  double avg_samplingTime = (base_sig1->get_analytics().avg_sample_time + base_sig2->get_analytics().avg_sample_time)/2;
+  double avg_samplingTime = (base_sig1->get_analytics()->avg_sample_time + base_sig2->get_analytics()->avg_sample_time)/2;
 
 
   for(resultant_sig_idx;  ;resultant_sig_idx++){
@@ -246,18 +246,18 @@ double _signal_operation::phase_diff(signal *ref_sig, signal *sig2)
   if(!sig2->isTimeAnalysed())sig2->analyse();
   //check for their their sampling times if they are valid
 
-  if(!isNear(ref_sig->get_analytics().avg_sample_time , sig2->get_analytics().avg_sample_time, samplingRate_diff)  ){
+  if(!isNear(ref_sig->get_analytics()->avg_sample_time , sig2->get_analytics()->avg_sample_time, samplingRate_diff)  ){
     std::cerr << "CANT WORK WITH THESE TWO SIGNALS __FAR_SAMPLING_RATES" << endl;
     lastOperationSuccess = false;
     return 0;
   }
-  if(!isNear(ref_sig->get_analytics().base_frequency,  sig2->get_analytics().base_frequency, freq_diff_accuracy)  ){
+  if(!isNear(ref_sig->get_analytics()->base_frequency,  sig2->get_analytics()->base_frequency, freq_diff_accuracy)  ){
     std::cerr << "CANT WORK WITH THESE TWO SIGNALS __FAR_FREQUENCIES_" << endl;
     lastOperationSuccess = false;
     return 0;
   }
 
-  double reference_time = ref_sig->get_valMaximas().time.at(0);
+  double reference_time = ref_sig->get_valMaximas()->time.at(0);
   //WE KEEP COMPARING THE MAXIMAS OF THE SECOND SIGNAL TO INTEGER ORDERS OF THE FIRST SIGNAL and see the time difference between them  
   // timeDiff = peak(n)_time - sig2_nearest_maxima;
   double time_start = sig2->analytics.timeStart;
@@ -270,9 +270,9 @@ double _signal_operation::phase_diff(signal *ref_sig, signal *sig2)
   //NOW WE HAVE THE the FIRST PEAK of ref_sig TIME THAT IS IN THE TIME DOMAIN OF sig2
 
   size_t idx = 0;
-  for(idx; idx < sig2->get_valMaximas().time.size(); idx++){
-    double time_diff = sig2->get_valMaximas().time.at(idx) - reference_time;
-    sum_phaseDiff += time_diff/(ref_sig->get_analytics().periodic_time) * 2 * M_PI;  
+  for(idx; idx < sig2->get_valMaximas()->time.size(); idx++){
+    double time_diff = sig2->get_valMaximas()->time.at(idx) - reference_time;
+    sum_phaseDiff += time_diff/(ref_sig->get_analytics()->periodic_time) * 2 * M_PI;  
     reference_time += ref_sig->analytics.periodic_time;
   }
    avgPhaseDiff = sum_phaseDiff/idx;
@@ -313,4 +313,36 @@ signal _signal_operation::add(signal* base_sig1, double val)
   return resultant;
 }
 
+/// @brief //output = (1 - filter_parameter)*last_output + filter_parameter*input
+/// @param base_sig signal to filter
+/// @param cutOff_freq cuttoff frequency
+/// @param order order for the filter block used for cascading
+/// @return 
+unsigned int county = 0;
+void _signal_operation::firstO_lowPass_filter(signal* base_sig,double cutOff_freq ,int order, double avg_sample_time)
+{
+  double sampling_time = avg_sample_time;
+  if(sampling_time == -1){
+    if(!base_sig->isTimeAnalysed())base_sig->analyse();
+    sampling_time = base_sig->analytics.avg_sample_time;
+  }else{
+    //fastMode predifined avg_sample_time
+    sampling_time = avg_sample_time;
+  }
 
+  double last_output = 0;
+  double filter_parameter = sampling_time/( ( 1/ (2*M_PI*cutOff_freq) )  -  sampling_time );
+  //CASCADE FILTERS THIS WAY
+  while(order--){
+    for(unsigned int idx = 0; idx < base_sig->signal_data.get_row_num(); idx++){ 
+
+      double input = base_sig->getValue(idx,_val);
+      double output = (1 - filter_parameter)*last_output + filter_parameter*input;
+      base_sig->putValue(output ,idx, _val);
+      last_output = output;
+    }
+  }
+
+  //RECURSION FOR FILTER CASCADING
+  //RECURION APPROACH FAIL AT HIGH FILTER ORDERS(PROBABLE STACK OVERFLOW)
+}

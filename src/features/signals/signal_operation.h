@@ -40,7 +40,8 @@ class _signal_operation{
     };
     //first order filters returns filtered signals
       //second order filters yet to come
-    signal lowPass_filter(signal base_sig, int order=1, int t = cascade);
+
+    void firstO_lowPass_filter(signal* base_sig,double cutOff_freq,int order=1, double avg_sample_time = -1);
     signal highPass_filter(signal base_sig, int order=1, int t = cascade);
     signal bangReject_filter(signal base_sig, int order=1, int t = cascade);
     signal bandPass_filter(signal base_sig, int order=1, int t = cascade);

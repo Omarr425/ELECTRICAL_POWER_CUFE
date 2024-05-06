@@ -1,0 +1,53 @@
+****CURRENT PROJECT FOLDER
+	/OCTAVE TEST SIGNALS	****contains small matlab/octave snippets for generating signals and displaying waveforms
+	
+	
+	/tests	****contains test codes at certain points of the development
+	
+	
+	/include	****contains basic libraries need for the project
+		json.hpp **JSON LIBRARY FOR OBJECT DESCRIPTIVE FILE FORMAT
+		
+		
+	/src
+		/core **CONTAINS CORE CODE OR STRUCTURE OF THIS PROJECT
+			/settings **CONTAINS THE GLOBAL SETTINGS STRUCTURE config required for giving each module some setting from the main config file
+				settings.h	**CONTAINS THE SETTINGS STRUCTURE AND ITS METHODS
+				default_settings.h & default_settings.cpp  **DEFAULT SETTINGS FOR EACH MODULE REPRESENTED IN A FUNCTION
+			/data_IO
+				dataTable.h/dataTable.cpp **SIMPLE DYNAMIC (VECTOR BASED) 2D data HOLDER USING VECTORS OF VECTORS
+				data_IO.h/data_IO.cpp **FILE import/export with different formats abstraction structure and handling for each format
+			core.h & core.cpp wrap the Whole folder include inline basic methods widely used in the whole program
+				
+		
+		/features
+			/signals
+				singal.h/signal.cpp **contains basic discrete signal blue print and its analysis
+				singal_operation.cpp/signal_operation.h ** contains basic signal operation methods like multiplication and additions
+				electrical.h  **Inherit from signal while add electrical specific properties
+			/miniSim
+				appliances.h **emulate the behavior of an electrical appliance
+		
+		/parser
+			parser.h **IN PROGRESS Intended for parsed syntax
+		
+		energy_monitor.cpp && energy_monitor.h  **Main execution files	
+		
+		
+		
+		
+		
+					---------------------CLASSES AND STRUCTURES MAP-------------------------------------
+					
+dataTable --2D dynamic and friendly data holder
+settings ---global application settings
+data_IO ---File import/export abstraction
+
+
+Signal	--Basic discrete signal representation and its analytics and methods + analyser methods
+signal_operation (friend class of signal)(can modify private members of signal) (add/multiply)(filtering)(timeshifting)(subClipping)
+_current /_voltage/_power Inherit from signal while add electrical specific members
+
+appliances --emulate the behavior of electrical appliances
+
+

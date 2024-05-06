@@ -12,8 +12,10 @@ class appliance {
     double tripVoltage_startTime = 0;
     double maximum_tripVoltage_duration = 0;
     double maximum_tripCurrent = 0;
-     double tripCurrent_startTime = 0;
+    double tripCurrent_startTime = 0;
     double maximum_tripCurrent_duration = 0;
+    bool disconnect_on_trip = true;
+    bool connected = true;
     double R = 0;
     double L = 0;
     double C = 0;
@@ -26,12 +28,12 @@ class appliance {
 
     bool voltageTripped = false;
     bool currentTripped = false;
-    double tripTime;
 
+    bool unkownCurrent = false;
     signal* impedanceTable = NULL;
     _voltage* volt_input = NULL;
     _current* result_current = NULL; 
-    _power* powerResult = NULL;
+    _power* result_power = NULL;
 
 
   public:
@@ -40,7 +42,8 @@ class appliance {
       //READ APPLIANCE PROPERTIES FROM JSON FILE FIRST IF EXISTS IF IT DOESN'T CREATE ONE 
       ifstream file;
       json in;
-      file.open("appliance/"+_name+".json");
+      file.open("appliances/"+_name+".json");
+
       if(file.is_open()){
         in = json::parse(file);
         maximum_tripVoltage = in[_name]["_maximum_tripVoltage"];
@@ -52,10 +55,12 @@ class appliance {
         C = in[_name]["_C"];
         real = in[_name]["_real"];
         complex = in[_name]["_complex"];
+        disconnect_on_trip = in[_name]["disconnect_on_trip"];
+        
         file.close();
         
       }else{
-        init(_name);
+        init();
       }
     //LINK THE VOLT TO THE APPLIANCE AND THE RESULT CURRENT TOO
     //IF RESULT CURRENT WAS PROVIDED PROVIDE POWER STATISTICS INSTANTLY
@@ -66,67 +71,88 @@ class appliance {
       if(!result_current->isTimeAnalysed())result_current->analyse();
 
       if(_result_current != NULL){
-        *powerResult = _power(volt_input,result_current);
-        powerResult->analyse();
+        result_power = new _power(volt_input,result_current);
+        result_power->analyse();
+        unkownCurrent = false;
+      }else{
+        result_power = new _power(volt_input,result_current);
+        _result_current = new _current();
+        unkownCurrent = true;
       }
+
     }  
 
-    double trip();
+    ~appliance(){
+      if( (result_current != NULL) && (unkownCurrent == true) )free(result_current);
+      if(result_power != NULL)free(result_power);
+    }
+
+    
+
     void readStep(){
-      if( (inputSignal_idx < volt_input->get_analytics().samples_num ) || (inputSignal_idx < result_current->get_analytics().samples_num ) ){
+      if( ( (inputSignal_idx < volt_input->get_analytics()->samples_num ) || (inputSignal_idx < result_current->get_analytics()->samples_num ) ) && connected){
         double thisInstantVoltage = 0;
         double thisInstantTime = 0;
         double thisInstantCurrent = 0;
-        
-        if(inputSignal_idx < volt_input->get_analytics().samples_num){
-          double thisInstantVoltage = volt_input->get_sig_data().getData(inputSignal_idx,_val);
-          double thisInstantTime = volt_input->get_sig_data().getData(inputSignal_idx,_time);
+  
+        if(inputSignal_idx < volt_input->get_analytics()->samples_num){
+          thisInstantVoltage = volt_input->get_signal_data()->getData(inputSignal_idx,_val);
+          thisInstantTime = volt_input->get_signal_data()->getData(inputSignal_idx,_time);
         }
 
-        if(inputSignal_idx < result_current->get_analytics().samples_num){
-          double thisInstantCurrent = result_current->get_sig_data().getData(inputSignal_idx,_val);
+        if(inputSignal_idx < result_current->get_analytics()->samples_num){
+          thisInstantCurrent = result_current->get_signal_data()->getData(inputSignal_idx,_val);
         }
 
-        if(thisInstantVoltage > maximum_tripVoltage){
+        if(abs(thisInstantVoltage) > abs(maximum_tripVoltage)){
           tripVoltage_startTime = thisInstantTime;
+          voltageTripped = true;
+          if(disconnect_on_trip)connected = false;
         }
-
-        if(thisInstantCurrent > maximum_tripCurrent){
+        
+        if(abs(thisInstantCurrent) > abs(maximum_tripCurrent)){
           tripCurrent_startTime = thisInstantTime;
+          currentTripped = true;
+          if(disconnect_on_trip)connected = false;
         }
+  
         inputSignal_idx++;
       }
     }
 
 
-    static void init(std::string _name,
-              double _maximum_tripVoltage = 0,
-              double _maximum_tripVoltage_duration = 0,
-              double _maximum_tripCurrent = 0,
-              double _maximum_tripCurrent_duration = 0,
-              double _R = 0,
-              double _L = 0,
-              double _C = 0,
-              double _real = 0,
-              double _complex = 0
-    ){
+    void init(double _maximum_tripVoltage = 0,
+                    double _maximum_tripVoltage_duration = 0,
+                    double _maximum_tripCurrent = 0,
+                    double _maximum_tripCurrent_duration = 0,
+                    double _R = 0,
+                    double _L = 0,
+                    double _C = 0,
+                    double _real = 0,
+                    double _complex = 0,
+                    bool _disconnect_on_trip = 0
+      ){
       json out;
-      ofstream file;
-      out[_name]["_maximum_tripVoltage"] = std::to_string(_maximum_tripVoltage);
-      out[_name]["_maximum_tripVoltage_duration"] = std::to_string(_maximum_tripVoltage_duration);
-      out[_name]["_maximum_tripCurrent"] = std::to_string(_maximum_tripCurrent);
-      out[_name]["_maximum_tripCurrent_duration"] = std::to_string(_maximum_tripCurrent_duration);
-      out[_name]["_R"] = std::to_string(_R);
-      out[_name]["_L"] = std::to_string(_L);
-      out[_name]["_C"] = std::to_string(_C);
-      out[_name]["_real"] = std::to_string(_real);
-      out[_name]["_complex"] = std::to_string(_complex);
+      ofstream fileout;
+      out[name]["_maximum_tripVoltage"] = (_maximum_tripVoltage);
+      out[name]["_maximum_tripVoltage_duration"] = (_maximum_tripVoltage_duration);
+      out[name]["_maximum_tripCurrent"] = (_maximum_tripCurrent);
+      out[name]["_maximum_tripCurrent_duration"] = (_maximum_tripCurrent_duration);
+      out[name]["_R"] = (_R);
+      out[name]["_L"] = (_L);
+      out[name]["_C"] = (_C);
+      out[name]["_real"] = (_real);
+      out[name]["_complex"] = (_complex);
+      out[name]["disconnect_on_trip"] = (_disconnect_on_trip);
 
-      file.open("appliance/"+_name+".json");
-      if(file.is_open()){
-        file << out;
+      ifstream fileCheck;
+      fileCheck.open("appliances/"+name+".json");
+      if(!fileCheck.is_open()){
+        fileout.open("appliances/"+name+".json");
+        fileout << std::setw(4) << out;
+        fileout.close();
       }
-      file.close();
+      fileCheck.close();
     }
 
 
@@ -134,7 +160,7 @@ class appliance {
     void refresh(){
       ifstream file;
       json in;
-      file.open("appliance/"+name+".json");
+      file.open("appliances/"+name+".json");
       if(file.is_open()){
         in = json::parse(file);
         maximum_tripVoltage = in[name]["_maximum_tripVoltage"];
@@ -146,7 +172,34 @@ class appliance {
         C = in[name]["_C"];
         real = in[name]["_real"];
         complex = in[name]["_complex"];
+        disconnect_on_trip = in[name]["disconnect_on_trip"];
       }
       file.close();
     }
+
+
+    bool voltage_tripped(){
+      return voltageTripped;
+    }
+    bool current_tripped(){
+      return currentTripped;
+    }
+    double current_tripTime(){
+      return tripCurrent_startTime;
+    }
+    double voltage_tripTime(){
+      return tripVoltage_startTime;
+    }
+    _power* get_power(){
+      return result_power;
+    }
+
+    _current* get_current(){
+      return result_current;
+    }
+
+    bool is_connected(){
+      return connected;
+    }
+
 };

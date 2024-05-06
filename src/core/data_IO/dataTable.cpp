@@ -41,7 +41,7 @@ void dataTable::insertData(double d,  unsigned int row , unsigned int col){
       @brief returns the value of a cell with that address
     */
 
-double dataTable::getData(int row, int col){
+double dataTable::getData(int row, int col)const{
   return _table.at(row).at(col);
 }
     /**
@@ -78,5 +78,24 @@ void dataTable::refresh(){
   }
 }
 
+template <typename data_type>
+std::vector<data_type>* dataTable::extractRow(unsigned int rowNumber){
+  if(rowNumber > this->_rows_num){
+    return NULL;
+    }else{
+      std::vector<data_type> returned_vector = new std::vector<data_type>;
+      for(unsigned int i = 0; i < _rows_num; i++){
+        
+      }
+    }
+}
 
-  
+
+template <typename data_type>
+std::vector<data_type>* dataTable::extractColumn(unsigned int columnNumber){
+  if(columnNumber > this->_cols_num){
+    return NULL;
+  }else{
+
+  }
+}

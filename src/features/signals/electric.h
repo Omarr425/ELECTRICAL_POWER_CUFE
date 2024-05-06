@@ -7,9 +7,19 @@
 
 
 class _current: public signal{
+  public:
+    _current(signal sig): signal(sig){
+    }
+    _current(){
+    }
 };
 
 class _voltage: public signal{
+  public:
+    _voltage(signal sig): signal(sig){
+    }
+    _voltage(){
+    }
 };
 
 
@@ -46,7 +56,7 @@ class _power: public signal{
       active = this->analytics.avg;
       
       if(stoi(settings.get_setting("electrical","use_rms_for_apparent"))){
-        apparent = current->get_analytics().rms * volt->get_analytics().rms;
+        apparent = current->get_analytics()->rms * volt->get_analytics()->rms;
       }else{
         apparent = (this->analytics.avg_ptp)/2;
       }
@@ -79,14 +89,14 @@ class _power: public signal{
         sign = -1;
       }
 
-      if(time_start > this->get_analytics().timeEnd)return 0;
-      if(time_end < this->get_analytics().timeStart)return 0;
+      if(time_start > this->get_analytics()->timeEnd)return 0;
+      if(time_end < this->get_analytics()->timeStart)return 0;
       unsigned int idx = 0;
       double energy_0 = 0;
       double energy_1 = 0;
       //Search for the time corresponding index in the data and iterate index 
       while(this->getValue(idx, _time) < time_start)idx++;
-      if(time_start < this->get_analytics().timeStart)return 0;
+      if(time_start < this->get_analytics()->timeStart)return 0;
       //capture energy_0
       
       energy_0 = getValue(idx,  _area);

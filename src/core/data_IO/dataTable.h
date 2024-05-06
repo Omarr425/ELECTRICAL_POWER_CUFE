@@ -30,11 +30,14 @@ class dataTable{
     unsigned int get_col_num();
 
     void insertData(double d, unsigned int row , unsigned int col);
-    double getData(int row , int col);
+    double getData(int row , int col)const;
 
     void eraseRow(int start_row, int rows_num = 1);
     void eraseColumn(int start_col, int cols_num = 1);
 
     void refresh();
+    template <typename data_type>
+    std::vector<data_type>* extractRow(unsigned int rowNumber);
+    template <typename data_type>
+    std::vector<data_type>* extractColumn(unsigned int columnNumber);
 };
-

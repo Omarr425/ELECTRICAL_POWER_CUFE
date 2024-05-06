@@ -13,22 +13,17 @@
 bool signal::loadData(string name, string fileLocation){
     //CONSTRUCTOR
   file_IO importFile;
-
-  if(importFile.data_import(fileLocation+name,  &signal_data.data, csv)){
-    _has_data = true;
-    data_viable = true;
+  if(importFile.data_import(fileLocation+name,  &signal_data, csv)){
     refreshData();
     return true;
   }else{
-    _has_data = false;
-    data_viable = false;
     return false;
   }
 }
 
 bool signal::loadData(dataTable _data)
 {
-  signal_data.data = _data;
+  signal_data = _data;
   return true;
 }
 
@@ -44,10 +39,6 @@ bool signal::loadData(std::vector<double> time, std::vector<double> vals)
     }
     return true;
   }
-}
-
-bool signal::hasData(){
-  return this->_has_data;
 }
 
 bool signal::dataViable(){
@@ -78,17 +69,16 @@ bool signal::pre_analyze()
 {
 
 
-    this->_has_data = true;
     this->data_viable = true;
 
 
 
 //CHECK IF THE ONCE PASSED TABLE HAS AT LEAST 2 COLUMNS for TIME and Values respectively
-  if(signal_data.data.get_col_num() < 2)
+  if(signal_data.get_col_num() < 2)
   {
     std::cerr << "THE CHOSEN DATA TABLE HAS AT LEAST A ROW MISSING" << endl;
     return false;
-  }else if(signal_data.data.get_row_num() < 10){
+  }else if(signal_data.get_row_num() < 10){
     std::cerr << "TOOO FEW SAMPLES PRE ANALYZER TERMINATE" << endl;
     return false;
   }else{
@@ -111,7 +101,7 @@ bool signal::pre_analyze()
     //ENABLE THE DATA VIABLE Variable and if data is not disable it
 
     //START FILLING COLUMNS FOR integration with respect to time , first derivative , second derivative;
-    for(row_index = 1; row_index < (signal_data.data.get_row_num() - 1); row_index++){
+    for(row_index = 1; row_index < (signal_data.get_row_num() - 1); row_index++){
 
       current_val = getValue(row_index,_val);
       next_val = getValue(row_index + 1,_val);
@@ -481,14 +471,14 @@ bool signal::analyse(){
 }
 
 
-const signal::_analytics signal::get_analytics()
+const signal::_analytics* signal::get_analytics()const
 {
-  return analytics;
+  return &analytics;
 }
 
-dataTable signal::get_sig_data() const
+const dataTable* signal::get_signal_data() const
 { 
-  return (signal_data.data);
+  return &signal_data;
 }
 
 
@@ -496,10 +486,8 @@ bool signal::exportSignal(string name, string fileLocation){
   file_IO file;
   //CHECKS IF The data does exist and viable
   refreshData();
-  if(hasData() && dataViable()){
-    if(file.data_export((fileLocation+name), signal_data.data, csv)){
-      return true;
-    }
+  if(file.data_export((fileLocation+name), signal_data, csv)){
+    return true;
   }
   //if something bad happens when exporting
   return false;

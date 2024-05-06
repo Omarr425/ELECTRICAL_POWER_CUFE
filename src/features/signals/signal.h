@@ -6,10 +6,9 @@
 #include <string>
 
 
-struct _signal_data{
-  std::string dataLabels[4] = {"time","val","dv/dt","vdt"};
-  dataTable data;
-};
+
+  
+
 
 
 
@@ -77,19 +76,18 @@ class signal{
     double duty_cycle;                        //CHECKED
   }analytics;
 
-    
-    _signal_data signal_data;
+  
 //METHODS FOR SETTING AND GETTING VALUES FROM the signal dataset
     inline void putValue(double val, int row, int col){
-      signal_data.data.insertData(val,row,col);
+      signal_data.insertData(val,row,col);
     }
 
     inline double getValue(int row, int col){
-      return signal_data.data.getData(row,col);
+      return signal_data.getData(row,col);
     }
 
     inline void refreshData(){
-      signal_data.data.refresh();
+      signal_data.refresh();
     }
 
 using json = nlohmann::json;
@@ -105,6 +103,7 @@ using json = nlohmann::json;
       std::vector<double> time;
     };
 
+    dataTable signal_data;
     maximas_minimas val_maximas;
     maximas_minimas val_minimas;
     maximas_minimas dvBdt_maximas;
@@ -152,7 +151,6 @@ using json = nlohmann::json;
 
 
     bool timeDomain_analysed = false;
-    bool _has_data = false;
     bool data_viable = false;
 
 
@@ -162,32 +160,31 @@ using json = nlohmann::json;
 
 
 
-    maximas_minimas const get_valMaximas(){
-      return val_maximas;
+    const maximas_minimas* get_valMaximas()const{
+      return &val_maximas;
     }
-    maximas_minimas const get_valMinimas(){
-      return val_minimas;
+    const maximas_minimas* get_valMinimas()const{
+      return &val_minimas;
     }
-    maximas_minimas const get_dvBdtMaximas(){
-      return dvBdt_maximas;
+    const maximas_minimas* get_dvBdtMaximas()const{
+      return &dvBdt_maximas;
     }
-    maximas_minimas const get_dvBdtMinimas(){
-      return dvBdt_minimas;
+    const maximas_minimas* get_dvBdtMinimas()const{
+      return &dvBdt_minimas;
     }
 
 
     const bool isTimeAnalysed(){
       return timeDomain_analysed; 
     }
-    bool hasData();
     bool dataViable();
     bool loadData(string name = "signal", string fileLocation = settings.get_setting("signal","import_path"));
     bool loadData(dataTable _data);
     bool loadData(std::vector<double> time,std::vector<double> vals);
     bool analyse();
     bool exportSignal(string name = "signal" , string fileLocation = settings.get_setting("signal","export_path"));
-    const _analytics get_analytics();
-    dataTable get_sig_data()const;
+    const _analytics* get_analytics()const;
+    const dataTable* get_signal_data()const;
 };
 
 
