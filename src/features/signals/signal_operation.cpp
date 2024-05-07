@@ -31,8 +31,8 @@ void _signal_operation::refreshSettings(){
  * @param mode the mode of operation (UNION for UNION summation INTERSECT for intersect summation)
  * @return result signal
 */
-signal _signal_operation::add(signal* base_sig1,  signal* base_sig2, int mode)
-{ signal resultant;
+void _signal_operation::add(signal* base_sig1,  signal* base_sig2,  signal* resultant, int mode)
+{ 
   //TIME DOMAIN ANALYTICS ARE CRITICAL FOR THE SIGNAL BEFORE OPERATION so we check if they have been analysed before 
   //and if not we analyse them
   if(!base_sig1->isTimeAnalysed())base_sig1->analyse();
@@ -43,7 +43,7 @@ signal _signal_operation::add(signal* base_sig1,  signal* base_sig2, int mode)
   if(!isNear(base_sig1->get_analytics()->avg_sample_time , base_sig2->get_analytics()->avg_sample_time, samplingRate_diff)  ){
     std::cerr << "CANT WORK WITH THESE TWO SIGNALS  __FAR_SAMPLING_RATES";
     lastOperationSuccess = false;
-    return resultant;
+    return;
   }
 
   //CHECK DOMAIN BOUNDARIES FOR THE RESULTANT
@@ -117,23 +117,16 @@ signal _signal_operation::add(signal* base_sig1,  signal* base_sig2, int mode)
       sum +=  base_sig2->getValue(base_sig2_idx,_val);
       base_sig2_idx++;
     }
-
-    resultant.putValue(sum, resultant_sig_idx ,  _val);
-    resultant.putValue(resultant_time, resultant_sig_idx, _time);
-
+    resultant->putValue(sum, resultant_sig_idx ,  _val);
+    resultant->putValue(resultant_time, resultant_sig_idx, _time);
   }
-
-  
-
   lastOperationSuccess = true;
-  return  resultant;
 }
 /* -------------------------END OF SIGNAL ADD--------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------*/
 
-signal _signal_operation::multiply(signal* base_sig1, signal* base_sig2, int mode)
+void _signal_operation::multiply(signal* base_sig1, signal* base_sig2, signal* resultant,  int mode)
 {
-  signal resultant;
   if(!base_sig1->isTimeAnalysed())base_sig1->analyse();
   if(!base_sig2->isTimeAnalysed())base_sig2->analyse();
 
@@ -141,7 +134,7 @@ signal _signal_operation::multiply(signal* base_sig1, signal* base_sig2, int mod
   if(!isNear(base_sig1->get_analytics()->avg_sample_time , base_sig2->get_analytics()->avg_sample_time, samplingRate_diff)  ){
     std::cerr << "CANT WORK WITH THESE TWO SIGNALS  __FAR_SAMPLING_RATES";
     lastOperationSuccess = false;
-    return resultant;
+    return;
   }
 
   //CHECK DOMAIN BOUNDARIES FOR THE RESULTANT
@@ -216,8 +209,8 @@ signal _signal_operation::multiply(signal* base_sig1, signal* base_sig2, int mod
     }
 
 
-    resultant.putValue(result, resultant_sig_idx ,  _val);
-    resultant.putValue(resultant_time, resultant_sig_idx, _time);
+    resultant->putValue(result, resultant_sig_idx ,  _val);
+    resultant->putValue(resultant_time, resultant_sig_idx, _time);
   
 
 //CHECK IF VALUES ARE IN DOMAIN AND IF IT IS TRUE ADD THEM TO THE RESULTANT
@@ -225,7 +218,6 @@ signal _signal_operation::multiply(signal* base_sig1, signal* base_sig2, int mod
   }
 
   lastOperationSuccess = true;
-  return  resultant;
 }
 
 /* -------------------------END OF SIGNAL MULTIPLY--------------------------------------------------------*/
@@ -284,33 +276,29 @@ double _signal_operation::phase_diff(signal *ref_sig, signal *sig2)
 /* -------------------------PHASE ANGLE END--------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------*/
 
-signal _signal_operation::multiply(signal *base_sig1, double val)
+void _signal_operation::multiply(signal *base_sig1, signal* resultant,double val)
 {
   if(!base_sig1->isTimeAnalysed())base_sig1->analyse();
-  signal resultant;
-
+  
   for(unsigned int idx = 0; idx < base_sig1->analytics.samples_num;  idx++){
     double multiple = base_sig1->getValue(idx, _val) * val;
     double result_time = base_sig1->getValue(idx, _time);
-    resultant.putValue(multiple,  idx,  _val);
-    resultant.putValue(result_time,  idx,  _time);
+    resultant->putValue(multiple,  idx,  _val);
+    resultant->putValue(result_time,  idx,  _time);
   }
-  return resultant;
 }
 
 
-signal _signal_operation::add(signal* base_sig1, double val)
+void _signal_operation::add(signal* base_sig1, signal* resultant,double val)
 {
 
   if(!base_sig1->isTimeAnalysed())base_sig1->analyse();
-  signal resultant;
   for(unsigned int idx = 0; idx < base_sig1->analytics.samples_num;  idx++){
     double sum = base_sig1->getValue(idx, _val) + val;
     double result_time = base_sig1->getValue(idx, _time);
-    resultant.putValue(sum, idx,  _val);
-    resultant.putValue(result_time, idx,  _time);
+    resultant->putValue(sum, idx,  _val);
+    resultant->putValue(result_time, idx,  _time);
   }
-  return resultant;
 }
 
 /// @brief //output = (1 - filter_parameter)*last_output + filter_parameter*input
@@ -319,7 +307,7 @@ signal _signal_operation::add(signal* base_sig1, double val)
 /// @param order order for the filter block used for cascading
 /// @return 
 unsigned int county = 0;
-void _signal_operation::firstO_lowPass_filter(signal* base_sig,double cutOff_freq ,int order, double avg_sample_time)
+void _signal_operation::firstO_lowPass_filter(signal* base_sig, signal* resultant,double cutOff_freq ,int order, double avg_sample_time)
 {
   double sampling_time = avg_sample_time;
   if(sampling_time == -1){
@@ -338,7 +326,8 @@ void _signal_operation::firstO_lowPass_filter(signal* base_sig,double cutOff_fre
 
       double input = base_sig->getValue(idx,_val);
       double output = (1 - filter_parameter)*last_output + filter_parameter*input;
-      base_sig->putValue(output ,idx, _val);
+      resultant->putValue(output ,idx, _val);
+      if(resultant != base_sig)resultant->putValue( base_sig->getValue(idx , _time) ,idx, _time);
       last_output = output;
     }
   }

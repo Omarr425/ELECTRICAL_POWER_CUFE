@@ -15,14 +15,9 @@ using namespace std;
 
 class dataTable{
   private:
-    unsigned int _cols_num;
-    unsigned int _rows_num;
+    unsigned int _cols_num = 0;
+    unsigned int _rows_num = 0;
     vector<vector<double>> _table; 
-
-
-
-
-
   public:
 
     dataTable(); 
@@ -34,10 +29,9 @@ class dataTable{
 
     void eraseRow(int start_row, int rows_num = 1);
     void eraseColumn(int start_col, int cols_num = 1);
-
     void refresh();
-    template <typename data_type>
-    std::vector<data_type>* extractRow(unsigned int rowNumber);
-    template <typename data_type>
-    std::vector<data_type>* extractColumn(unsigned int columnNumber);
+    bool extractRow(unsigned int rowNumber, std::vector<double>* returnArray);
+    bool extractColumn(unsigned int columnNumber, std::vector<double>* returnArray);
+    bool insertRow(unsigned int rowNumber, std::vector<double> *putArray);
+    bool insertColumn(unsigned int columnNumber, std::vector<double>* putArray);
 };

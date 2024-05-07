@@ -3,3 +3,4 @@
 #include "signals/signal_operation.h"
 #include "signals/electric.h"
 #include "mini_sim/mini_sim.h"
+#include "signals/operational_blocks.h"

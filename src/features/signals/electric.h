@@ -50,7 +50,10 @@ class _power: public signal{
 
   public:
 
-    _power(_voltage* volt, _current* current):  signal(signal_operation_global.multiply(current, volt)){
+    _power(_voltage* volt, _current* current){
+      //GET POWER FROM CURRENT AND VOLTAGE MULTIPLICATION
+      signal_operation_global.multiply(volt,current,this, INTERSECT);
+
       if(!this->isTimeAnalysed())this->analyse();
       frequency = this->analytics.base_frequency;
       active = this->analytics.avg;
@@ -172,3 +175,25 @@ class _power: public signal{
 
 };
 
+
+/// @brief calculate energy cost based on how much energy was consumed in a month according to egyptian tarrif
+/// @param energy_in_month (in Kilo Watt HOURS (KWH))
+/// @return cost in EGP
+inline double tarrif_calc(double energy_in_month)
+{
+	double cost=0;
+	if (energy_in_month <= 100)
+	{
+		if (energy_in_month > 50) cost = 0.68 * (energy_in_month - 50) + 50 * 0.58;
+		else cost = energy_in_month * 0.58;
+	}
+	else if (energy_in_month <= 650)
+	{
+		if (energy_in_month > 350) cost = 1.4 * (energy_in_month - 350) + 1.25 * 150 + 0.83 * 200;
+		else if (energy_in_month > 200) cost = 1.25 * (energy_in_month - 200) + 0.83 * 200;
+		else cost = 0.83 * energy_in_month;
+	}
+	else if (energy_in_month <= 1000) cost = energy_in_month * 1.5;
+	else cost = energy_in_month * 1.65;
+	return cost;
+}

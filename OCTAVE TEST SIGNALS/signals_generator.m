@@ -4,14 +4,14 @@ pkg load signal
 % SINE WAVE
 %TIME VECTOR
 TIME_START = 0
-TIME_END = 0.115+0.5;
+TIME_END = 1;
 samplingRate = 10000 %in sample/second
 numSamples = samplingRate*(TIME_END - TIME_START) + 1;
 phase_angle = 0;
 
 Time = linspace(TIME_START, TIME_END, numSamples)';  
 freq = 10;                  % Signal frequency in Hz
-Amp = 5;                     % Signal amplitude
+Amp = 220;                     % Signal amplitude
 signal1 = Amp * sin(2 * pi * freq * Time + phase_angle);  % Generate the sinusoidal signal
 
 
@@ -29,7 +29,7 @@ TIME_START = 0
 TIME_END = 0.05
 samplingRate = 10000 %in sample/second
 numSamples = samplingRate*(TIME_END - TIME_START) + 1
-phase_angle = 0;
+phase_angle = pi/4;
 
 
 Time2 = linspace(TIME_START, TIME_END, numSamples) ;  
@@ -41,10 +41,10 @@ signal2 = Amp * sin(2 * pi * freq * Time2 + phase_angle);  % Generate the sinuso
 %CONCATE TWO SIGNALS
 
 TIME_START = 0.0501
-TIME_END = 0.115+0.5
+TIME_END = 1
 samplingRate = 10000 %in sample/second
 numSamples = samplingRate*(TIME_END - TIME_START) + 1
-phase_angle = 0;
+phase_angle = pi/4;
 
 
 Time3 = linspace(TIME_START, TIME_END, numSamples) ;  

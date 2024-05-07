@@ -78,24 +78,39 @@ void dataTable::refresh(){
   }
 }
 
-template <typename data_type>
-std::vector<data_type>* dataTable::extractRow(unsigned int rowNumber){
+
+bool dataTable::extractRow(unsigned int rowNumber,  std::vector<double>* returnArray){
   if(rowNumber > this->_rows_num){
-    return NULL;
-    }else{
-      std::vector<data_type> returned_vector = new std::vector<data_type>;
-      for(unsigned int i = 0; i < _rows_num; i++){
-        
-      }
+    return  false;
+  }else{
+    for(unsigned int idx = 0; idx < _cols_num; idx++){
+      returnArray->push_back(getData(rowNumber, idx));
     }
+    return true;
+  }
 }
 
-
-template <typename data_type>
-std::vector<data_type>* dataTable::extractColumn(unsigned int columnNumber){
+bool dataTable::extractColumn(unsigned int columnNumber,  std::vector<double>* returnArray){
   if(columnNumber > this->_cols_num){
-    return NULL;
+    return false;
   }else{
-
+    for(unsigned int idx = 0; idx < _rows_num; idx++){
+      returnArray->push_back(getData(idx,  columnNumber));    
+    }
+    return true;
   }
+}
+
+bool dataTable::insertColumn(unsigned int columnNumber,  std::vector<double>* putArray){
+  for(unsigned int idx = 0; idx < putArray->size(); idx++){
+    this->insertData(putArray->at(idx),  idx ,columnNumber);    
+  }
+  return true;
+}
+
+bool dataTable::insertRow(unsigned int rowNumber,  std::vector<double>* putArray){
+  for(unsigned int idx = 0; idx < putArray->size(); idx++){
+    this->insertData(putArray->at(idx),  _rows_num,  idx);    
+  }
+  return true;
 }

@@ -104,13 +104,13 @@ class appliance {
           thisInstantCurrent = result_current->get_signal_data()->getData(inputSignal_idx,_val);
         }
 
-        if(abs(thisInstantVoltage) > abs(maximum_tripVoltage)){
+        if(abs(thisInstantVoltage) > abs(maximum_tripVoltage) && !voltageTripped){
           tripVoltage_startTime = thisInstantTime;
           voltageTripped = true;
           if(disconnect_on_trip)connected = false;
         }
         
-        if(abs(thisInstantCurrent) > abs(maximum_tripCurrent)){
+        if(abs(thisInstantCurrent) > abs(maximum_tripCurrent) && !currentTripped){
           tripCurrent_startTime = thisInstantTime;
           currentTripped = true;
           if(disconnect_on_trip)connected = false;
@@ -203,3 +203,11 @@ class appliance {
     }
 
 };
+
+
+
+
+
+
+
+

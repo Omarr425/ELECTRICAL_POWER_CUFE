@@ -107,8 +107,8 @@ bool signal::pre_analyze()
       next_val = getValue(row_index + 1,_val);
       current_time = getValue(row_index,_time);
 
-      if(last_time >= current_time){
-        std::cerr << "CORRUPTED DATA" << endl;
+      if(last_time > current_time){
+        std::cerr << "CORRUPTED DATA  " << row_index << endl;
         data_viable = false;
         return false;
       }

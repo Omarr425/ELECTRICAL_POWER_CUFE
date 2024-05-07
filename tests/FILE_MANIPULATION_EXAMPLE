@@ -1,0 +1,26 @@
+#include "energy_monitor_cli.h"
+#include <iostream>
+
+// THIS EXAMPLE IS INTENDED TO ELABORATE THE EASE OF USE OF dataTable Class to manipulate 2D formated data in many ways
+
+
+int main(){
+  dataTable dataContainer;
+  file_IO file_manipulation;
+
+  file_manipulation.data_import("Load1",&dataContainer,csv);
+  cout << "COLUMNS NUMBER OF CURRENT TABLE IS :::" << dataContainer.get_col_num() << endl;
+  cout << "ROWS NUMBER OF CURRENT TABLE IS :::" << dataContainer.get_row_num() << endl;
+
+
+  std::vector<double> time;
+  dataContainer.extractColumn(0,&time);
+  std::vector<double> current;
+  dataContainer.extractColumn(1,&current);
+
+  dataTable derivedTable;
+  derivedTable.insertColumn(_time,&time);
+  derivedTable.insertColumn(_val,&current);
+
+  file_manipulation.data_export("derived",derivedTable,csv);
+}
