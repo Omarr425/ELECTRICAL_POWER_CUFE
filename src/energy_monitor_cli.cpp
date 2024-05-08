@@ -2,14 +2,14 @@
 #include <iostream>
 
 
-
+using v_container = dataTable<double>;
 
 
 void analyticBlock(signal *dummySignal, bool show_peaks_troughs = false);
 
 int main(){
   std::string user_input;
-  dataTable dataContainer;
+  v_container dataContainer;
   file_IO file_manipulation;
 
 
@@ -30,19 +30,19 @@ int main(){
 
   cout << "REARRANGING DATA.........." << endl;
   std::vector<double> time;
-  dataContainer.extractColumn(0,&time);
+  dataContainer.extractColumn(0,time);
   std::vector<double> current;
-  dataContainer.extractColumn(2,&current);
+  dataContainer.extractColumn(2,current);
   std::vector<double> voltage;
-  dataContainer.extractColumn(1,&voltage);
+  dataContainer.extractColumn(1,voltage);
 
-  dataTable currentTable;
-  currentTable.insertColumn(_time,&time);
-  currentTable.insertColumn(_val,&current);
+  v_container currentTable;
+  currentTable.insertColumn(_time,time);
+  currentTable.insertColumn(_val,current);
   
-  dataTable voltageTable;  
-  voltageTable.insertColumn(_time,&time);
-  voltageTable.insertColumn(_val,&voltage);
+  v_container voltageTable;  
+  voltageTable.insertColumn(_time,time);
+  voltageTable.insertColumn(_val,voltage);
 
   /*NOW I HAVE THE EXPECTED FORMAT*/
 
