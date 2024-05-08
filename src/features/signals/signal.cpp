@@ -21,7 +21,7 @@ bool signal::loadData(string name, string fileLocation){
   }
 }
 
-bool signal::loadData(dataTable _data)
+bool signal::loadData(v_container _data)
 {
   signal_data = _data;
   return true;
@@ -68,7 +68,6 @@ double signal::_vdt(double v1, double v2, double t1, double t2){
 bool signal::pre_analyze()
 {
 
-
     this->data_viable = true;
 
 
@@ -83,7 +82,7 @@ bool signal::pre_analyze()
     return false;
   }else{
 
-
+  
 
   //START DOING BASIC ANALYTICS   
     unsigned int row_index = 0;
@@ -102,7 +101,6 @@ bool signal::pre_analyze()
 
     //START FILLING COLUMNS FOR integration with respect to time , first derivative , second derivative;
     for(row_index = 1; row_index < (signal_data.get_row_num() - 1); row_index++){
-
       current_val = getValue(row_index,_val);
       next_val = getValue(row_index + 1,_val);
       current_time = getValue(row_index,_time);
@@ -137,7 +135,6 @@ bool signal::pre_analyze()
     analytics.timeEnd = current_time;
     analytics.avg_sample_time = (analytics.timeEnd - analytics.timeStart)/(analytics.samples_num - 1) ;
     refreshData();
-
     return true;
   }
 }
@@ -459,7 +456,6 @@ bool signal::soft_analyze(){
 bool signal::analyse(){
 
   if(pre_analyze()){
-
     //FUTURE WORK THAT INCLUDES TRANSFORM NON EQUALY TIME-SPACED discrete signal into equally time-spaced discrete signal using approximation techniques
     soft_analyze();
     timeDomain_analysed = true;
@@ -476,7 +472,7 @@ const signal::_analytics* signal::get_analytics()const
   return &analytics;
 }
 
-const dataTable* signal::get_signal_data() const
+const v_container* signal::get_signal_data() const
 { 
   return &signal_data;
 }

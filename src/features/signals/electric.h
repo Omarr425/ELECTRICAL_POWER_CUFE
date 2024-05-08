@@ -52,7 +52,9 @@ class _power: public signal{
 
     _power(_voltage* volt, _current* current){
       //GET POWER FROM CURRENT AND VOLTAGE MULTIPLICATION
+
       signal_operation_global.multiply(volt,current,this, INTERSECT);
+
 
       if(!this->isTimeAnalysed())this->analyse();
       frequency = this->analytics.base_frequency;
