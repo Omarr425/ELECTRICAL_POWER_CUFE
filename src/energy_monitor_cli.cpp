@@ -1,6 +1,14 @@
 #include "energy_monitor_cli.h"
 #include <iostream>
+#include "features/signals/signal.h"
 
+
+
+
+/*!
+  @file energy_monitor_cli.cpp
+  @brief the main file where the main() function exists and the program starts executing
+*/
 
 using v_container = dataTable<double>;
 
@@ -12,20 +20,32 @@ int main(){
   v_container dataContainer;
   file_IO file_manipulation;
 
+  pdf_wrap PDF_LOVE;
+
+
+  PDF_LOVE.init("SADPDF.PDF");
+  PDF_LOVE.textPiece_start();
+  PDF_LOVE.setFontStyle(5,50,50,50,1);
+  PDF_LOVE.setCursor(LEFT(30), TOP(50));
+  PDF_LOVE.addText("SAD");
+  PDF_LOVE.newLine();
+  PDF_LOVE.addText("SAD BUT TWICE");
+  PDF_LOVE.newLine();
+  PDF_LOVE.addText("SAD BUT THRICE");
+  PDF_LOVE.newLine();
+  PDF_LOVE.textPiece_end();
+  PDF_LOVE.end();
+
 
 
   cout << "EXTRACTING DATA FROM THE FILE.........." << endl;
-
-
-  file_manipulation.data_import("Load1",&dataContainer,csv);
+  file_manipulation.data_import("Load1.csv",&dataContainer,csv);
 
 
   cout << "COLUMNS NUMBER OF CURRENT TABLE IS :::" << dataContainer.get_col_num() << endl;
   cout << "ROWS NUMBER OF CURRENT TABLE IS :::" << dataContainer.get_row_num() << endl;
 
   /*I HAD TO EXTRACT COLUMNS AND MANIPULATE THEM SINCE THE EXPECTED FORMAT WAS NOT PROVIDED*/
-
-
 
 
   cout << "REARRANGING DATA.........." << endl;
@@ -46,13 +66,12 @@ int main(){
 
   /*NOW I HAVE THE EXPECTED FORMAT*/
 
-
-
   _voltage voltage_input;
   _current current_input;
+
   voltage_input.loadData(voltageTable);
   current_input.loadData(currentTable);
-  _power result_power = _power(&voltage_input,&current_input);
+  _power result_power = _power(voltage_input,current_input);
 
 
   cout << "ANALYSING UNFILTERED SIGNALS .....\n\n" << endl;
@@ -73,26 +92,23 @@ int main(){
   if (user_input == "EXPORT") {
       cout << "EXPORTING UNFILTERED .....\n\n" << endl;
 
-      voltage_input.exportSignal("voltage_output");
-      current_input.exportSignal("current_output");
-      result_power.exportSignal("power_output");
+      voltage_input.exportSignal("voltage_output",true ,  sig_exp::sig);
+      current_input.exportSignal("current_output",false, sig_exp::sig);
+      result_power.exportSignal("power_output",false , sig_exp::sig);
   }
 
   
   cout << "Filtering .....\n\n" << endl;
-  _current filtered_current;
-  _voltage filtered_voltage;
   
   
-  
-  signal_operation_global.firstO_lowPass_filter(&voltage_input,&filtered_voltage,500);
-  signal_operation_global.firstO_lowPass_filter(&current_input,&filtered_current,500);
-  result_power = _power(&filtered_voltage,&filtered_current);
+  signal_operation_global.firstO_lowPass_filter(voltage_input,voltage_input,500,2);
+  signal_operation_global.firstO_lowPass_filter(current_input,current_input,500,2);
+  result_power = _power(voltage_input,current_input);
 
   cout << "\n***********FILTERED VOLTAGE ANALYSIS******\n" << endl;
-  analyticBlock(&filtered_voltage);
+  analyticBlock(&voltage_input);
   cout << "\n***********FILTERED CURRENT ANALYSIS******\n" << endl;
-  analyticBlock(&filtered_current);
+  analyticBlock(&current_input);
   cout << "\n***********FILTERED POWER ANALYSIS******\n" << endl;
   analyticBlock(&result_power);
   cout << "POWER FACTOR :::" << result_power.get_PF() << endl;
@@ -111,7 +127,7 @@ int main(){
 
 
   cout << "SIMULATING APPLIANCE WITH FILTERED CURRENT&VOLTAGE .....\n\n" << endl;
-  appliance modelAppliance = appliance(&voltage_input,&current_input,"refrigerator");
+  appliance modelAppliance = appliance(voltage_input,current_input,"refrigerator");
   unsigned int steps_number = modelAppliance.get_power()->get_analytics()->samples_num;
   for(unsigned int step = 0;  step < steps_number ; step++)modelAppliance.readStep();
 
@@ -153,6 +169,7 @@ void analyticBlock(signal *dummySignal, bool show_peaks_troughs){
   std::cout << "SAMPLING_RATE::"<<dummySignal->get_analytics()->avg_sample_time << endl;
   std::cout << "NUM_OF_SAMPLES::"<<dummySignal->get_analytics()->samples_num << endl;
   std::cout << "DATA VIABLE ::" << dummySignal->dataViable() << endl;
+  std::cout << "FREQUENCY ::" << dummySignal->get_analytics()->base_frequency << endl;
 }
 
 
