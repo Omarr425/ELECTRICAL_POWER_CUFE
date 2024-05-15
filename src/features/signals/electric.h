@@ -39,7 +39,8 @@ enum pf_type{
   LEADING,
   SYNC
 };
-
+#include <iostream>
+#include <stdlib.h>
 class _power: public signal{
   private:
     double active = 0;
@@ -62,6 +63,7 @@ class _power: public signal{
 
 
       if(!this->isTimeAnalysed())this->analyse();
+
       frequency = this->analytics.base_frequency;
       active = this->analytics.avg;
       
@@ -70,6 +72,7 @@ class _power: public signal{
       }else{
         apparent = (this->analytics.avg_ptp)/2;
       }
+ 
 
 
      //CHECK FOR THE HOW THE LOAD BEHAVIOR IS
@@ -88,6 +91,11 @@ class _power: public signal{
       base_volt = &volt;
     }
 
+
+    /// @brief get the energy over the coarse of a certain time period
+    /// @param time_start the start time of the calculations
+    /// @param time_end the end time of the calculations
+    /// @return the energy value
     double get_energy(double time_start,double time_end){
       if(!this->isTimeAnalysed())this->analyse();
       //if time_start is smaller than time_end swap both and multiply by -1(sign) in the end

@@ -31,8 +31,8 @@ struct file_IO{
   @brief csv File I/O functions 
 */
 private:
-bool csv_import(string file_address, dataTable<double> *table);
-bool csv_export(string file_address, dataTable<double> table);
+bool csv_import(string file_address, dataTable<double> &table);
+bool csv_export(string file_address, dataTable<double> &table);
 
 
 
@@ -45,6 +45,6 @@ public:
   @param type file extension
   @return true if operation is successfull false if anything else happens
 */
-bool data_import(string file_address,  dataTable<double> *data,  int type);
-bool data_export(string file_address, dataTable<double> data, int type);
+bool data_import(string file_address,  dataTable<double> &data,  int type);
+bool data_export(string file_address, dataTable<double> &data, int type);
 };

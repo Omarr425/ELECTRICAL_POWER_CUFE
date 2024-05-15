@@ -1,3 +1,4 @@
+#THIS CODE WAS GENERALY PROVIDED BY OMAR_MAGDY0
 cmake_minimum_required(VERSION 3.10)
 project(energy_monitor VERSION 1.0)
 

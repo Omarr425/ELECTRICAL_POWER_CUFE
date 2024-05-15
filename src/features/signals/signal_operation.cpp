@@ -306,7 +306,7 @@ void _signal_operation::add(signal &base_sig1, signal &resultant,double val)
 /// @param cutOff_freq cuttoff frequency
 /// @param order order for the filter block used for cascading
 /// @return 
-unsigned int county = 0;
+
 void _signal_operation::firstO_lowPass_filter(signal& base_sig, signal& resultant,double cutOff_freq ,int order, double avg_sample_time)
 {
   double sampling_time = avg_sample_time;
@@ -331,7 +331,33 @@ void _signal_operation::firstO_lowPass_filter(signal& base_sig, signal& resultan
       last_output = output;
     }
   }
-  if (&resultant == &base_sig)resultant.timeDomain_analysed = false;
+  resultant.timeDomain_analysed = false;
   //RECURSION FOR FILTER CASCADING
   //RECURION APPROACH FAIL AT HIGH FILTER ORDERS(PROBABLE STACK OVERFLOW)
+}
+
+bool _signal_operation::subsignal_time_based(signal &base_sig, signal &sub_sig, double time_start, double time_end)
+{
+  if(!base_sig.isTimeAnalysed())base_sig.analyse();
+  //CHECK IF THE Time Domain of the smaller one intersects the bigger one
+  if((time_start < base_sig.analytics.timeStart) || (time_end > base_sig.analytics.timeEnd)){
+    return false;   
+  }else{
+      unsigned int idx = 0;
+      unsigned int idx_start = 0;
+      unsigned int idx_end = 0;
+
+      for(idx;  base_sig.getValue(idx,  _time) < time_start;  idx++);
+      idx_start = idx;
+      //Now idx_start points to the start of the time domain
+      //Lets start Copying data from the smaller one to the bigger one
+      std::vector<double> temp_row;
+      for(idx; base_sig.getValue(idx, _time) < time_end;  idx++);
+      idx_end = idx;
+
+      //Now lets extract the subset portion of the base signal and pass it to the subSignal
+      base_sig.signal_data.sub_table(sub_sig.signal_data, idx_start,  idx_end,  _time, _val);
+      //voila now we passed a portion of the data of the base signal to the sub signal Usefull for part by part analysis 
+      return true;
+  }  
 }

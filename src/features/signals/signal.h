@@ -109,8 +109,9 @@ using json = nlohmann::json;
     bool periodic_avg_rms = stoi(settings.get_setting("signal","periodic_avg&rms")); 
 
     enum freq_calc_t{
-      peakNdtrough = 0,
-      trigger_level = 1,
+      triggerLevel = 1,
+      peakNdtrough = 2,
+      triggerHysteresis = 3,
     };
     int frequency_calc_type = stoi(settings.get_setting("signal","frequency_calc_type"));
 
@@ -124,9 +125,20 @@ using json = nlohmann::json;
     maximas_minimas val_minimas;
     maximas_minimas dvBdt_maximas;
     maximas_minimas dvBdt_minimas;
-
-
+    std::vector<double> rising_trigger_times;
+    std::vector<double> falling_trigger_times; 
+    std::vector<double> rising_periods;
+    std::vector<double> falling_periods;
     
+    std::vector<signal> subSignals_freq_based;
+    std::vector<signal> subSignals_value_based;
+
+    /// @brief signal value for detecting edges and calculating frequency based on
+    double _trigger_level = 0;
+    double _hysteresis_high_threshold = 5;
+    double _hysteresis_low_threshold = -5; 
+
+
     double _dvBdt(double v1, double v2, double t1, double t2);
     double _dv2Bdt2(double v1, double v2, double v3, double t1, double t2);
     double _vdt(double v1, double v2, double t1, double t2);
@@ -140,7 +152,7 @@ using json = nlohmann::json;
      * 
      * */
     bool pre_analyze();
-    //INTERPOLATIONS FOR FIXING LOW SAMPLE SIGNALS/DIFFERENT SAMPLING RATES
+    /// @brief INTERPOLATIONS FOR FIXING LOW SAMPLE SIGNALS/DIFFERENT SAMPLING RATES
     void interpolate();
     
     /**
@@ -155,15 +167,22 @@ using json = nlohmann::json;
     bool update_local_maximas_minimas();
     /// @brief filter local MAXIMAS and MINIMAS and update ptp data (only top maximas and lowest minimas) 
     bool post_local_maximas_minimas();
+    /// @brief calculate frequency based on Local maximas and minimas and their times respectively 
     bool frequency_peakNdtrough();
+    /// @brief calculate frequency based on crossing trigger level times
     bool frequency_triggerLevel();
+    /// @brief calculate the base_frequency with hysteresis added for noise ignorance
+    bool frequency_triggerHysteresis();
     /// @brief deduce base frequency + angular + number of periods for the signal
     bool deduce_baseFrequency();
     /// @brief rms and avg based on integer number of signals analysis only
     bool deduce_avg_rms();
-
+    /// @brief VALUES ANALYTICS THAT EVALUATE MAXIMAS_MINIMAS using SLOPE DATA
     bool update_slope_maximas_minimas();
         //frequency analytics
+    bool period_pattern_analysis();
+    bool pattern_analyze();
+
     std::vector<double[2]> forrierTransform(signal base_sig); //IN PROGRESS
   
 
@@ -205,7 +224,11 @@ using json = nlohmann::json;
     bool pdf_export(std::string name, std::string file_address = settings.get_setting("signal","export_path"));
     bool exportSignal(std::string name , bool export_all = false, sig_exp expType = sig_exp::csv, std::string fileLocation = settings.get_setting("signal","export_path"));
     bool importSignal(std::string name , std::string fileLocation = settings.get_setting("signal","import_path"));
-
+    
+    
+    void set_trigger_level(double v);
+    double get_trigger_level();
+    void set_hysteresis(double upThreshold, double lowThreshold);
 
     const _analytics* get_analytics()const;
     const v_container* get_signal_data()const;

@@ -3,17 +3,24 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include <cmath>
+#include "operational_blocks.h"
+
+
 
 // EXPECTED DATA FORMAT FIRST COLUMN TIME SECOND COLUMN VALUES
 //FUTURE WORK SUBDIVIDE SIGNALS WHEN FREQUENCY CHANGE OR PHASE ANGLE CHANGES SUDDENLY
 //FOR SUB_DIVIDED ANALYSES FOR EACH PART
+
+/*
+  THIS PIECE OF CODE WAS PROVIDED BY : OOOO;
+*/
 
 
 
 bool signal::loadData(string name, string fileLocation){
     //CONSTRUCTOR
   file_IO importFile;
-  if(importFile.data_import(fileLocation+name,  &signal_data, csv)){
+  if(importFile.data_import(fileLocation+name,  signal_data, csv)){
     refreshData();
     return true;
   }else{
@@ -22,7 +29,7 @@ bool signal::loadData(string name, string fileLocation){
 }
 
 bool signal::loadData(v_container _data)
-{
+{ 
   signal_data = _data;
   return true;
 }
@@ -68,7 +75,7 @@ double signal::_vdt(double v1, double v2, double t1, double t2){
 */
 bool signal::pre_analyze()
 {
-
+ 
     this->data_viable = true;
 
 
@@ -84,7 +91,7 @@ bool signal::pre_analyze()
   }else{
 
   
-
+  
   //START DOING BASIC ANALYTICS   
     unsigned int row_index = 0;
     double current_val = getValue(row_index,_val);
@@ -141,9 +148,10 @@ bool signal::pre_analyze()
 }
 
 
-/// @brief VALUES ANALYTICS THAT EVALUATE MAXIMAS_MINIMAS using SLOPE DATA
+
 bool signal::update_local_maximas_minimas()
-{
+{ 
+
   unsigned int index = 1;
   int current_firstDeriv_sign = sign(getValue(index,_first_deriv));
   int last_firstDeriv_sign = current_firstDeriv_sign;
@@ -228,6 +236,10 @@ bool signal::update_local_maximas_minimas()
   return true;
   //END OF update_local_maximas_minimas
 }
+
+/*
+  THIS PIECE OF CODE WAS PROVIDED BY : OOOO;
+*/
 
 bool signal::post_local_maximas_minimas()
 {
@@ -411,9 +423,98 @@ bool signal::frequency_peakNdtrough(){
 
 }
 
-bool signal::frequency_triggerLevel()
+bool signal::frequency_triggerLevel(){
+  double rise_trigger_time = 0;
+  double fall_trigger_time = 0; 
+  double last_rise_trigger_time = 0;
+  double last_fall_trigger_time = 0;
+  unsigned int idx = 0;
+  double last_value = getValue(idx,  _val);
+  idx++;
+  int count = 0;
+
+  rising_trigger_times.clear();
+  falling_trigger_times.clear();
+  falling_periods.clear();
+  rising_periods.clear();
+
+  for(idx ; idx < this->analytics.samples_num; idx++){
+    double current_value = getValue(idx,  _val);
+
+    if((last_value <= _trigger_level) && (current_value > _trigger_level)){
+      rising_trigger_times.push_back(getValue(idx, _time) );
+    }
+    if((last_value >= _trigger_level) && (current_value < _trigger_level)){
+      falling_trigger_times.push_back(getValue(idx, _time) );
+    }
+    //NOW WE HAVE TWO VECTORS OF PERIODS FOR THE SIGNAL ONE RISING EDGE BASED AND THE OTHER FALLING EDGE
+
+    last_value = current_value;
+  }
+
+
+  double sum_rise_periods = 0;
+  double sum_fall_periods = 0;
+
+
+  unsigned int idx_periods = 0;
+     
+  //WE START FROM INDEX 1 to compensate for the disrupted signal at first due to filtering similar stuff
+  for(idx_periods = 1;  idx_periods < rising_trigger_times.size() - 1; idx_periods++){
+    rising_periods.push_back(  rising_trigger_times.at(idx_periods + 1) - rising_trigger_times.at(idx_periods) );
+    sum_rise_periods += rising_periods.at(idx_periods - 1);  
+  } 
+  double avg_rise_period = sum_rise_periods/(idx_periods - 1);
+  
+  //WE START FROM INDEX 1 to compensate for the disrupted signal at first due to filtering similar stuff
+  for(idx_periods = 1;  idx_periods < falling_trigger_times.size() - 1; idx_periods++){
+    falling_periods.push_back(  falling_trigger_times.at(idx_periods + 1) - falling_trigger_times.at(idx_periods) );
+    sum_fall_periods += falling_periods.at(idx_periods - 1);
+  }
+  double avg_fall_period = sum_fall_periods/(idx_periods - 1);
+  //For now we are going to get the frequency for this signal as a whole We may have to subdivide it later;
+  this->analytics.periodic_time = (avg_fall_period + avg_rise_period)/2 ;
+  this->analytics.base_frequency = 1/this->analytics.periodic_time;
+  this->analytics.base_angular_frequency = 2*M_PI*this->analytics.base_frequency;
+  this->analytics.periods_num = (this->analytics.timeEnd - this->analytics.timeStart) * this->analytics.base_frequency;
+
+  return true;
+}
+
+bool signal::frequency_triggerHysteresis()
 {
-  return false;
+  hysteresis hysteresisBlock = hysteresis(this->_hysteresis_low_threshold,  this->_hysteresis_high_threshold, false);
+  unsigned int idx = 0;
+  bool current_hyster_state = hysteresisBlock.update_state(getValue(idx,  _val)); 
+  bool last_hyster_state =  current_hyster_state;
+  idx++;
+
+  rising_trigger_times.clear();
+  falling_trigger_times.clear();
+  falling_periods.clear();
+  rising_periods.clear();
+
+
+  for(idx;  idx < this->analytics.samples_num;  idx++){
+    current_hyster_state = hysteresisBlock.update_state(getValue(idx, _val));
+    if(last_hyster_state != current_hyster_state && current_hyster_state == true){
+      this->rising_trigger_times.push_back(getValue(idx, _time) );
+    }    
+    last_hyster_state = current_hyster_state;
+  }
+  
+  double periods_sum = 0;
+  unsigned int rise_idx = 1;
+  for(rise_idx = 1; rise_idx < this->rising_trigger_times.size() - 1; rise_idx++){
+    this->rising_periods.push_back( rising_trigger_times.at(rise_idx + 1) - rising_trigger_times.at(rise_idx) );
+    periods_sum += rising_periods.at(rise_idx - 1);
+  }
+  analytics.periodic_time = periods_sum/(rise_idx - 1);
+  analytics.base_frequency = 1/analytics.periodic_time;
+  analytics.base_angular_frequency = analytics.base_frequency * M_PI * 2;
+
+  
+  return true;
 }
 
 bool signal::deduce_baseFrequency(){
@@ -422,9 +523,12 @@ bool signal::deduce_baseFrequency(){
       return frequency_peakNdtrough();
       break;
 
-    case trigger_level:
+    case triggerLevel:
       return frequency_triggerLevel();
       break;
+
+    case triggerHysteresis:
+      return frequency_triggerHysteresis();
 
     default:
       return false;
@@ -475,6 +579,37 @@ bool signal::soft_analyze(){
   return true;
 }
 
+bool signal::period_pattern_analysis()
+{
+  //Remember we have edge(i + 1) - edge(i) time as the period 
+  //time in rising_periods vector same for falling_periods vector
+  //now we are going to analyse any pattern and create subsignals when the periods time changes
+  //consecutive equal periods = subsignal ; transition time to a different consequetive equal periods = transient
+  //consecutive equal periods again = subsignal ;
+
+  int count = 0;
+  unsigned int rise_idx = 1;
+  unsigned int start_flag = 0;
+
+  for(rise_idx; rise_idx < rising_periods.size(); rise_idx++){
+    if(!isNear(rising_periods.at(rise_idx),rising_periods.at(rise_idx - 1), period_diff_accuracy)){
+      unsigned int end_flag = rise_idx;
+      cout << count++ << ":::" << rising_periods.at(rise_idx) << ":::" << rising_periods.at(rise_idx - 1) << endl;
+      cout << rising_trigger_times.at(rise_idx - 1) << ":::" << rising_trigger_times.at(rise_idx) << endl;
+    }
+  }
+
+
+
+  return true;
+}
+
+bool signal::pattern_analyze()
+{
+  period_pattern_analysis();
+  return true;
+}
+
 
 
 
@@ -484,6 +619,9 @@ bool signal::analyse(){
     //FUTURE WORK THAT INCLUDES TRANSFORM NON EQUALY TIME-SPACED discrete signal into equally time-spaced discrete signal using approximation techniques
     soft_analyze();
     timeDomain_analysed = true;
+    pattern_analyze();
+
+
     return true;
   }
   else{
@@ -609,6 +747,20 @@ bool signal::importSignal(string name, string fileLocation)
   }
 }
 
+void signal::set_trigger_level(double v)
+{
+  _trigger_level = v;
+}
+
+double signal::get_trigger_level()
+{
+  return _trigger_level;
+}
+
+void signal::set_hysteresis(double upThreshold, double lowThreshold){
+  this->_hysteresis_high_threshold = upThreshold;
+  this->_hysteresis_low_threshold = lowThreshold;
+}
 
 bool signal::pdf_export(std::string name, std::string file_address)
 {

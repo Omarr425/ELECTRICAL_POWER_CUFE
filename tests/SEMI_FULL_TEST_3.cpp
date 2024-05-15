@@ -40,7 +40,7 @@ int main(){
 
   cout << "EXTRACTING DATA FROM THE FILE.........." << endl;
   file_manipulation.data_import("Load1.csv",dataContainer,csv);
-  
+
 
   cout << "COLUMNS NUMBER OF CURRENT TABLE IS :::" << dataContainer.get_col_num() << endl;
   cout << "ROWS NUMBER OF CURRENT TABLE IS :::" << dataContainer.get_row_num() << endl;
@@ -56,31 +56,23 @@ int main(){
   std::vector<double> voltage;
   dataContainer.extractColumn(1,voltage);
 
-
-
   v_container currentTable;
   currentTable.insertColumn(_time,time);
   currentTable.insertColumn(_val,current);
-  currentTable.sub_table(currentTable,  0,  500000,  0,  1);
   
-
   v_container voltageTable;  
   voltageTable.insertColumn(_time,time);
   voltageTable.insertColumn(_val,voltage);
-  voltageTable.sub_table(voltageTable,  0,  500000,  0,  1);
+
   /*NOW I HAVE THE EXPECTED FORMAT*/
 
   _voltage voltage_input;
   _current current_input;
-  voltage_input.set_hysteresis(50, -50);
-  current_input.set_hysteresis(3, -3);
+
   voltage_input.loadData(voltageTable);
   current_input.loadData(currentTable);
-
-
   _power result_power = _power(voltage_input,current_input);
-  result_power.set_hysteresis(60,20);
- 
+
 
   cout << "ANALYSING UNFILTERED SIGNALS .....\n\n" << endl;
   cout << "\n***********VOLTAGE ANALYSIS******\n" << endl;
@@ -89,7 +81,6 @@ int main(){
   analyticBlock(&current_input);
   cout << "\n***********POWER ANALYSIS******\n" << endl;
   analyticBlock(&result_power);
-
   cout << "POWER FACTOR :::" << result_power.get_PF() << endl;
   cout << "active :::" << result_power.get_active() << endl;
   cout << "apparent :::" << result_power.get_apparent() << endl;
@@ -101,17 +92,17 @@ int main(){
   if (user_input == "EXPORT") {
       cout << "EXPORTING UNFILTERED .....\n\n" << endl;
 
-      voltage_input.exportSignal("voltage_output.csv",true ,  sig_exp::csv);
-      current_input.exportSignal("current_output.csv",false, sig_exp::csv);
-      result_power.exportSignal("power_output.csv",false , sig_exp::csv);
+      voltage_input.exportSignal("voltage_output",true ,  sig_exp::sig);
+      current_input.exportSignal("current_output",false, sig_exp::sig);
+      result_power.exportSignal("power_output",false , sig_exp::sig);
   }
 
   
   cout << "Filtering .....\n\n" << endl;
   
   
-  signal_operation_global.firstO_lowPass_filter(voltage_input,voltage_input,500,3);
-  signal_operation_global.firstO_lowPass_filter(current_input,current_input,500,3);
+  signal_operation_global.firstO_lowPass_filter(voltage_input,voltage_input,500,2);
+  signal_operation_global.firstO_lowPass_filter(current_input,current_input,500,2);
   result_power = _power(voltage_input,current_input);
 
   cout << "\n***********FILTERED VOLTAGE ANALYSIS******\n" << endl;
@@ -128,9 +119,9 @@ int main(){
   cin >> user_input;
   if (user_input == "EXPORT") {
       cout << "EXPORTING FILTERED .....\n\n" << endl;
-      voltage_input.exportSignal("voltage_output_filtered.csv");
-      current_input.exportSignal("current_output_filtered.csv");
-      result_power.exportSignal("power_output_filtered.csv");
+      voltage_input.exportSignal("voltage_output_filtered");
+      current_input.exportSignal("current_output_filtered");
+      result_power.exportSignal("power_output_filtered");
   }
   cout << "NOW SIMULATING THE APPLIANCE MODEL USING FILTERED CURRENT AND VOLTAGE.........." << endl;
 

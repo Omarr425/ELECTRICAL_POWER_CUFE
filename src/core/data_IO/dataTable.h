@@ -102,12 +102,12 @@ class dataTable{
     /// @param rowNumber the row number of the row you want to extract starting from 0
     /// @param returnArray the vector the row is returned in
     /// @return boolean for success of operation
-    bool extractRow(unsigned int rowNumber, std::vector<HELD_DATA>& returnArray){
+    bool extractRow(unsigned int rowNumber, std::vector<HELD_DATA>  &returnArray){
       if(rowNumber > this->_rows_num){
         return  false;
       }else{
         for(unsigned int idx = 0; idx < _cols_num; idx++){
-          returnArray->push_back(getData(rowNumber, idx));
+          returnArray.push_back(getData(rowNumber, idx));
         }
         return true;
       }
@@ -117,7 +117,7 @@ class dataTable{
     /// @param rowNumber the row number of the row you want to extract starting from 0
     /// @param returnArray the vector the row is returned in
     /// @return boolean for success of operation
-    bool extractColumn(unsigned int columnNumber, std::vector<HELD_DATA>& returnArray){
+    bool extractColumn(unsigned int columnNumber, std::vector<HELD_DATA>  &returnArray){
       if(columnNumber > this->_cols_num){
         return false;
       }else{
@@ -130,7 +130,7 @@ class dataTable{
     /// @param rowNumber the position of the row to be added
     /// @param putArray the vector that holds the data to be put
     /// @return boolean for success of operation
-    bool insertRow(unsigned int rowNumber,const std::vector<HELD_DATA>& putArray){
+    bool insertRow(unsigned int rowNumber,const std::vector<HELD_DATA>  &putArray){
       for(unsigned int idx = 0; idx < putArray->size(); idx++){
         this->insertData(putArray->at(idx),  rowNumber ,  idx);    
       }
@@ -141,7 +141,7 @@ class dataTable{
     /// @param rowNumber the position of the column to be added
     /// @param putArray the vector that holds the data to be put
     /// @return boolean for success of operation
-    bool insertColumn(unsigned int columnNumber,const std::vector<HELD_DATA>& putArray){
+    bool insertColumn(unsigned int columnNumber,const std::vector<HELD_DATA>  &putArray){
       if(columnNumber >= this->_table.size()){
         this->_table.resize(columnNumber + 1);
         _cols_num = columnNumber + 1;
@@ -152,7 +152,33 @@ class dataTable{
       _table.at(columnNumber) = putArray;
       return true;
     }
+
+    /// @brief  EXTRACT A SUBSET OF THE BIGGER TABLE
+    /// @param subTable THE TABLE WE PASS THE EXTRACTED DATA TO
+    /// @param rowStart the start row for the extraction
+    /// @param rowEnd the end row for the extraction
+    /// @param columnStart the start column for the extraction
+    /// @param columnEnd the end column for the extraction
+    /// @return true if the extraction was in bounds .ie subTable bounds is subset of the table else return false
+    bool sub_table(dataTable &subTable, int rowStart, int rowEnd, int columnStart,  int columnEnd){
+      if((rowStart >= this->_rows_num) || (rowEnd >= this->_rows_num) || (columnStart >= this->_cols_num) || (columnEnd >= this->_cols_num)){
+        return false;
+      }else{
+        for(int i = columnStart;  i <= columnEnd;  i++){
+          if(i < subTable._table.size()){
+            subTable._table.at(i) = (  std::vector<HELD_DATA>(this->_table.at(i).begin() + rowStart ,this->_table.at(i).begin() + rowEnd + 1));
+          }else{
+            subTable._table.push_back(  std::vector<HELD_DATA>(this->_table.at(i).begin() + rowStart ,this->_table.at(i).begin() + rowEnd + 1));
+          }
+        }
+
+        subTable._rows_num = abs(rowEnd - rowStart + 1);
+        subTable._cols_num = columnEnd - columnStart + 1; 
+        return true;
+      }
+    }
 };
 
+  
 
 

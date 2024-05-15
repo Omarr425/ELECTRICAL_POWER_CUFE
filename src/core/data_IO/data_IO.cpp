@@ -6,12 +6,12 @@
 
 using v_container = dataTable<double>;
 
-bool file_IO::csv_import(string file_address, v_container *table){
+bool file_IO::csv_import(string file_address, v_container &table){
   ifstream file;
   string cell;
   char c;
 
-  table->get_row_num();
+  table.get_row_num();
 
   int row_index = 0;
   int col_index = 0;
@@ -23,7 +23,7 @@ bool file_IO::csv_import(string file_address, v_container *table){
         if(c == '\n' || c == ','){
 
           try{
-            table->insertData(stod(cell),  row_index, col_index);
+            table.insertData(stod(cell),  row_index, col_index);
             cell = "";
           }
           catch(const std::invalid_argument& e){
@@ -57,7 +57,7 @@ bool file_IO::csv_import(string file_address, v_container *table){
 
 
 
-bool file_IO::csv_export(string file_address, v_container table){
+bool file_IO::csv_export(string file_address, v_container &table){
   ofstream outputFile;
   outputFile << std::setprecision(10);
   outputFile.open(file_address);
@@ -81,7 +81,7 @@ bool file_IO::csv_export(string file_address, v_container table){
 
 
 
-bool file_IO::data_import(string file_address,  v_container *data,  int type){
+bool file_IO::data_import(string file_address,  v_container &data,  int type){
   switch (type)
   {
   case csv:
@@ -93,7 +93,7 @@ bool file_IO::data_import(string file_address,  v_container *data,  int type){
   }
 }
 
-bool file_IO::data_export(string file_address, v_container data, int type){
+bool file_IO::data_export(string file_address, v_container &data, int type){
   switch (type)
   {
   case csv:
