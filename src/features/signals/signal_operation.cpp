@@ -301,11 +301,7 @@ void _signal_operation::add(signal &base_sig1, signal &resultant,double val)
   }
 }
 
-/// @brief //output = (1 - filter_parameter)*last_output + filter_parameter*input
-/// @param base_sig signal to filter
-/// @param cutOff_freq cuttoff frequency
-/// @param order order for the filter block used for cascading
-/// @return 
+
 
 void _signal_operation::firstO_lowPass_filter(signal& base_sig, signal& resultant,double cutOff_freq ,int order, double avg_sample_time)
 {

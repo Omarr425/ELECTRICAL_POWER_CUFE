@@ -10,8 +10,9 @@ IMPLEMENTATION AND PROTOTYPES ARE IN HEADER FOR NO-ERROR COMPILING
 #include <string>
 #include <iostream>
 using namespace std;
-#define VECTOR_OVERSIZE 1
-
+//ALLOCATE EXTRA MEMORY TO DAMPEN THE DELAY OF VECTOR EXPANSION
+#define ROW_VECTOR_OVERSIZE 10
+#define COLUMN_VECTOR_OVERSIZE 1
 
 /*!
   @file dataTable.h
@@ -50,8 +51,9 @@ class dataTable{
         _cols_num = col + 1;
       }
 
-    if(col >= _table.size())_table.resize(col + VECTOR_OVERSIZE);
-    if(row >= _table.at(col).size())_table.at(col).resize(row + VECTOR_OVERSIZE);
+    if(col >= _table.size())_table.resize(col + COLUMN_VECTOR_OVERSIZE);
+    if(row >= _table.at(col).size())_table.at(col).resize(row + ROW_VECTOR_OVERSIZE);
+    //WE CHECK BOUNDARIES FIRST THEN INSERT OUR DATA
       _table.at(col).at(row) = d;
     }
 
@@ -96,6 +98,13 @@ class dataTable{
           _table.at(i).resize(_rows_num);
         }
       }
+      //SHRINK THE TABLE TOO TO COMPENSATE FOR OVERSIZING
+      _table.shrink_to_fit();
+      for(unsigned int i = 0; i < _table.size();  i++){
+        _table.at(i).shrink_to_fit();
+      }
+
+
     }
 
     /// @brief Extracts a row from the dataTable in a vector

@@ -2,7 +2,13 @@
 #include <iostream>
 #include "features/signals/signal.h"
 
+/*
+  SUBSIGNAL IMPLEMENTATION TEST FOR SIGNAL ANALYSIS FOR DIFFERENT STATES FOR A SIGNAL
+  DIVIDE AND CONQUER LIKISH APPROACH WHERE EACH TIME A PERIOD WITH DIFFERENT PERIODIC TIME BREAKS A SET
+  THE SET THAT WAS BROKEN BECOMES A UNIQUE SIGNAL THAT DESERVES AN ANALYSIS FOR IT ONLY 
 
+
+*/
 
 
 /*!
@@ -72,23 +78,42 @@ int main(){
 
   _voltage voltage_input;
   _current current_input;
-  voltage_input.set_hysteresis(50, -50);
-  current_input.set_hysteresis(3, -3);
+  voltage_input.set_hysteresis(0, -100);
+  current_input.set_hysteresis(0, -3);
   voltage_input.loadData(voltageTable);
   current_input.loadData(currentTable);
 
 
   _power result_power = _power(voltage_input,current_input);
-  result_power.set_hysteresis(60,20);
+
  
 
   cout << "ANALYSING UNFILTERED SIGNALS .....\n\n" << endl;
   cout << "\n***********VOLTAGE ANALYSIS******\n" << endl;
   analyticBlock(&voltage_input);
+  for(int i = 0; i < voltage_input.subSignal_periodBased()->subSignals.size(); i++){
+    cout << "----------------------------------" << endl;
+    cout << "SUBSIGNAL : " << i << endl;
+    cout << "----------------------------------" << endl;
+      analyticBlock( &(voltage_input.subSignal_periodBased()->subSignals.at(i)) );
+  }
   cout << "\n***********CURRENT ANALYSIS******\n" << endl;
   analyticBlock(&current_input);
+  for(int i = 0; i < current_input.subSignal_periodBased()->subSignals.size(); i++){
+    cout << "----------------------------------" << endl;
+    cout << "SUBSIGNAL : " << i << endl;
+    cout << "----------------------------------" << endl;
+      analyticBlock( &(current_input.subSignal_periodBased()->subSignals.at(i)) );
+  }
   cout << "\n***********POWER ANALYSIS******\n" << endl;
   analyticBlock(&result_power);
+  for(int i = 0; i < result_power.subSignal_periodBased()->subSignals.size(); i++){
+    cout << "----------------------------------" << endl;
+    cout << "SUBSIGNAL : " << i << endl;
+    cout << "----------------------------------" << endl;
+      analyticBlock( &(result_power.subSignal_periodBased()->subSignals.at(i)) );
+  }
+
 
   cout << "POWER FACTOR :::" << result_power.get_PF() << endl;
   cout << "active :::" << result_power.get_active() << endl;
@@ -110,16 +135,35 @@ int main(){
   cout << "Filtering .....\n\n" << endl;
   
   
-  signal_operation_global.firstO_lowPass_filter(voltage_input,voltage_input,500,3);
-  signal_operation_global.firstO_lowPass_filter(current_input,current_input,500,3);
+  signal_operation_global.firstO_lowPass_filter(voltage_input,voltage_input,500,2);
+  signal_operation_global.firstO_lowPass_filter(current_input,current_input,500,2);
   result_power = _power(voltage_input,current_input);
 
   cout << "\n***********FILTERED VOLTAGE ANALYSIS******\n" << endl;
   analyticBlock(&voltage_input);
+  for(int i = 0; i < voltage_input.subSignal_periodBased()->subSignals.size(); i++){
+    cout << "----------------------------------" << endl;
+    cout << "SUBSIGNAL : " << i << endl;
+    cout << "----------------------------------" << endl;
+      analyticBlock( &(voltage_input.subSignal_periodBased()->subSignals.at(i)) );
+  }
   cout << "\n***********FILTERED CURRENT ANALYSIS******\n" << endl;
   analyticBlock(&current_input);
+  for(int i = 0; i < current_input.subSignal_periodBased()->subSignals.size(); i++){
+    cout << "----------------------------------" << endl;
+    cout << "SUBSIGNAL : " << i << endl;
+    cout << "----------------------------------" << endl;
+      analyticBlock( &(current_input.subSignal_periodBased()->subSignals.at(i)) );
+  }
   cout << "\n***********FILTERED POWER ANALYSIS******\n" << endl;
   analyticBlock(&result_power);
+  for(int i = 0; i < result_power.subSignal_periodBased()->subSignals.size(); i++){
+    cout << "----------------------------------" << endl;
+    cout << "SUBSIGNAL : " << i << endl;
+    cout << "----------------------------------" << endl;
+      analyticBlock( &(result_power.subSignal_periodBased()->subSignals.at(i)) );
+  }
+
   cout << "POWER FACTOR :::" << result_power.get_PF() << endl;
   cout << "active :::" << result_power.get_active() << endl;
   cout << "apparent :::" << result_power.get_apparent() << endl;
@@ -171,6 +215,8 @@ int main(){
 
 void analyticBlock(signal *dummySignal, bool show_peaks_troughs){
   if(!dummySignal->isTimeAnalysed())dummySignal->analyse();
+  std::cout << "TIME_START :: " << dummySignal->get_analytics()->timeStart << endl;
+  std::cout << "TIME_END :: " << dummySignal->get_analytics()->timeEnd << endl;
   std::cout << "MAX::"<<dummySignal->get_analytics()->max_val << " at "  <<  dummySignal->get_analytics()->max_val_time << endl;
   std::cout << "MIN::"<<dummySignal->get_analytics()->min_val << " at "  <<  dummySignal->get_analytics()->min_val_time << endl;
   std::cout << "AVG::"<<dummySignal->get_analytics()->avg << endl;

@@ -18,7 +18,7 @@ PDF format export
 ## **MORE TO COME**
     WEB_UI / QT_UI
     PARSER
-    FAST FORRIER TRANSFORM ALGORITHM
+    FAST FORRIER TRANSFORM FFT ALGORITHM 
 
 ## **MORE TO COME BUT LESS PRIORITY**
     REAL_TIME_DIGITAL_FILTERING by using an MCU for sampling and signal output (multithreaded/multicore MCU's recommended)

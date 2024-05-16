@@ -61,7 +61,7 @@ class _power: public signal{
 
       signal_operation_global.multiply(volt,current,*this, INTERSECT);
 
-
+        this->set_hysteresis(500,50);
       if(!this->isTimeAnalysed())this->analyse();
 
       frequency = this->analytics.base_frequency;

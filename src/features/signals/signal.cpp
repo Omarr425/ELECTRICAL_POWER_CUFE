@@ -4,6 +4,7 @@
 #include <math.h>
 #include <cmath>
 #include "operational_blocks.h"
+#include "signal_operation.h"
 
 
 
@@ -373,7 +374,6 @@ bool signal::frequency_peakNdtrough(){
   if(_maxima_periods.size() > 1){
     //START by assuming it is periodic unless its not
     maxima_periodic = true;
-    cout << base_frequency_maximaBased << "::::::" << base_frequency_minimaBased << endl;
     for(int i = 0;  i < (_maxima_periods.size() - 1); i++){
       if(!isNear(_maxima_periods.at(i),  _maxima_periods.at(i + 1), period_diff_accuracy)){
         maxima_periodic = false;
@@ -459,16 +459,16 @@ bool signal::frequency_triggerLevel(){
 
   unsigned int idx_periods = 0;
      
-  //WE START FROM INDEX 1 to compensate for the disrupted signal at first due to filtering similar stuff
-  for(idx_periods = 1;  idx_periods < rising_trigger_times.size() - 1; idx_periods++){
-    rising_periods.push_back(  rising_trigger_times.at(idx_periods + 1) - rising_trigger_times.at(idx_periods) );
+  //WE START FROM INDEX 1 to compensate for the disrupted or shifted signal at first due to filtering similar stuff
+  for(idx_periods = 1;  idx_periods < rising_trigger_times.size(); idx_periods++){
+    rising_periods.push_back(  rising_trigger_times.at(idx_periods) - rising_trigger_times.at(idx_periods - 1) );
     sum_rise_periods += rising_periods.at(idx_periods - 1);  
   } 
   double avg_rise_period = sum_rise_periods/(idx_periods - 1);
   
-  //WE START FROM INDEX 1 to compensate for the disrupted signal at first due to filtering similar stuff
-  for(idx_periods = 1;  idx_periods < falling_trigger_times.size() - 1; idx_periods++){
-    falling_periods.push_back(  falling_trigger_times.at(idx_periods + 1) - falling_trigger_times.at(idx_periods) );
+  //WE START FROM INDEX 1 to compensate for the disrupted or shifted signal at first due to filtering similar stuff
+  for(idx_periods = 1;  idx_periods < falling_trigger_times.size(); idx_periods++){
+    falling_periods.push_back(  falling_trigger_times.at(idx_periods) - falling_trigger_times.at(idx_periods - 1) );
     sum_fall_periods += falling_periods.at(idx_periods - 1);
   }
   double avg_fall_period = sum_fall_periods/(idx_periods - 1);
@@ -505,14 +505,15 @@ bool signal::frequency_triggerHysteresis()
   
   double periods_sum = 0;
   unsigned int rise_idx = 1;
-  for(rise_idx = 1; rise_idx < this->rising_trigger_times.size() - 1; rise_idx++){
-    this->rising_periods.push_back( rising_trigger_times.at(rise_idx + 1) - rising_trigger_times.at(rise_idx) );
+  for(rise_idx = 1; rise_idx < this->rising_trigger_times.size(); rise_idx++){
+    this->rising_periods.push_back( rising_trigger_times.at(rise_idx) - rising_trigger_times.at(rise_idx - 1) );
     periods_sum += rising_periods.at(rise_idx - 1);
   }
-  analytics.periodic_time = periods_sum/(rise_idx - 1);
-  analytics.base_frequency = 1/analytics.periodic_time;
-  analytics.base_angular_frequency = analytics.base_frequency * M_PI * 2;
-
+  
+  this->analytics.periodic_time = periods_sum/(rise_idx - 1);
+  this->analytics.base_frequency = 1/analytics.periodic_time;
+  this->analytics.base_angular_frequency = analytics.base_frequency * M_PI * 2;
+  this->analytics.periods_num = (analytics.timeEnd - analytics.timeStart)*analytics.base_frequency;
   
   return true;
 }
@@ -542,7 +543,7 @@ bool signal::deduce_avg_rms()
   double endTime_stamp = 0;
   //RMS and AVG per period or for the whole signal as a whole
   if(periodic_avg_rms){
-    endTime_stamp = analytics.periodic_time * floor(analytics.periods_num) ; 
+    endTime_stamp = analytics.periodic_time * floor(analytics.periods_num) + startTime_stamp ; 
   }else{
     endTime_stamp = analytics.timeEnd;
   }
@@ -579,34 +580,85 @@ bool signal::soft_analyze(){
   return true;
 }
 
+
+
 bool signal::period_pattern_analysis()
 {
-  //Remember we have edge(i + 1) - edge(i) time as the period 
+  //Remember we have edge(i) - edge(i - 1) time as the period 
   //time in rising_periods vector same for falling_periods vector
   //now we are going to analyse any pattern and create subsignals when the periods time changes
   //consecutive equal periods = subsignal ; transition time to a different consequetive equal periods = transient
   //consecutive equal periods again = subsignal ;
 
-  int count = 0;
   unsigned int rise_idx = 1;
-  unsigned int start_flag = 0;
+  unsigned int pattern_idx = 0;
+
+  periods_pattern.clear();
+  if(this->rising_trigger_times.size() > 0){
+    periods_pattern.push_back(pattern(this->analytics.timeStart, 0));
+  }
+
+  unsigned int transients_count = 0;
+  unsigned int unique_periods_count = 0;
 
   for(rise_idx; rise_idx < rising_periods.size(); rise_idx++){
     if(!isNear(rising_periods.at(rise_idx),rising_periods.at(rise_idx - 1), period_diff_accuracy)){
-      unsigned int end_flag = rise_idx;
-      cout << count++ << ":::" << rising_periods.at(rise_idx) << ":::" << rising_periods.at(rise_idx - 1) << endl;
-      cout << rising_trigger_times.at(rise_idx - 1) << ":::" << rising_trigger_times.at(rise_idx) << endl;
+      //THE LAST PATTERN ENDED WE STORE ITS ENDING TIME
+      periods_pattern.at(pattern_idx).periodsCount++;
+      periods_pattern.at(pattern_idx).pattern_end_time = rising_trigger_times.at(rise_idx);
+      //WE START A NEW PERIODS PATTERN
+      periods_pattern.push_back(pattern(rising_trigger_times.at(rise_idx),  0)  );
+      pattern_idx++;
+    }else{
+      periods_pattern.at(pattern_idx).periodsCount++;
+    }
+  }
+  periods_pattern.at(pattern_idx).periodsCount++;
+  periods_pattern.at(pattern_idx).pattern_end_time = this->analytics.timeEnd;
+
+  //CATEGORIZE THE SUBSIGNALS
+  
+  for(int idx = 0; idx < periods_pattern.size(); idx++){
+    if(periods_pattern.at(idx).periodsCount >= minimum_periodic_periodNum){
+      periods_pattern.at(idx).type = pattern_type::periodic;
+      unique_periods_count++;
+    }else{
+      periods_pattern.at(idx).type = pattern_type::transient;
+      transients_count++;
     }
   }
 
+  //CONNECT consecutive transients to make a single big transient 
+  //USING A SIMPLE ALGORITHM WE CHECK OUR CONDITION AND IF THE LAST ELEMENT AND CURRENT ONE SATISFY IT
+  //COMBINE THE LAST ELEMENT AND CURRENT ONE UNIION THEIR TIMES AND DELETE THE CURRENT ONE
 
+  //NOW WE ARE GOING TO FILTER THE PATTERN AND CONCATENATE ONES WITH PERIODS SMALLER THAN A USER DEFINED NUMBER
+  //LETS CALL THEM TRANSIENTS FOR NOW DUE TO PHASE SHIFTS AND SUDDEN VALUE CHANGES  
+  for(int idx = 1; idx < periods_pattern.size();  ){
+    if( (periods_pattern.at(idx).type == pattern_type::transient) &&  (periods_pattern.at(idx - 1).type == pattern_type::transient)){
+      periods_pattern.at(idx - 1).pattern_start_time = periods_pattern.at(idx - 1).pattern_start_time;
+      periods_pattern.at(idx - 1).pattern_end_time = periods_pattern.at(idx).pattern_end_time;
+      periods_pattern.at(idx - 1).periodsCount += periods_pattern.at(idx).periodsCount;
+      periods_pattern.erase( periods_pattern.begin() + idx);
+      transients_count--;
+    }else{
+      idx++;
+    }
+  }
 
+  subSignals_period_based.transients_count = transients_count;
+  subSignals_period_based.unique_periods_count = unique_periods_count;
   return true;
 }
+/*-----------------------END OF period_pattern_analysis()---------------------------------*/
+
+
 
 bool signal::pattern_analyze()
 {
-  period_pattern_analysis();
+  if(frequency_calc_type != peakNdtrough){
+    period_pattern_analysis();
+  }
   return true;
 }
 
@@ -620,7 +672,7 @@ bool signal::analyse(){
     soft_analyze();
     timeDomain_analysed = true;
     pattern_analyze();
-
+    make_subsignals(periods_pattern, subSignals_period_based);
 
     return true;
   }
@@ -639,6 +691,29 @@ const v_container* signal::get_signal_data() const
 { 
   return &signal_data;
 }
+
+void signal::make_subsignals(std::vector<pattern> &pattern, _subSignals &sig)
+{
+  sig.subSignals.clear();
+  for(int i = 0;  i < pattern.size(); i++){
+    _signal_operation operation;
+    sig.subSignals.push_back( signal() );
+    operation.subsignal_time_based(*this,  sig.subSignals.at(i),  pattern.at(i).pattern_start_time, pattern.at(i).pattern_end_time); 
+  }
+}
+
+
+signal::_subSignals *signal::subSignal_periodBased()
+{
+  return &subSignals_period_based;
+}
+
+signal::_subSignals *signal::subSignal_valueBased()
+{
+  return &subSignals_value_based;
+}
+
+
 
 // EXPORT AS CSV OR BINARY COMPRESSED FORMATED
 bool signal::exportSignal(string name, bool export_all, sig_exp exportType, string fileLocation){
@@ -752,10 +827,6 @@ void signal::set_trigger_level(double v)
   _trigger_level = v;
 }
 
-double signal::get_trigger_level()
-{
-  return _trigger_level;
-}
 
 void signal::set_hysteresis(double upThreshold, double lowThreshold){
   this->_hysteresis_high_threshold = upThreshold;

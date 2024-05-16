@@ -22,6 +22,7 @@ void signal_defaults(json *def){
   (*def)["signal"]["maxima_diff_rounding"] = std::to_string(0.001);
   (*def)["signal"]["minima_diff_rounding"] = std::to_string(0.1);
   (*def)["signal"]["smaller_extremas_ignored"] = std::to_string(false);
+  (*def)["signal"]["minimum_periodic_periodNum"] = std::to_string(10);
   (*def)["signal"]["period_diff_accuracy"] = std::to_string(0.1);
   (*def)["signal"]["_COMMENT_FREQ_CALC_TYPE"] = "1 - trigger_level_based \\"
                                                 "2 - peak & trough_based \\"

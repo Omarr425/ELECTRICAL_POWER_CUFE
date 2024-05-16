@@ -64,7 +64,8 @@ class _signal_operation{
     signal logarithmic(signal *base_sig);
 
 
-    /// @brief  first order IIR(INFINITE IMPULSE RESPONSE)  low pass filter
+    /// @brief  first order IIR(INFINITE IMPULSE RESPONSE)  low pass filter   
+    ///         output = (1 - filter_parameter)*last_output + filter_parameter*input for the resultant signal
     /// @param  base_sig  The signal that needs filtering
     /// @param  resultant   The signal that holds the filtered signal can be the base_signal
     /// @param  cutOff_freq   The cutoff frequency for this filter
