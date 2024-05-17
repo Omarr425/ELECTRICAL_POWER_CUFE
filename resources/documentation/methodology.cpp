@@ -45,8 +45,9 @@
  *      @image html trigger_level.png width=60%       
  * 
  * 
- *      however this method is prone to noise double triggering at trigger level like the folllowing
- *      @image html doubleTrigger.png width=60%
+ *      - however this method is prone to noise double triggering at trigger level like the folllowing
+ *       
+ *       @image html doubleTrigger.png width=60%
  * 
  *      
  *    ## USING TRIGGERING WITH HYSTERESIS
@@ -59,7 +60,7 @@
  *      4. once the signal alters to high again (store that time) another rising edge
  *      5. the time between each consecutive rising edges we call as periodic tim
  * 
- *      @image html hysteresis.png width=60%
+ *       @image html hysteresis.png width=60%
  *      
  * 
  * 
