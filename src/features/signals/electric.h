@@ -61,7 +61,7 @@ class _power: public signal{
 
       signal_operation_global.multiply(volt,current,*this, INTERSECT);
 
-        this->set_hysteresis(500,50);
+
       if(!this->isTimeAnalysed())this->analyse();
 
       frequency = this->analytics.base_frequency;
@@ -200,7 +200,6 @@ inline double tarrif_calc(double energy_in_month)
 	if (energy_in_month <= 100)
 	{
 		if (energy_in_month > 50) cost = 0.68 * (energy_in_month - 50) + 50 * 0.58;
-		else cost = energy_in_month * 0.58;
 	}
 	else if (energy_in_month <= 650)
 	{

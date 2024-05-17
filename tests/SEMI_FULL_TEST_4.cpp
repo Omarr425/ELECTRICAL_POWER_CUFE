@@ -26,6 +26,24 @@ int main(){
   v_container dataContainer;
   file_IO file_manipulation;
 
+  pdf_wrap PDF_LOVE;
+
+
+  PDF_LOVE.init("SADPDF.PDF");
+  PDF_LOVE.textPiece_start();
+  PDF_LOVE.setFontStyle(5,50,50,50,1);
+  PDF_LOVE.setCursor(LEFT(30), TOP(50));
+  PDF_LOVE.addText("SAD");
+  PDF_LOVE.newLine();
+  PDF_LOVE.addText("SAD BUT TWICE");
+  PDF_LOVE.newLine();
+  PDF_LOVE.addText("SAD BUT THRICE");
+  PDF_LOVE.newLine();
+  PDF_LOVE.textPiece_end();
+  PDF_LOVE.end();
+
+
+
   cout << "EXTRACTING DATA FROM THE FILE.........." << endl;
   file_manipulation.data_import("Load1.csv",dataContainer,csv);
   
@@ -158,9 +176,6 @@ int main(){
       current_input.exportSignal("current_output_filtered.csv");
       result_power.exportSignal("power_output_filtered.csv");
   }
-
-  current_input.pdf_export("current_input.pdf");
-  voltage_input.pdf_export("voltage_input.pdf");
   cout << "NOW SIMULATING THE APPLIANCE MODEL USING FILTERED CURRENT AND VOLTAGE.........." << endl;
 
 

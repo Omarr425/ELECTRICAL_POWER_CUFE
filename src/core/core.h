@@ -6,6 +6,7 @@
   @brief wrap the core folder / include base helper methods and macros used accross the program
 
 */
+#include <vector>
 
 
 
@@ -178,3 +179,18 @@ inline std::string bool_to_string(int v){
     return "false";
   }
 }
+
+template <typename DATA>
+class mode{
+  private:
+    struct elements{
+      DATA value;
+      unsigned int count;
+    };
+    std::vector<elements> elements_found;
+  public:
+    mode(std::vector<DATA> data_to_mode){
+      //FUNCTION DEFINITION
+    }
+
+};
