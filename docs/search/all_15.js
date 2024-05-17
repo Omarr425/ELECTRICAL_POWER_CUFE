@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['zero_0',['zero',['../core_8h.html#a361b1d0588e13a7b5994f24b40138ec0',1,'core.h']]]
+  ['with_20hysteresis_0',['USING TRIGGERING WITH HYSTERESIS',['../methodology.html#autotoc_md6',1,'']]]
 ];

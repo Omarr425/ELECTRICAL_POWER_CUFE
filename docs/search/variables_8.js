@@ -12,5 +12,6 @@ var searchData=
   ['min_5fptp_9',['min_ptp',['../structsignal_1_1__analytics.html#a465ee19c68614dca5ed5ba030c5d7331',1,'signal::_analytics']]],
   ['min_5fval_10',['min_val',['../structsignal_1_1__analytics.html#af07dff507860f8b8952d24ed403a400a',1,'signal::_analytics']]],
   ['min_5fval_5ftime_11',['min_val_time',['../structsignal_1_1__analytics.html#ac1574625c334e6787e8ce95a6856a16d',1,'signal::_analytics']]],
-  ['minima_5fdiff_5frounding_12',['minima_diff_rounding',['../classsignal.html#a933da69ccfdbf1289a76439bd2061507',1,'signal']]]
+  ['minima_5fdiff_5frounding_12',['minima_diff_rounding',['../classsignal.html#a933da69ccfdbf1289a76439bd2061507',1,'signal']]],
+  ['minimum_5fperiodic_5fperiodnum_13',['minimum_periodic_periodNum',['../classsignal.html#a470a3a3bf47550a99e703789f21d6681',1,'signal']]]
 ];

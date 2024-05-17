@@ -5,11 +5,15 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.10.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Energy_monitor: C:/Users/hp/Downloads/src/features/signals/signal.h File Reference</title>
+<title>ENERGY MONITOR: D:/EPE_ENERGY_MONITOR/src/features/signals/signal.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
@@ -23,7 +27,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Energy_monitor<span id="projectnumber">&#160;0.2</span>
+   <div id="projectname">ENERGY MONITOR<span id="projectnumber">&#160;0.2</span>
    </div>
   </td>
  </tr>
@@ -48,6 +52,23 @@ $(function() {
 /* @license-end */
 </script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('signal_8h.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -69,11 +90,6 @@ $(function() {
 </div>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="dir_e6bb53534ac0e427887cf7a94c0c004e.html">C:</a></li><li class="navelem"><a class="el" href="dir_8ceffd4ee35c3518d4e8bdc7e638efe8.html">Users</a></li><li class="navelem"><a class="el" href="dir_4535c22c91a2ef3e2e153e7bea8f98c6.html">hp</a></li><li class="navelem"><a class="el" href="dir_6aa497ceaa26f34cbc76c19feafe7435.html">Downloads</a></li><li class="navelem"><a class="el" href="dir_fd58f23db1889473756d01ef16e02a42.html">src</a></li><li class="navelem"><a class="el" href="dir_685d5d2561c225625d0d36d7ae537885.html">features</a></li><li class="navelem"><a class="el" href="dir_f175d2e7fddd7ab5c6761250f72b4b8c.html">signals</a></li>  </ul>
-</div>
-</div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
@@ -95,10 +111,16 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsignal.html">signal</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">signal class the parent class for every other signal or any form of time-sorted (time,value) vectors  <a href="classsignal.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsignal_1_1__analytics.html">signal::_analytics</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsignal_1_1maximas__minimas.html">signal::maximas_minimas</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">(time, value) representation of peaks and troughs of a signal  <a href="structsignal_1_1maximas__minimas.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsignal_1_1pattern.html">signal::pattern</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsignal_1_1__sub_signals.html">signal::_subSignals</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
@@ -113,14 +135,15 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="separator:a04e44259cdbdc40609242d96fef3ec64"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a20590fdb094b608eef7d32dd6ba24005" id="r_a20590fdb094b608eef7d32dd6ba24005"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a20590fdb094b608eef7d32dd6ba24005">dataTable_order</a> { <br />
-&#160;&#160;<a class="el" href="#a20590fdb094b608eef7d32dd6ba24005ac74fd468c6ab69071ca748642ed31fd8">_time</a>
-, <a class="el" href="#a20590fdb094b608eef7d32dd6ba24005ac1d59c2c4a960d0d265c0464e0e9aab2">_val</a>
-, <a class="el" href="#a20590fdb094b608eef7d32dd6ba24005a1041085617e4c2bc5f271d8123b8725d">_first_deriv</a>
-, <a class="el" href="#a20590fdb094b608eef7d32dd6ba24005a21c044e23fe89e2b3662ac5b99c7d601">_second_deriv</a>
+&#160;&#160;<a class="el" href="#a20590fdb094b608eef7d32dd6ba24005ac74fd468c6ab69071ca748642ed31fd8">_time</a> = 0
+, <a class="el" href="#a20590fdb094b608eef7d32dd6ba24005ac1d59c2c4a960d0d265c0464e0e9aab2">_val</a> = 1
+, <a class="el" href="#a20590fdb094b608eef7d32dd6ba24005a1041085617e4c2bc5f271d8123b8725d">_first_deriv</a> = 2
+, <a class="el" href="#a20590fdb094b608eef7d32dd6ba24005a21c044e23fe89e2b3662ac5b99c7d601">_second_deriv</a> = 3
 , <br />
-&#160;&#160;<a class="el" href="#a20590fdb094b608eef7d32dd6ba24005ab749e1efe08db912b4d351ccab3651bb">_area</a>
+&#160;&#160;<a class="el" href="#a20590fdb094b608eef7d32dd6ba24005ab749e1efe08db912b4d351ccab3651bb">_area</a> = 4
 <br />
  }</td></tr>
+<tr class="memdesc:a20590fdb094b608eef7d32dd6ba24005"><td class="mdescLeft">&#160;</td><td class="mdescRight">represent the column order of elements in signal_table  <a href="#a20590fdb094b608eef7d32dd6ba24005">More...</a><br /></td></tr>
 <tr class="separator:a20590fdb094b608eef7d32dd6ba24005"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -156,6 +179,8 @@ Enumerations</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>represent the column order of elements in signal_table </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a20590fdb094b608eef7d32dd6ba24005ac74fd468c6ab69071ca748642ed31fd8" name="a20590fdb094b608eef7d32dd6ba24005ac74fd468c6ab69071ca748642ed31fd8"></a>_time&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a20590fdb094b608eef7d32dd6ba24005ac1d59c2c4a960d0d265c0464e0e9aab2" name="a20590fdb094b608eef7d32dd6ba24005ac1d59c2c4a960d0d265c0464e0e9aab2"></a>_val&#160;</td><td class="fielddoc"></td></tr>
@@ -164,7 +189,7 @@ Enumerations</h2></td></tr>
 <tr><td class="fieldname"><a id="a20590fdb094b608eef7d32dd6ba24005ab749e1efe08db912b4d351ccab3651bb" name="a20590fdb094b608eef7d32dd6ba24005ab749e1efe08db912b4d351ccab3651bb"></a>_area&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="signal_8h_source.html#l00027">27</a> of file <a class="el" href="signal_8h_source.html">signal.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="signal_8h_source.html#l00028">28</a> of file <a class="el" href="signal_8h_source.html">signal.h</a>.</p>
 
 </div>
 </div>
@@ -197,9 +222,13 @@ Enumerations</h2></td></tr>
 </div>
 </div>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_67a3ad5dbb58d0ae1dd3ca1109ffeb2c.html">EPE_ENERGY_MONITOR</a></li><li class="navelem"><a class="el" href="dir_387f41f47543c7f33d7b014a59099b7c.html">src</a></li><li class="navelem"><a class="el" href="dir_c22947efd3f0a45ba7527dc59d537951.html">features</a></li><li class="navelem"><a class="el" href="dir_27119c90b7de077898881982221c1e85.html">signals</a></li><li class="navelem"><a class="el" href="signal_8h.html">signal.h</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0 </li>
+  </ul>
+</div>
 </body>
 </html>

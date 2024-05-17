@@ -5,11 +5,15 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.10.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Energy_monitor: C:/Users/hp/Downloads/src/core/data_IO/pdfWrapper.h Source File</title>
+<title>ENERGY MONITOR: D:/EPE_ENERGY_MONITOR/src/core/data_IO/pdfWrapper.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
@@ -23,7 +27,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Energy_monitor<span id="projectnumber">&#160;0.2</span>
+   <div id="projectname">ENERGY MONITOR<span id="projectnumber">&#160;0.2</span>
    </div>
   </td>
  </tr>
@@ -53,6 +57,23 @@ $(function() {
 $(function() { codefold.init(0); });
 /* @license-end */
 </script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('pdf_wrapper_8h_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -74,11 +95,6 @@ $(function() { codefold.init(0); });
 </div>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="dir_e6bb53534ac0e427887cf7a94c0c004e.html">C:</a></li><li class="navelem"><a class="el" href="dir_8ceffd4ee35c3518d4e8bdc7e638efe8.html">Users</a></li><li class="navelem"><a class="el" href="dir_4535c22c91a2ef3e2e153e7bea8f98c6.html">hp</a></li><li class="navelem"><a class="el" href="dir_6aa497ceaa26f34cbc76c19feafe7435.html">Downloads</a></li><li class="navelem"><a class="el" href="dir_fd58f23db1889473756d01ef16e02a42.html">src</a></li><li class="navelem"><a class="el" href="dir_2d4e1ec122a7893ffa4554c69f72c0aa.html">core</a></li><li class="navelem"><a class="el" href="dir_d83176634e6312e894cd66ed7e0681c0.html">data_IO</a></li>  </ul>
-</div>
-</div><!-- top -->
 <div class="header">
   <div class="headertitle"><div class="title">pdfWrapper.h</div></div>
 </div><!--header-->
@@ -93,126 +109,183 @@ $(function() { codefold.init(0); });
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;PageContentContext.h&gt;</span></div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;PDFFormXObject.h&gt;</span></div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;ResourcesDictionary.h&gt;</span></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;PDFUsedFont.h&gt;</span></div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="pdf_wrapper_8h.html#ac88f937671f76579ae1f409a174ec368">   25</a></span><span class="preprocessor">#define A4_Width  595</span></div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="pdf_wrapper_8h.html#a9f04711ff4f1f4c885676ebe5e051343">   26</a></span><span class="preprocessor">#define A4_Height 842</span></div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="pdf_wrapper_8h.html#af33c297bd530e771c400482010f046c0">   28</a></span><span class="preprocessor">#define LEFT(n)(n)</span></div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="pdf_wrapper_8h.html#aa477ef45c541eaf199ad11b46be27d40">   29</a></span><span class="preprocessor">#define TOP(n)(A4_Height - n)</span></div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="pdf_wrapper_8h.html#a3e962e58909a42621b270c84c29dddcf">   30</a></span><span class="preprocessor">#define standardFont &quot;resources/OpenSans-Italic.ttf&quot;</span></div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
-<div class="foldopen" id="foldopen00032" data-start="{" data-end="};">
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="classpdf__wrap.html">   32</a></span><span class="keyword">class </span><a class="code hl_class" href="classpdf__wrap.html">pdf_wrap</a>{</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>  PDFWriter pdfWriter;</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>  PDFPage* page;</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>  PageContentContext* pageContentContext;</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>  PDFUsedFont* font;</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>  <span class="keyword">struct </span>{</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="classpdf__wrap.html#a371d5c486f151fec6d387e0240d18341">   39</a></span>    <span class="keywordtype">int</span> <a class="code hl_variable" href="classpdf__wrap.html#a371d5c486f151fec6d387e0240d18341">r</a> = 0;</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="classpdf__wrap.html#a4e32a4c2afd107ff5ef46378b77ed4f9">   40</a></span>    <span class="keywordtype">int</span> <a class="code hl_variable" href="classpdf__wrap.html#a4e32a4c2afd107ff5ef46378b77ed4f9">g</a> = 0;</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="classpdf__wrap.html#a9a67386ba5234dc5e5adf5017aa8dafa">   41</a></span>    <span class="keywordtype">int</span> <a class="code hl_variable" href="classpdf__wrap.html#a9a67386ba5234dc5e5adf5017aa8dafa">b</a> = 0;</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="classpdf__wrap.html#a6a27c6424345add98c234649213a30fd">   42</a></span>    <span class="keywordtype">int</span> <a class="code hl_variable" href="classpdf__wrap.html#a6a27c6424345add98c234649213a30fd">a</a> = 1;</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>  }fontStyle;</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="classpdf__wrap.html#af029d8c16defa4b52799f302d6e7534d">   46</a></span>  <span class="keywordtype">int</span> <a class="code hl_variable" href="classpdf__wrap.html#af029d8c16defa4b52799f302d6e7534d">left_padding</a> = 40;</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="classpdf__wrap.html#aa0754aa8db7cf10f80c856cfdc5947de">   47</a></span>  <span class="keywordtype">int</span> <a class="code hl_variable" href="classpdf__wrap.html#aa0754aa8db7cf10f80c856cfdc5947de">top_padding</a> = 842 - 40;</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="classpdf__wrap.html#aa9efe59acd5cb6e55521413612c37293">   48</a></span>  <span class="keywordtype">int</span> <a class="code hl_variable" href="classpdf__wrap.html#aa9efe59acd5cb6e55521413612c37293">font_size</a> = 20;</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="pdf_wrapper_8h.html#ac88f937671f76579ae1f409a174ec368">   26</a></span><span class="preprocessor">#define A4_Width  595</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="pdf_wrapper_8h.html#a9f04711ff4f1f4c885676ebe5e051343">   27</a></span><span class="preprocessor">#define A4_Height 842</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="pdf_wrapper_8h.html#af33c297bd530e771c400482010f046c0">   29</a></span><span class="preprocessor">#define LEFT(n)(n)</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="pdf_wrapper_8h.html#aa477ef45c541eaf199ad11b46be27d40">   30</a></span><span class="preprocessor">#define TOP(n)(A4_Height - n)</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="pdf_wrapper_8h.html#a3e962e58909a42621b270c84c29dddcf">   31</a></span><span class="preprocessor">#define standardFont &quot;resources/OpenSans-Italic.ttf&quot;</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
+<div class="foldopen" id="foldopen00033" data-start="{" data-end="};">
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="classpdf__wrap.html">   33</a></span><span class="keyword">class </span><a class="code hl_class" href="classpdf__wrap.html">pdf_wrap</a>{</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>  PDFWriter pdfWriter;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>  PDFPage* page;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>  PageContentContext* pageContentContext;</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>  PDFUsedFont* font;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>  <span class="keyword">struct </span>{</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="classpdf__wrap.html#a371d5c486f151fec6d387e0240d18341">   40</a></span>    <span class="keywordtype">int</span> <a class="code hl_variable" href="classpdf__wrap.html#a371d5c486f151fec6d387e0240d18341">r</a> = 0;</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="classpdf__wrap.html#a4e32a4c2afd107ff5ef46378b77ed4f9">   41</a></span>    <span class="keywordtype">int</span> <a class="code hl_variable" href="classpdf__wrap.html#a4e32a4c2afd107ff5ef46378b77ed4f9">g</a> = 0;</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="classpdf__wrap.html#a9a67386ba5234dc5e5adf5017aa8dafa">   42</a></span>    <span class="keywordtype">int</span> <a class="code hl_variable" href="classpdf__wrap.html#a9a67386ba5234dc5e5adf5017aa8dafa">b</a> = 0;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="classpdf__wrap.html#a6a27c6424345add98c234649213a30fd">   43</a></span>    <span class="keywordtype">int</span> <a class="code hl_variable" href="classpdf__wrap.html#a6a27c6424345add98c234649213a30fd">a</a> = 1;</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>  }fontStyle;</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>  <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> pos_x = 0;</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>  <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> pos_y = 0;</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
-<div class="foldopen" id="foldopen00052" data-start="{" data-end="}">
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="classpdf__wrap.html#a0ce400c24ea64e0068b5d54391dd6bc3">   52</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classpdf__wrap.html#a0ce400c24ea64e0068b5d54391dd6bc3">init</a>(std::string fileLocation){</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    pdfWriter.StartPDF(fileLocation,ePDFVersion13);</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    page = <span class="keyword">new</span> PDFPage();</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    page-&gt;SetMediaBox(PDFRectangle(0,0,<a class="code hl_define" href="pdf_wrapper_8h.html#ac88f937671f76579ae1f409a174ec368">A4_Width</a>,<a class="code hl_define" href="pdf_wrapper_8h.html#a9f04711ff4f1f4c885676ebe5e051343">A4_Height</a>));</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    font = pdfWriter.GetFontForFile(<a class="code hl_define" href="pdf_wrapper_8h.html#a3e962e58909a42621b270c84c29dddcf">standardFont</a>);</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    pageContentContext = pdfWriter.StartPageContentContext(page);</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>  }</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="classpdf__wrap.html#af029d8c16defa4b52799f302d6e7534d">   51</a></span>  <span class="keywordtype">int</span> <a class="code hl_variable" href="classpdf__wrap.html#af029d8c16defa4b52799f302d6e7534d">left_padding</a> = 30;</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="classpdf__wrap.html#aa0754aa8db7cf10f80c856cfdc5947de">   52</a></span>  <span class="keywordtype">int</span> <a class="code hl_variable" href="classpdf__wrap.html#aa0754aa8db7cf10f80c856cfdc5947de">top_padding</a> = 30;</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="classpdf__wrap.html#ad06ae7c51304a5a372d717474f050c63">   53</a></span>  <span class="keywordtype">float</span> <a class="code hl_variable" href="classpdf__wrap.html#ad06ae7c51304a5a372d717474f050c63">font_size</a> = 5;</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="classpdf__wrap.html#abf276162d35afc06090cfc282d6cb870">   54</a></span>  <span class="keywordtype">int</span> <a class="code hl_variable" href="classpdf__wrap.html#abf276162d35afc06090cfc282d6cb870">interline_gap</a> = <a class="code hl_variable" href="classpdf__wrap.html#ad06ae7c51304a5a372d717474f050c63">font_size</a>*4;</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
+<div class="foldopen" id="foldopen00057" data-start="{" data-end="}">
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno"><a class="line" href="classpdf__wrap.html#a0ce400c24ea64e0068b5d54391dd6bc3">   57</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classpdf__wrap.html#a0ce400c24ea64e0068b5d54391dd6bc3">init</a>(std::string fileLocation){</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    pdfWriter.StartPDF(fileLocation,ePDFVersion13);</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    font = pdfWriter.GetFontForFile(<a class="code hl_define" href="pdf_wrapper_8h.html#a3e962e58909a42621b270c84c29dddcf">standardFont</a>);</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>  }</div>
 </div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
-<div class="foldopen" id="foldopen00061" data-start="{" data-end="}">
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno"><a class="line" href="classpdf__wrap.html#ab816947e877425acc64ee96a912b1026">   61</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classpdf__wrap.html#ab816947e877425acc64ee96a912b1026">end</a>(){</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    pdfWriter.EndPageContentContext(pageContentContext);</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    pdfWriter.WritePageAndRelease(page);</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    pdfWriter.EndPDF();</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>  }</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
+<div class="foldopen" id="foldopen00062" data-start="{" data-end="}">
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno"><a class="line" href="classpdf__wrap.html#ab816947e877425acc64ee96a912b1026">   62</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classpdf__wrap.html#ab816947e877425acc64ee96a912b1026">end</a>(){</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    pdfWriter.EndPDF();</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>  }</div>
 </div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
-<div class="foldopen" id="foldopen00067" data-start="{" data-end="}">
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno"><a class="line" href="classpdf__wrap.html#aebff6699b0b7e3991e11e47b1f2f4fba">   67</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classpdf__wrap.html#aebff6699b0b7e3991e11e47b1f2f4fba">textPiece_start</a>(){</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    pageContentContext-&gt;BT();</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    pageContentContext-&gt;Tf(font,<a class="code hl_variable" href="classpdf__wrap.html#aa9efe59acd5cb6e55521413612c37293">font_size</a>);</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    pageContentContext-&gt;k(fontStyle.r,fontStyle.g,fontStyle.b,fontStyle.a);</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    pageContentContext-&gt;TL(<a class="code hl_variable" href="classpdf__wrap.html#aa9efe59acd5cb6e55521413612c37293">font_size</a>/4);</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
+<div class="foldopen" id="foldopen00066" data-start="{" data-end="}">
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno"><a class="line" href="classpdf__wrap.html#a4028e69993ebf6a30d6a4b0910952a68">   66</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classpdf__wrap.html#a4028e69993ebf6a30d6a4b0910952a68">newPage</a>(){</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    page = <span class="keyword">new</span> PDFPage();</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    page-&gt;SetMediaBox(PDFRectangle(0,0,<a class="code hl_define" href="pdf_wrapper_8h.html#ac88f937671f76579ae1f409a174ec368">A4_Width</a>,<a class="code hl_define" href="pdf_wrapper_8h.html#a9f04711ff4f1f4c885676ebe5e051343">A4_Height</a>));</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    pageContentContext = pdfWriter.StartPageContentContext(page);</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    pos_x = 0;</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    pos_y = 0;</div>
 <div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>  }</div>
 </div>
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
 <div class="foldopen" id="foldopen00074" data-start="{" data-end="}">
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno"><a class="line" href="classpdf__wrap.html#a99695776a8eeb3c061b2b92f3af6e852">   74</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classpdf__wrap.html#a99695776a8eeb3c061b2b92f3af6e852">addText</a>(std::string text){</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    pageContentContext-&gt;Tj(text);</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>  }</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno"><a class="line" href="classpdf__wrap.html#a7f1081ce5928f0e0efb79c951f3f260c">   74</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classpdf__wrap.html#a7f1081ce5928f0e0efb79c951f3f260c">endPage</a>(){</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    pdfWriter.EndPageContentContext(pageContentContext);</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    pdfWriter.WritePageAndRelease(page);</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>  }</div>
 </div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
-<div class="foldopen" id="foldopen00078" data-start="{" data-end="}">
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno"><a class="line" href="classpdf__wrap.html#a94513b98eb6307f04ad20337bac5310c">   78</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classpdf__wrap.html#a94513b98eb6307f04ad20337bac5310c">textPiece_end</a>(){</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    pageContentContext-&gt;ET();</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>  }</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
+<div class="foldopen" id="foldopen00079" data-start="{" data-end="}">
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno"><a class="line" href="classpdf__wrap.html#aebff6699b0b7e3991e11e47b1f2f4fba">   79</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classpdf__wrap.html#aebff6699b0b7e3991e11e47b1f2f4fba">textPiece_start</a>(){</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    pageContentContext-&gt;BT();</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    pageContentContext-&gt;Tf(font,<a class="code hl_variable" href="classpdf__wrap.html#ad06ae7c51304a5a372d717474f050c63">font_size</a>);</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    pageContentContext-&gt;k(fontStyle.r,fontStyle.g,fontStyle.b,fontStyle.a);</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>  }</div>
 </div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
-<div class="foldopen" id="foldopen00082" data-start="{" data-end="}">
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno"><a class="line" href="classpdf__wrap.html#ac2f17108649a1c5ce84ac3bc0f507b5b">   82</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classpdf__wrap.html#ac2f17108649a1c5ce84ac3bc0f507b5b">newLine</a>(){</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    pageContentContext-&gt;TStar();</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>  }</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
+<div class="foldopen" id="foldopen00085" data-start="{" data-end="}">
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno"><a class="line" href="classpdf__wrap.html#a99695776a8eeb3c061b2b92f3af6e852">   85</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classpdf__wrap.html#a99695776a8eeb3c061b2b92f3af6e852">addText</a>(std::string text){</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    pageContentContext-&gt;Tj(text);</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    PDFUsedFont::TextMeasures textDimensions = font-&gt;CalculateTextDimensions(text,<a class="code hl_variable" href="classpdf__wrap.html#ad06ae7c51304a5a372d717474f050c63">font_size</a>);</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    pos_x += textDimensions.xMax;</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>  }</div>
 </div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
-<div class="foldopen" id="foldopen00086" data-start="{" data-end="}">
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno"><a class="line" href="classpdf__wrap.html#af3e178f1d2a5d52d06425349f8dc6dab">   86</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classpdf__wrap.html#af3e178f1d2a5d52d06425349f8dc6dab">setFontStyle</a>(<span class="keywordtype">int</span> size, <span class="keywordtype">int</span> <a class="code hl_variable" href="classpdf__wrap.html#a371d5c486f151fec6d387e0240d18341">r</a>,  <span class="keywordtype">int</span> <a class="code hl_variable" href="classpdf__wrap.html#a4e32a4c2afd107ff5ef46378b77ed4f9">g</a>, <span class="keywordtype">int</span> <a class="code hl_variable" href="classpdf__wrap.html#a9a67386ba5234dc5e5adf5017aa8dafa">b</a>,<span class="keywordtype">int</span> <a class="code hl_variable" href="classpdf__wrap.html#a6a27c6424345add98c234649213a30fd">a</a>){</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    pageContentContext-&gt;Tf(font,size);</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    <a class="code hl_variable" href="classpdf__wrap.html#aa9efe59acd5cb6e55521413612c37293">font_size</a> = size;</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>    pageContentContext-&gt;k(<a class="code hl_variable" href="classpdf__wrap.html#a371d5c486f151fec6d387e0240d18341">r</a>,<a class="code hl_variable" href="classpdf__wrap.html#a4e32a4c2afd107ff5ef46378b77ed4f9">g</a>,<a class="code hl_variable" href="classpdf__wrap.html#a9a67386ba5234dc5e5adf5017aa8dafa">b</a>,<a class="code hl_variable" href="classpdf__wrap.html#a6a27c6424345add98c234649213a30fd">a</a>);</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    fontStyle.r = <a class="code hl_variable" href="classpdf__wrap.html#a371d5c486f151fec6d387e0240d18341">r</a>;</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>    fontStyle.g = <a class="code hl_variable" href="classpdf__wrap.html#a4e32a4c2afd107ff5ef46378b77ed4f9">g</a>;</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    fontStyle.b = <a class="code hl_variable" href="classpdf__wrap.html#a9a67386ba5234dc5e5adf5017aa8dafa">b</a>;</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    fontStyle.a = <a class="code hl_variable" href="classpdf__wrap.html#a6a27c6424345add98c234649213a30fd">a</a>;</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>  }</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
+<div class="foldopen" id="foldopen00091" data-start="{" data-end="}">
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno"><a class="line" href="classpdf__wrap.html#a94513b98eb6307f04ad20337bac5310c">   91</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classpdf__wrap.html#a94513b98eb6307f04ad20337bac5310c">textPiece_end</a>(){</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    pageContentContext-&gt;ET();</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>  }</div>
 </div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
 <div class="foldopen" id="foldopen00095" data-start="{" data-end="}">
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno"><a class="line" href="classpdf__wrap.html#a8902e67519c11383d78b381c53e96390">   95</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classpdf__wrap.html#a8902e67519c11383d78b381c53e96390">setCursor</a>(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y){</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    pageContentContext-&gt;Tm(<a class="code hl_variable" href="classpdf__wrap.html#aa9efe59acd5cb6e55521413612c37293">font_size</a>, 0,  0, <a class="code hl_variable" href="classpdf__wrap.html#aa9efe59acd5cb6e55521413612c37293">font_size</a>, x,  y);  </div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>  }</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno"><a class="line" href="classpdf__wrap.html#ac2f17108649a1c5ce84ac3bc0f507b5b">   95</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classpdf__wrap.html#ac2f17108649a1c5ce84ac3bc0f507b5b">newLine</a>(){</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    pos_x = <a class="code hl_define" href="pdf_wrapper_8h.html#af33c297bd530e771c400482010f046c0">LEFT</a>(<a class="code hl_variable" href="classpdf__wrap.html#af029d8c16defa4b52799f302d6e7534d">left_padding</a>);</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    pos_y -= <a class="code hl_variable" href="classpdf__wrap.html#abf276162d35afc06090cfc282d6cb870">interline_gap</a>;</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    pageContentContext-&gt;Tm(1,0,0,1,<a class="code hl_define" href="pdf_wrapper_8h.html#af33c297bd530e771c400482010f046c0">LEFT</a>(<a class="code hl_variable" href="classpdf__wrap.html#af029d8c16defa4b52799f302d6e7534d">left_padding</a>),  pos_y);</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>  }</div>
 </div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>};</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> </div>
+<div class="foldopen" id="foldopen00101" data-start="{" data-end="}">
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno"><a class="line" href="classpdf__wrap.html#aeaaa772cbd1cf239eed1fcd352738715">  101</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classpdf__wrap.html#aeaaa772cbd1cf239eed1fcd352738715">setFontStyle</a>(<span class="keywordtype">float</span> size, <span class="keywordtype">int</span> <a class="code hl_variable" href="classpdf__wrap.html#a371d5c486f151fec6d387e0240d18341">r</a>,  <span class="keywordtype">int</span> <a class="code hl_variable" href="classpdf__wrap.html#a4e32a4c2afd107ff5ef46378b77ed4f9">g</a>, <span class="keywordtype">int</span> <a class="code hl_variable" href="classpdf__wrap.html#a9a67386ba5234dc5e5adf5017aa8dafa">b</a>,<span class="keywordtype">int</span> <a class="code hl_variable" href="classpdf__wrap.html#a6a27c6424345add98c234649213a30fd">a</a>){</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    pageContentContext-&gt;Tf(font,size);</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>    <a class="code hl_variable" href="classpdf__wrap.html#ad06ae7c51304a5a372d717474f050c63">font_size</a> = size;</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>    pageContentContext-&gt;k(<a class="code hl_variable" href="classpdf__wrap.html#a371d5c486f151fec6d387e0240d18341">r</a>,<a class="code hl_variable" href="classpdf__wrap.html#a4e32a4c2afd107ff5ef46378b77ed4f9">g</a>,<a class="code hl_variable" href="classpdf__wrap.html#a9a67386ba5234dc5e5adf5017aa8dafa">b</a>,<a class="code hl_variable" href="classpdf__wrap.html#a6a27c6424345add98c234649213a30fd">a</a>);</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>    fontStyle.r = <a class="code hl_variable" href="classpdf__wrap.html#a371d5c486f151fec6d387e0240d18341">r</a>;</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    fontStyle.g = <a class="code hl_variable" href="classpdf__wrap.html#a4e32a4c2afd107ff5ef46378b77ed4f9">g</a>;</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>    fontStyle.b = <a class="code hl_variable" href="classpdf__wrap.html#a9a67386ba5234dc5e5adf5017aa8dafa">b</a>;</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>    fontStyle.a = <a class="code hl_variable" href="classpdf__wrap.html#a6a27c6424345add98c234649213a30fd">a</a>;</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>    pageContentContext-&gt;TL(<a class="code hl_variable" href="classpdf__wrap.html#ad06ae7c51304a5a372d717474f050c63">font_size</a>);</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>  }</div>
 </div>
-<div class="ttc" id="aclasspdf__wrap_html"><div class="ttname"><a href="classpdf__wrap.html">pdf_wrap</a></div><div class="ttdef"><b>Definition</b> <a href="#l00032">pdfWrapper.h:32</a></div></div>
-<div class="ttc" id="aclasspdf__wrap_html_a0ce400c24ea64e0068b5d54391dd6bc3"><div class="ttname"><a href="classpdf__wrap.html#a0ce400c24ea64e0068b5d54391dd6bc3">pdf_wrap::init</a></div><div class="ttdeci">void init(std::string fileLocation)</div><div class="ttdef"><b>Definition</b> <a href="#l00052">pdfWrapper.h:52</a></div></div>
-<div class="ttc" id="aclasspdf__wrap_html_a371d5c486f151fec6d387e0240d18341"><div class="ttname"><a href="classpdf__wrap.html#a371d5c486f151fec6d387e0240d18341">pdf_wrap::r</a></div><div class="ttdeci">int r</div><div class="ttdef"><b>Definition</b> <a href="#l00039">pdfWrapper.h:39</a></div></div>
-<div class="ttc" id="aclasspdf__wrap_html_a4e32a4c2afd107ff5ef46378b77ed4f9"><div class="ttname"><a href="classpdf__wrap.html#a4e32a4c2afd107ff5ef46378b77ed4f9">pdf_wrap::g</a></div><div class="ttdeci">int g</div><div class="ttdef"><b>Definition</b> <a href="#l00040">pdfWrapper.h:40</a></div></div>
-<div class="ttc" id="aclasspdf__wrap_html_a6a27c6424345add98c234649213a30fd"><div class="ttname"><a href="classpdf__wrap.html#a6a27c6424345add98c234649213a30fd">pdf_wrap::a</a></div><div class="ttdeci">int a</div><div class="ttdef"><b>Definition</b> <a href="#l00042">pdfWrapper.h:42</a></div></div>
-<div class="ttc" id="aclasspdf__wrap_html_a8902e67519c11383d78b381c53e96390"><div class="ttname"><a href="classpdf__wrap.html#a8902e67519c11383d78b381c53e96390">pdf_wrap::setCursor</a></div><div class="ttdeci">void setCursor(int x, int y)</div><div class="ttdef"><b>Definition</b> <a href="#l00095">pdfWrapper.h:95</a></div></div>
-<div class="ttc" id="aclasspdf__wrap_html_a94513b98eb6307f04ad20337bac5310c"><div class="ttname"><a href="classpdf__wrap.html#a94513b98eb6307f04ad20337bac5310c">pdf_wrap::textPiece_end</a></div><div class="ttdeci">void textPiece_end()</div><div class="ttdef"><b>Definition</b> <a href="#l00078">pdfWrapper.h:78</a></div></div>
-<div class="ttc" id="aclasspdf__wrap_html_a99695776a8eeb3c061b2b92f3af6e852"><div class="ttname"><a href="classpdf__wrap.html#a99695776a8eeb3c061b2b92f3af6e852">pdf_wrap::addText</a></div><div class="ttdeci">void addText(std::string text)</div><div class="ttdef"><b>Definition</b> <a href="#l00074">pdfWrapper.h:74</a></div></div>
-<div class="ttc" id="aclasspdf__wrap_html_a9a67386ba5234dc5e5adf5017aa8dafa"><div class="ttname"><a href="classpdf__wrap.html#a9a67386ba5234dc5e5adf5017aa8dafa">pdf_wrap::b</a></div><div class="ttdeci">int b</div><div class="ttdef"><b>Definition</b> <a href="#l00041">pdfWrapper.h:41</a></div></div>
-<div class="ttc" id="aclasspdf__wrap_html_aa0754aa8db7cf10f80c856cfdc5947de"><div class="ttname"><a href="classpdf__wrap.html#aa0754aa8db7cf10f80c856cfdc5947de">pdf_wrap::top_padding</a></div><div class="ttdeci">int top_padding</div><div class="ttdef"><b>Definition</b> <a href="#l00047">pdfWrapper.h:47</a></div></div>
-<div class="ttc" id="aclasspdf__wrap_html_aa9efe59acd5cb6e55521413612c37293"><div class="ttname"><a href="classpdf__wrap.html#aa9efe59acd5cb6e55521413612c37293">pdf_wrap::font_size</a></div><div class="ttdeci">int font_size</div><div class="ttdef"><b>Definition</b> <a href="#l00048">pdfWrapper.h:48</a></div></div>
-<div class="ttc" id="aclasspdf__wrap_html_ab816947e877425acc64ee96a912b1026"><div class="ttname"><a href="classpdf__wrap.html#ab816947e877425acc64ee96a912b1026">pdf_wrap::end</a></div><div class="ttdeci">void end()</div><div class="ttdef"><b>Definition</b> <a href="#l00061">pdfWrapper.h:61</a></div></div>
-<div class="ttc" id="aclasspdf__wrap_html_ac2f17108649a1c5ce84ac3bc0f507b5b"><div class="ttname"><a href="classpdf__wrap.html#ac2f17108649a1c5ce84ac3bc0f507b5b">pdf_wrap::newLine</a></div><div class="ttdeci">void newLine()</div><div class="ttdef"><b>Definition</b> <a href="#l00082">pdfWrapper.h:82</a></div></div>
-<div class="ttc" id="aclasspdf__wrap_html_aebff6699b0b7e3991e11e47b1f2f4fba"><div class="ttname"><a href="classpdf__wrap.html#aebff6699b0b7e3991e11e47b1f2f4fba">pdf_wrap::textPiece_start</a></div><div class="ttdeci">void textPiece_start()</div><div class="ttdef"><b>Definition</b> <a href="#l00067">pdfWrapper.h:67</a></div></div>
-<div class="ttc" id="aclasspdf__wrap_html_af029d8c16defa4b52799f302d6e7534d"><div class="ttname"><a href="classpdf__wrap.html#af029d8c16defa4b52799f302d6e7534d">pdf_wrap::left_padding</a></div><div class="ttdeci">int left_padding</div><div class="ttdef"><b>Definition</b> <a href="#l00046">pdfWrapper.h:46</a></div></div>
-<div class="ttc" id="aclasspdf__wrap_html_af3e178f1d2a5d52d06425349f8dc6dab"><div class="ttname"><a href="classpdf__wrap.html#af3e178f1d2a5d52d06425349f8dc6dab">pdf_wrap::setFontStyle</a></div><div class="ttdeci">void setFontStyle(int size, int r, int g, int b, int a)</div><div class="ttdef"><b>Definition</b> <a href="#l00086">pdfWrapper.h:86</a></div></div>
-<div class="ttc" id="apdf_wrapper_8h_html_a3e962e58909a42621b270c84c29dddcf"><div class="ttname"><a href="pdf_wrapper_8h.html#a3e962e58909a42621b270c84c29dddcf">standardFont</a></div><div class="ttdeci">#define standardFont</div><div class="ttdef"><b>Definition</b> <a href="#l00030">pdfWrapper.h:30</a></div></div>
-<div class="ttc" id="apdf_wrapper_8h_html_a9f04711ff4f1f4c885676ebe5e051343"><div class="ttname"><a href="pdf_wrapper_8h.html#a9f04711ff4f1f4c885676ebe5e051343">A4_Height</a></div><div class="ttdeci">#define A4_Height</div><div class="ttdef"><b>Definition</b> <a href="#l00026">pdfWrapper.h:26</a></div></div>
-<div class="ttc" id="apdf_wrapper_8h_html_ac88f937671f76579ae1f409a174ec368"><div class="ttname"><a href="pdf_wrapper_8h.html#ac88f937671f76579ae1f409a174ec368">A4_Width</a></div><div class="ttdeci">#define A4_Width</div><div class="ttdef"><b>Definition</b> <a href="#l00025">pdfWrapper.h:25</a></div></div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span> </div>
+<div class="foldopen" id="foldopen00112" data-start="{" data-end="}">
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno"><a class="line" href="classpdf__wrap.html#a8902e67519c11383d78b381c53e96390">  112</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classpdf__wrap.html#a8902e67519c11383d78b381c53e96390">setCursor</a>(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y){</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>    pageContentContext-&gt;Tm(1, 0,  0, 1, x,  y);  </div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    pos_x = x;</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    pos_y = y;</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>  }</div>
+</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> </div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span> </div>
+<div class="foldopen" id="foldopen00119" data-start="{" data-end="}">
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno"><a class="line" href="classpdf__wrap.html#ac81cff9d454379dc8edc72e7a1f77068">  119</a></span>  <span class="keywordtype">int</span> <a class="code hl_function" href="classpdf__wrap.html#ac81cff9d454379dc8edc72e7a1f77068">get_posX</a>(){</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    <span class="keywordflow">return</span> pos_x;</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>  }</div>
+</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span> </div>
+<div class="foldopen" id="foldopen00123" data-start="{" data-end="}">
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno"><a class="line" href="classpdf__wrap.html#a2ba3a960fbe1b1d3e73006f7bbcb91ea">  123</a></span>  <span class="keywordtype">int</span> <a class="code hl_function" href="classpdf__wrap.html#a2ba3a960fbe1b1d3e73006f7bbcb91ea">get_posY</a>(){</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    <span class="keywordflow">return</span> pos_y;</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>  }</div>
+</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span> </div>
+<div class="foldopen" id="foldopen00127" data-start="{" data-end="}">
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno"><a class="line" href="classpdf__wrap.html#a5abf0acc3c729abc04c8b941f118c680">  127</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classpdf__wrap.html#a5abf0acc3c729abc04c8b941f118c680">center_text</a>(std::string word){</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>    PDFUsedFont::TextMeasures textDimensions = font-&gt;CalculateTextDimensions(word,<a class="code hl_variable" href="classpdf__wrap.html#ad06ae7c51304a5a372d717474f050c63">font_size</a>); </div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>    pageContentContext-&gt;Td(<a class="code hl_define" href="pdf_wrapper_8h.html#ac88f937671f76579ae1f409a174ec368">A4_Width</a>/2 - textDimensions.width/2 - <a class="code hl_variable" href="classpdf__wrap.html#af029d8c16defa4b52799f302d6e7534d">left_padding</a>, 0);</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>    <a class="code hl_function" href="classpdf__wrap.html#a99695776a8eeb3c061b2b92f3af6e852">addText</a>(word);</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>    pageContentContext-&gt;Td(-(<a class="code hl_define" href="pdf_wrapper_8h.html#ac88f937671f76579ae1f409a174ec368">A4_Width</a>/2 - textDimensions.width/2 - <a class="code hl_variable" href="classpdf__wrap.html#af029d8c16defa4b52799f302d6e7534d">left_padding</a>), 0);</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>  }</div>
+</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>};</div>
+</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span> </div>
+<div class="ttc" id="aclasspdf__wrap_html"><div class="ttname"><a href="classpdf__wrap.html">pdf_wrap</a></div><div class="ttdef"><b>Definition</b> <a href="#l00033">pdfWrapper.h:33</a></div></div>
+<div class="ttc" id="aclasspdf__wrap_html_a0ce400c24ea64e0068b5d54391dd6bc3"><div class="ttname"><a href="classpdf__wrap.html#a0ce400c24ea64e0068b5d54391dd6bc3">pdf_wrap::init</a></div><div class="ttdeci">void init(std::string fileLocation)</div><div class="ttdef"><b>Definition</b> <a href="#l00057">pdfWrapper.h:57</a></div></div>
+<div class="ttc" id="aclasspdf__wrap_html_a2ba3a960fbe1b1d3e73006f7bbcb91ea"><div class="ttname"><a href="classpdf__wrap.html#a2ba3a960fbe1b1d3e73006f7bbcb91ea">pdf_wrap::get_posY</a></div><div class="ttdeci">int get_posY()</div><div class="ttdef"><b>Definition</b> <a href="#l00123">pdfWrapper.h:123</a></div></div>
+<div class="ttc" id="aclasspdf__wrap_html_a371d5c486f151fec6d387e0240d18341"><div class="ttname"><a href="classpdf__wrap.html#a371d5c486f151fec6d387e0240d18341">pdf_wrap::r</a></div><div class="ttdeci">int r</div><div class="ttdef"><b>Definition</b> <a href="#l00040">pdfWrapper.h:40</a></div></div>
+<div class="ttc" id="aclasspdf__wrap_html_a4028e69993ebf6a30d6a4b0910952a68"><div class="ttname"><a href="classpdf__wrap.html#a4028e69993ebf6a30d6a4b0910952a68">pdf_wrap::newPage</a></div><div class="ttdeci">void newPage()</div><div class="ttdef"><b>Definition</b> <a href="#l00066">pdfWrapper.h:66</a></div></div>
+<div class="ttc" id="aclasspdf__wrap_html_a4e32a4c2afd107ff5ef46378b77ed4f9"><div class="ttname"><a href="classpdf__wrap.html#a4e32a4c2afd107ff5ef46378b77ed4f9">pdf_wrap::g</a></div><div class="ttdeci">int g</div><div class="ttdef"><b>Definition</b> <a href="#l00041">pdfWrapper.h:41</a></div></div>
+<div class="ttc" id="aclasspdf__wrap_html_a5abf0acc3c729abc04c8b941f118c680"><div class="ttname"><a href="classpdf__wrap.html#a5abf0acc3c729abc04c8b941f118c680">pdf_wrap::center_text</a></div><div class="ttdeci">void center_text(std::string word)</div><div class="ttdef"><b>Definition</b> <a href="#l00127">pdfWrapper.h:127</a></div></div>
+<div class="ttc" id="aclasspdf__wrap_html_a6a27c6424345add98c234649213a30fd"><div class="ttname"><a href="classpdf__wrap.html#a6a27c6424345add98c234649213a30fd">pdf_wrap::a</a></div><div class="ttdeci">int a</div><div class="ttdef"><b>Definition</b> <a href="#l00043">pdfWrapper.h:43</a></div></div>
+<div class="ttc" id="aclasspdf__wrap_html_a7f1081ce5928f0e0efb79c951f3f260c"><div class="ttname"><a href="classpdf__wrap.html#a7f1081ce5928f0e0efb79c951f3f260c">pdf_wrap::endPage</a></div><div class="ttdeci">void endPage()</div><div class="ttdef"><b>Definition</b> <a href="#l00074">pdfWrapper.h:74</a></div></div>
+<div class="ttc" id="aclasspdf__wrap_html_a8902e67519c11383d78b381c53e96390"><div class="ttname"><a href="classpdf__wrap.html#a8902e67519c11383d78b381c53e96390">pdf_wrap::setCursor</a></div><div class="ttdeci">void setCursor(int x, int y)</div><div class="ttdef"><b>Definition</b> <a href="#l00112">pdfWrapper.h:112</a></div></div>
+<div class="ttc" id="aclasspdf__wrap_html_a94513b98eb6307f04ad20337bac5310c"><div class="ttname"><a href="classpdf__wrap.html#a94513b98eb6307f04ad20337bac5310c">pdf_wrap::textPiece_end</a></div><div class="ttdeci">void textPiece_end()</div><div class="ttdef"><b>Definition</b> <a href="#l00091">pdfWrapper.h:91</a></div></div>
+<div class="ttc" id="aclasspdf__wrap_html_a99695776a8eeb3c061b2b92f3af6e852"><div class="ttname"><a href="classpdf__wrap.html#a99695776a8eeb3c061b2b92f3af6e852">pdf_wrap::addText</a></div><div class="ttdeci">void addText(std::string text)</div><div class="ttdef"><b>Definition</b> <a href="#l00085">pdfWrapper.h:85</a></div></div>
+<div class="ttc" id="aclasspdf__wrap_html_a9a67386ba5234dc5e5adf5017aa8dafa"><div class="ttname"><a href="classpdf__wrap.html#a9a67386ba5234dc5e5adf5017aa8dafa">pdf_wrap::b</a></div><div class="ttdeci">int b</div><div class="ttdef"><b>Definition</b> <a href="#l00042">pdfWrapper.h:42</a></div></div>
+<div class="ttc" id="aclasspdf__wrap_html_aa0754aa8db7cf10f80c856cfdc5947de"><div class="ttname"><a href="classpdf__wrap.html#aa0754aa8db7cf10f80c856cfdc5947de">pdf_wrap::top_padding</a></div><div class="ttdeci">int top_padding</div><div class="ttdef"><b>Definition</b> <a href="#l00052">pdfWrapper.h:52</a></div></div>
+<div class="ttc" id="aclasspdf__wrap_html_ab816947e877425acc64ee96a912b1026"><div class="ttname"><a href="classpdf__wrap.html#ab816947e877425acc64ee96a912b1026">pdf_wrap::end</a></div><div class="ttdeci">void end()</div><div class="ttdef"><b>Definition</b> <a href="#l00062">pdfWrapper.h:62</a></div></div>
+<div class="ttc" id="aclasspdf__wrap_html_abf276162d35afc06090cfc282d6cb870"><div class="ttname"><a href="classpdf__wrap.html#abf276162d35afc06090cfc282d6cb870">pdf_wrap::interline_gap</a></div><div class="ttdeci">int interline_gap</div><div class="ttdef"><b>Definition</b> <a href="#l00054">pdfWrapper.h:54</a></div></div>
+<div class="ttc" id="aclasspdf__wrap_html_ac2f17108649a1c5ce84ac3bc0f507b5b"><div class="ttname"><a href="classpdf__wrap.html#ac2f17108649a1c5ce84ac3bc0f507b5b">pdf_wrap::newLine</a></div><div class="ttdeci">void newLine()</div><div class="ttdef"><b>Definition</b> <a href="#l00095">pdfWrapper.h:95</a></div></div>
+<div class="ttc" id="aclasspdf__wrap_html_ac81cff9d454379dc8edc72e7a1f77068"><div class="ttname"><a href="classpdf__wrap.html#ac81cff9d454379dc8edc72e7a1f77068">pdf_wrap::get_posX</a></div><div class="ttdeci">int get_posX()</div><div class="ttdef"><b>Definition</b> <a href="#l00119">pdfWrapper.h:119</a></div></div>
+<div class="ttc" id="aclasspdf__wrap_html_ad06ae7c51304a5a372d717474f050c63"><div class="ttname"><a href="classpdf__wrap.html#ad06ae7c51304a5a372d717474f050c63">pdf_wrap::font_size</a></div><div class="ttdeci">float font_size</div><div class="ttdef"><b>Definition</b> <a href="#l00053">pdfWrapper.h:53</a></div></div>
+<div class="ttc" id="aclasspdf__wrap_html_aeaaa772cbd1cf239eed1fcd352738715"><div class="ttname"><a href="classpdf__wrap.html#aeaaa772cbd1cf239eed1fcd352738715">pdf_wrap::setFontStyle</a></div><div class="ttdeci">void setFontStyle(float size, int r, int g, int b, int a)</div><div class="ttdef"><b>Definition</b> <a href="#l00101">pdfWrapper.h:101</a></div></div>
+<div class="ttc" id="aclasspdf__wrap_html_aebff6699b0b7e3991e11e47b1f2f4fba"><div class="ttname"><a href="classpdf__wrap.html#aebff6699b0b7e3991e11e47b1f2f4fba">pdf_wrap::textPiece_start</a></div><div class="ttdeci">void textPiece_start()</div><div class="ttdef"><b>Definition</b> <a href="#l00079">pdfWrapper.h:79</a></div></div>
+<div class="ttc" id="aclasspdf__wrap_html_af029d8c16defa4b52799f302d6e7534d"><div class="ttname"><a href="classpdf__wrap.html#af029d8c16defa4b52799f302d6e7534d">pdf_wrap::left_padding</a></div><div class="ttdeci">int left_padding</div><div class="ttdef"><b>Definition</b> <a href="#l00051">pdfWrapper.h:51</a></div></div>
+<div class="ttc" id="apdf_wrapper_8h_html_a3e962e58909a42621b270c84c29dddcf"><div class="ttname"><a href="pdf_wrapper_8h.html#a3e962e58909a42621b270c84c29dddcf">standardFont</a></div><div class="ttdeci">#define standardFont</div><div class="ttdef"><b>Definition</b> <a href="#l00031">pdfWrapper.h:31</a></div></div>
+<div class="ttc" id="apdf_wrapper_8h_html_a9f04711ff4f1f4c885676ebe5e051343"><div class="ttname"><a href="pdf_wrapper_8h.html#a9f04711ff4f1f4c885676ebe5e051343">A4_Height</a></div><div class="ttdeci">#define A4_Height</div><div class="ttdef"><b>Definition</b> <a href="#l00027">pdfWrapper.h:27</a></div></div>
+<div class="ttc" id="apdf_wrapper_8h_html_ac88f937671f76579ae1f409a174ec368"><div class="ttname"><a href="pdf_wrapper_8h.html#ac88f937671f76579ae1f409a174ec368">A4_Width</a></div><div class="ttdeci">#define A4_Width</div><div class="ttdef"><b>Definition</b> <a href="#l00026">pdfWrapper.h:26</a></div></div>
+<div class="ttc" id="apdf_wrapper_8h_html_af33c297bd530e771c400482010f046c0"><div class="ttname"><a href="pdf_wrapper_8h.html#af33c297bd530e771c400482010f046c0">LEFT</a></div><div class="ttdeci">#define LEFT(n)</div><div class="ttdef"><b>Definition</b> <a href="#l00029">pdfWrapper.h:29</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_67a3ad5dbb58d0ae1dd3ca1109ffeb2c.html">EPE_ENERGY_MONITOR</a></li><li class="navelem"><a class="el" href="dir_387f41f47543c7f33d7b014a59099b7c.html">src</a></li><li class="navelem"><a class="el" href="dir_5fad6f1f0e335da26c870e62d04e9e20.html">core</a></li><li class="navelem"><a class="el" href="dir_aa535b597d236bcc32c963a23dacc716.html">data_IO</a></li><li class="navelem"><a class="el" href="pdf_wrapper_8h.html">pdfWrapper.h</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0 </li>
+  </ul>
+</div>
 </body>
 </html>

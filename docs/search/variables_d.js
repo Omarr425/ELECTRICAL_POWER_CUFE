@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['val_5fmaximas_0',['val_maximas',['../classsignal.html#a32ff85e93620dd3a91b8b5b6008065e7',1,'signal']]],
-  ['val_5fminimas_1',['val_minimas',['../classsignal.html#a379f6675509d757236ae96301346306b',1,'signal']]],
-  ['value_2',['value',['../structsignal_1_1maximas__minimas.html#a0546807deb24e7575b097f59ceab13f5',1,'signal::maximas_minimas']]]
+  ['unique_5fperiods_5fcount_0',['unique_periods_count',['../structsignal_1_1__sub_signals.html#ad008559836ae5c605ca7b1f8c8ba25cb',1,'signal::_subSignals']]]
 ];

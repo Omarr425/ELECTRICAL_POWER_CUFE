@@ -5,5 +5,6 @@ var searchData=
   ['_5fpower_2',['_power',['../class__power.html',1,'']]],
   ['_5fsettings_3',['_settings',['../class__settings.html',1,'']]],
   ['_5fsignal_5foperation_4',['_signal_operation',['../class__signal__operation.html',1,'']]],
-  ['_5fvoltage_5',['_voltage',['../class__voltage.html',1,'']]]
+  ['_5fsubsignals_5',['_subSignals',['../structsignal_1_1__sub_signals.html',1,'signal']]],
+  ['_5fvoltage_6',['_voltage',['../class__voltage.html',1,'']]]
 ];

@@ -5,7 +5,7 @@ var searchData=
   ['textpiece_5fstart_2',['textPiece_start',['../classpdf__wrap.html#aebff6699b0b7e3991e11e47b1f2f4fba',1,'pdf_wrap']]],
   ['time_5fellapsed_3',['time_ellapsed',['../structprocess__feedback.html#a4396e46adb2d3b72e1008cd2662e991f',1,'process_feedback']]],
   ['timer_5fcounter_4',['timer_counter',['../classtimer__counter.html#abb77dd25663cd8387f1d9db67cb42ae7',1,'timer_counter']]],
-  ['timeshift_5',['timeShift',['../class__signal__operation.html#a776d65b97b2eb44cc833f542a7f5611d',1,'_signal_operation']]],
+  ['timeshift_5',['timeShift',['../class__signal__operation.html#ab3a06e20d82e4ee8eecfc066fa247733',1,'_signal_operation']]],
   ['to_5fgigas_6',['to_gigas',['../structeng__multiplier.html#ae5937d2f20a7291fb5c5c804f80c7e11',1,'eng_multiplier']]],
   ['to_5fkilos_7',['to_kilos',['../structeng__multiplier.html#ac55e795a93d129556017d9d618aa7caf',1,'eng_multiplier']]],
   ['to_5fmegas_8',['to_megas',['../structeng__multiplier.html#a4cf77c147bea73a984963aaeecabb420',1,'eng_multiplier']]],

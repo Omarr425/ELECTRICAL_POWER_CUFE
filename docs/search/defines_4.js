@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['positive_0',['positive',['../core_8h.html#af51adb6200815143f3e4d92b4b0048fd',1,'core.h']]]
+  ['negative_0',['negative',['../core_8h.html#a601e464c95c62f3217b9213ad2a9a1e1',1,'core.h']]]
 ];

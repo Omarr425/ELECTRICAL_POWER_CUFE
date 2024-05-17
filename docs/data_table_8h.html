@@ -5,11 +5,15 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.10.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Energy_monitor: C:/Users/hp/Downloads/src/core/data_IO/dataTable.h File Reference</title>
+<title>ENERGY MONITOR: D:/EPE_ENERGY_MONITOR/src/core/data_IO/dataTable.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
@@ -23,7 +27,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Energy_monitor<span id="projectnumber">&#160;0.2</span>
+   <div id="projectname">ENERGY MONITOR<span id="projectnumber">&#160;0.2</span>
    </div>
   </td>
  </tr>
@@ -48,6 +52,23 @@ $(function() {
 /* @license-end */
 </script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('data_table_8h.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -69,11 +90,6 @@ $(function() {
 </div>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="dir_e6bb53534ac0e427887cf7a94c0c004e.html">C:</a></li><li class="navelem"><a class="el" href="dir_8ceffd4ee35c3518d4e8bdc7e638efe8.html">Users</a></li><li class="navelem"><a class="el" href="dir_4535c22c91a2ef3e2e153e7bea8f98c6.html">hp</a></li><li class="navelem"><a class="el" href="dir_6aa497ceaa26f34cbc76c19feafe7435.html">Downloads</a></li><li class="navelem"><a class="el" href="dir_fd58f23db1889473756d01ef16e02a42.html">src</a></li><li class="navelem"><a class="el" href="dir_2d4e1ec122a7893ffa4554c69f72c0aa.html">core</a></li><li class="navelem"><a class="el" href="dir_d83176634e6312e894cd66ed7e0681c0.html">data_IO</a></li>  </ul>
-</div>
-</div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
@@ -97,34 +113,56 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ac8ac919ec10e0b265874ce9c5949f7cd" id="r_ac8ac919ec10e0b265874ce9c5949f7cd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac8ac919ec10e0b265874ce9c5949f7cd">VECTOR_OVERSIZE</a>&#160;&#160;&#160;1</td></tr>
-<tr class="separator:ac8ac919ec10e0b265874ce9c5949f7cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c920b5fcde2b9530ec92c3f50b68e0c" id="r_a8c920b5fcde2b9530ec92c3f50b68e0c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8c920b5fcde2b9530ec92c3f50b68e0c">ROW_VECTOR_OVERSIZE</a>&#160;&#160;&#160;10</td></tr>
+<tr class="separator:a8c920b5fcde2b9530ec92c3f50b68e0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2638c809fdf8d319ca408e7b4cfd05b3" id="r_a2638c809fdf8d319ca408e7b4cfd05b3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2638c809fdf8d319ca408e7b4cfd05b3">COLUMN_VECTOR_OVERSIZE</a>&#160;&#160;&#160;1</td></tr>
+<tr class="separator:a2638c809fdf8d319ca408e7b4cfd05b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>2D dynamic fast and efficient structure for Holding data optimised for longer columns with function for dataManipulation in this structure &ndash;Templated for various dataTypes </p>
 
 <p class="definition">Definition in file <a class="el" href="data_table_8h_source.html">dataTable.h</a>.</p>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="ac8ac919ec10e0b265874ce9c5949f7cd" name="ac8ac919ec10e0b265874ce9c5949f7cd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac8ac919ec10e0b265874ce9c5949f7cd">&#9670;&#160;</a></span>VECTOR_OVERSIZE</h2>
+<a id="a2638c809fdf8d319ca408e7b4cfd05b3" name="a2638c809fdf8d319ca408e7b4cfd05b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2638c809fdf8d319ca408e7b4cfd05b3">&#9670;&#160;</a></span>COLUMN_VECTOR_OVERSIZE</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define VECTOR_OVERSIZE&#160;&#160;&#160;1</td>
+          <td class="memname">#define COLUMN_VECTOR_OVERSIZE&#160;&#160;&#160;1</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="data_table_8h_source.html#l00013">13</a> of file <a class="el" href="data_table_8h_source.html">dataTable.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="data_table_8h_source.html#l00015">15</a> of file <a class="el" href="data_table_8h_source.html">dataTable.h</a>.</p>
+
+</div>
+</div>
+<a id="a8c920b5fcde2b9530ec92c3f50b68e0c" name="a8c920b5fcde2b9530ec92c3f50b68e0c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c920b5fcde2b9530ec92c3f50b68e0c">&#9670;&#160;</a></span>ROW_VECTOR_OVERSIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ROW_VECTOR_OVERSIZE&#160;&#160;&#160;10</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="data_table_8h_source.html#l00014">14</a> of file <a class="el" href="data_table_8h_source.html">dataTable.h</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_67a3ad5dbb58d0ae1dd3ca1109ffeb2c.html">EPE_ENERGY_MONITOR</a></li><li class="navelem"><a class="el" href="dir_387f41f47543c7f33d7b014a59099b7c.html">src</a></li><li class="navelem"><a class="el" href="dir_5fad6f1f0e335da26c870e62d04e9e20.html">core</a></li><li class="navelem"><a class="el" href="dir_aa535b597d236bcc32c963a23dacc716.html">data_IO</a></li><li class="navelem"><a class="el" href="data_table_8h.html">dataTable.h</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0 </li>
+  </ul>
+</div>
 </body>
 </html>
