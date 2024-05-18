@@ -4,24 +4,26 @@
 #include <iostream>
 #include <iomanip>
 
-bool file_IO::csv_import(string file_address, dataTable *table){
+using v_container = dataTable<double>;
+
+bool file_IO::csv_import(string file_address, v_container &table){
   ifstream file;
   string cell;
   char c;
 
-  table->get_row_num();
+  table.get_row_num();
 
   int row_index = 0;
   int col_index = 0;
   file.open(file_address);
   if(file.is_open()){
-    //operations to fill the dataTable object from the file
+    //operations to fill the v_container object from the file
       while(file.get(c)){
 
         if(c == '\n' || c == ','){
 
           try{
-            table->insertData(stod(cell),  row_index, col_index);
+            table.insertData(stod(cell),  row_index, col_index);
             cell = "";
           }
           catch(const std::invalid_argument& e){
@@ -53,13 +55,9 @@ bool file_IO::csv_import(string file_address, dataTable *table){
 }
 
 
-bool file_IO::pdf_import(string file_address, dataTable *table){
-  return false;
-};
 
 
-
-bool file_IO::csv_export(string file_address, dataTable table){
+bool file_IO::csv_export(string file_address, v_container &table){
   ofstream outputFile;
   outputFile << std::setprecision(10);
   outputFile.open(file_address);
@@ -82,22 +80,12 @@ bool file_IO::csv_export(string file_address, dataTable table){
 };
 
 
-bool file_IO::pdf_export(string file_address, dataTable table){
-  return false; 
-}
 
-
-
-
-
-bool file_IO::data_import(string file_address,  dataTable *data,  int type){
+bool file_IO::data_import(string file_address,  v_container &data,  int type){
   switch (type)
   {
   case csv:
-    return csv_import(file_address+".csv", data);
-    break;
-  case pdf:
-    return pdf_import(file_address+".pdf", data);
+    return csv_import(file_address, data);
     break;
   default:
     return false;
@@ -105,14 +93,12 @@ bool file_IO::data_import(string file_address,  dataTable *data,  int type){
   }
 }
 
-bool file_IO::data_export(string file_address, dataTable data, int type){
+bool file_IO::data_export(string file_address, v_container &data, int type){
   switch (type)
   {
   case csv:
-    return csv_export(file_address+".csv", data);
+    return csv_export(file_address, data);
     break;
-  case pdf:
-    return pdf_export(file_address+".pdf", data);
   default:
     return false;
     break;

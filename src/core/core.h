@@ -1,6 +1,17 @@
 #pragma once
 
+
+/*!
+  @file core.h
+  @brief wrap the core folder / include base helper methods and macros used accross the program
+
+*/
+#include <vector>
+
+
+
 #include "data_IO/data_IO.h"
+#include "data_IO/pdfWrapper.h"
 #include <stdlib.h>
 #include <type_traits>
 #include <string>
@@ -9,6 +20,14 @@
 
 #define toRad(_deg)((_deg/180)  * M_PI) 
 #define toDeg(_rad)((_rad/M_PI) * 180)
+
+
+#define positive 1
+#define zero 0
+#define negative -1
+#define sign(c)((c>0) ? positive : ((c<0) ? negative : zero))
+
+
 using namespace std;
 
 extern _settings settings;
@@ -18,74 +37,74 @@ extern _settings settings;
 template <typename t>
 struct eng_multiplier{
 
-inline t to_millis(t v)
+static inline t to_millis(t v)
   {
     if(is_arithmetic<t>::value){
-      return v*10e-3;
+      return v/1e-3;
     }
     else if(is_same_v<t,string>)
     {
-      return v+"10e-3";
+      return std::to_string(stod(v)/1e-3)+"10^-3";
     }
   }
 
 
-inline t to_micros(t v)
+static inline t to_micros(t v)
   {
     if(is_arithmetic<t>::value){
-      return v*10e-6;
+      return v/10e-6;
     }
     else if(is_same_v<t,string>)
     {
-      return v+"10e-6";
+      return std::to_string(stod(v)/1e-6)+"10^-6";
     }
   }
 
 
-inline t to_nanos(t v)
+static inline t to_nanos(t v)
   {
     if(is_arithmetic<t>::value){
-      return v*10e-9;
+      return v/10e-9;
     }
     else if(is_same_v<t,string>)
     {
-      return v+"10e-9";
+      return std::to_string(stod(v)/1e-9)+"10^-9";
     }
   }
 
 
-inline t to_kilos(t v)
+static inline t to_kilos(t v)
   {
     if(is_arithmetic<t>::value){
-      return v*10e3;
+      return v/10e3;
     }
     else if(is_same_v<t,string>)
     {
-      return v+"10e3";
+      return std::to_string(stod(v)/1e3)+"10^3";
     }
   }
 
 
-inline t to_megas(t v)
+static inline t to_megas(t v)
   {
     if(is_arithmetic<t>::value){
-      return v*10e6;
+      return v/10e6;
     }
     else if(is_same_v<t,string>)
     {
-      return v+"10e6";
+      return std::to_string(stod(v)/1e6)+"10^6";
     }
   }
 
 
-inline t to_gigas(t v)
+static inline t to_gigas(t v)
   {
     if(is_arithmetic<t>::value){
-      return v*10e9;
+      return v/1e9;
     }
     else if(is_same_v<t,string>)
     {
-      return v+"10e9";
+      return std::to_string(stod(v)/1e9)+"10^9";
     }
   }
 };
@@ -129,15 +148,10 @@ inline t roundTo(t num,t n){
 
 
 
-
-
-
-
-
 inline float getCurrentTime(){
   return float(clock()/CLOCKS_PER_SEC);
 }
-inline void replace(char c){
+inline void replace_char(char c){
   cout << "\b" << c << endl;
 }
  
@@ -156,4 +170,27 @@ struct process_feedback{
   void load_string(std::string str);
   float time_ellapsed();
   process_feedback();
+};
+
+inline std::string bool_to_string(int v){
+  if(v != 0){
+    return "true";
+  }else{
+    return "false";
+  }
+}
+
+template <typename DATA>
+class mode{
+  private:
+    struct elements{
+      DATA value;
+      unsigned int count;
+    };
+    std::vector<elements> elements_found;
+  public:
+    mode(std::vector<DATA> data_to_mode){
+      //FUNCTION DEFINITION
+    }
+
 };

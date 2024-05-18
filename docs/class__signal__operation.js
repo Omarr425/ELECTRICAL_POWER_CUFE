@@ -1,0 +1,27 @@
+var class__signal__operation =
+[
+    [ "add", "class__signal__operation.html#a718348e51e0471001d9af24e519fb111", null ],
+    [ "add", "class__signal__operation.html#a188568d5021cdd2ce40c8526fe9f4a78", null ],
+    [ "add", "class__signal__operation.html#a33b876f596b7a9c1664cf187e176bc6e", null ],
+    [ "add", "class__signal__operation.html#add5935798656e8b67ed5554edbd375f8", null ],
+    [ "bandPass_filter", "class__signal__operation.html#ac7cb738a2e78c0563c6a6d31e2ad99fc", null ],
+    [ "bangReject_filter", "class__signal__operation.html#a0429de3eb98b6f8e77c5696d1b0b6722", null ],
+    [ "concatenate", "class__signal__operation.html#a32aff43c73aa05311e777e61ece491ab", null ],
+    [ "factor_frequency", "class__signal__operation.html#a8a2bcdeb23cbd52925aa5a284e72ce12", null ],
+    [ "firstO_lowPass_filter", "class__signal__operation.html#ab9de57e953481f7abe5e370ce85c2b50", null ],
+    [ "highPass_filter", "class__signal__operation.html#a6c106740a7f964129f3be6aae20ac01f", null ],
+    [ "integ_vpower", "class__signal__operation.html#ab328824e539148c21c4b2dbe4b5d41fa", null ],
+    [ "isSuccessfull", "class__signal__operation.html#a7e8e7f0c9d68ba7ff238283111dee512", null ],
+    [ "logarithmic", "class__signal__operation.html#af6c76cfd1448bf6502e6eae35b3fdb8c", null ],
+    [ "multiply", "class__signal__operation.html#a2d28d98b7abe4aead46ec64ccc7a8413", null ],
+    [ "multiply", "class__signal__operation.html#a57c71457f8832614b3fc8154435c1674", null ],
+    [ "multiply", "class__signal__operation.html#a849625cb89488ad988f1b423a029a995", null ],
+    [ "multiply", "class__signal__operation.html#aedb81e318bf646a1afd199770fcafb75", null ],
+    [ "phase_diff", "class__signal__operation.html#a392932071ef781f3a78fa02595a45a46", null ],
+    [ "subsignal_time_based", "class__signal__operation.html#a30d9d8c911dd8ec0661ea9aed066714b", null ],
+    [ "subsignal_value_based", "class__signal__operation.html#ab6ab06318deaf6e5224b6b7921fd4108", null ],
+    [ "subsignal_value_time_based", "class__signal__operation.html#a6dd271f57bdac7b08779f92a89a3456c", null ],
+    [ "timeShift", "class__signal__operation.html#ab3a06e20d82e4ee8eecfc066fa247733", null ],
+    [ "toSignal", "class__signal__operation.html#abe5998a772428d2abc497e1a6ba29f07", null ],
+    [ "toSignal", "class__signal__operation.html#a66a4f019fb086289c7faacbde7736f2f", null ]
+];
